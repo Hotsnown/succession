@@ -26,4 +26,6 @@ export const simpsonsTree = {
     millhouse: {id:"millhouse", name: "Millhouse Van Houten"},
     millhouse_jr: {id:"millhouse_jr", name: "Millhouse Van Houten Jr."}
   };
+
+it('', () => expect(true).toBeTruthy())
   

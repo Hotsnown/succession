@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return a 200 status code 1`] = `
+Object {
+  "task": Array [
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 0,
+        "ordre": 0,
+      },
+      "member_id": "Pierre",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 2,
+        "ordre": 2,
+      },
+      "member_id": "Marie",
+    },
+    Object {
+      "childs": Array [
+        "Pierre",
+        "Marie",
+      ],
+      "data": Object {
+        "degre": 1,
+        "ordre": 2,
+      },
+      "member_id": "Fred",
+    },
+    Object {
+      "childs": Array [
+        "Armand",
+        "Morgane",
+        "Thibault",
+        "Romain",
+      ],
+      "data": Object {
+        "degre": 2,
+        "ordre": 4,
+      },
+      "member_id": "Bea",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 4,
+        "ordre": 4,
+      },
+      "member_id": "Armand",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 4,
+        "ordre": 4,
+      },
+      "member_id": "Morgane",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 4,
+        "ordre": 4,
+      },
+      "member_id": "Thibault",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 4,
+        "ordre": 4,
+      },
+      "member_id": "Romain",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 2,
+        "ordre": 4,
+      },
+      "member_id": "Sylvain",
+    },
+    Object {
+      "childs": Array [],
+      "data": Object {
+        "degre": 2,
+        "ordre": 4,
+      },
+      "member_id": "Steph",
+    },
+    Object {
+      "childs": Array [
+        "Fred",
+        "Sylvain",
+        "Bea",
+        "Steph",
+      ],
+      "data": Object {
+        "degre": 2,
+        "ordre": 3,
+      },
+      "member_id": "Bernard",
+    },
+    Object {
+      "childs": Array [
+        "Fred",
+        "Sylvain",
+        "Bea",
+        "Steph",
+      ],
+      "data": Object {
+        "degre": 2,
+        "ordre": 3,
+      },
+      "member_id": "Claudine",
+    },
+  ],
+}
+`;
