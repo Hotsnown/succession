@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+Array [
+  "parent(abe, herb).",
+  "parent(abe, homer).",
+  "parent(homer, bart).",
+  "parent(homer, lisa).",
+  "parent(homer, maggie).",
+  "parent(lisa, millhouse_jr).",
+]
+`;
