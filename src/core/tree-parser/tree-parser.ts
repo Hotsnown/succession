@@ -1,41 +1,29 @@
-interface Tree {
-    [key: string]: Node
-}
-
-interface Node {
-    id: string;
-    name: string;
-    partners?: string[];
-    children?: HouseHold;
-}
-
-interface HouseHold {
-    [key: string]: string[]
-}
+import { Tree, Node, HouseHold } from './interface'
 
 export function treeParser(tree: Tree) {
     let facts: string[] = []
 
     Object.entries(tree)
-        .map(
-            node => {
-
-                let parent = node[0]
-                let houseHold = node[1]["children"]
-
-                if (houseHold) {
-                    if (hasMultipleChildren(houseHold)) {
-                        getChildren(houseHold)
-                            .map(childrens => extractMultipleChildren(childrens, facts, parent))
-                    }
-                    else {
-                        getChildren(houseHold)
-                            .map(extractSingleChildren(facts, parent))
-                    }
-                }
-            })
+        .map(parseNode(facts))
 
     return facts
+}
+
+function parseNode(facts: string[]): (value: [string, Node], index: number, array: [string, Node][]) => void {
+    return node => {
+        let parent = node[0]
+        let houseHold = node[1].children
+        if (houseHold) {
+            if (hasMultipleChildren(houseHold)) {
+                getChildren(houseHold)
+                    .map(childrens => extractMultipleChildren(childrens, facts, parent))
+            }
+            else {
+                getChildren(houseHold)
+                    .map(extractSingleChildren(facts, parent))
+            }
+        }
+    }
 }
 
 function getChildren(houseHold: HouseHold) {
@@ -46,11 +34,11 @@ function hasMultipleChildren(houseHold: HouseHold) {
     return getChildren(houseHold).length
 }
 
-function extractSingleChildren(facts: string[], parent: string): (value: string[], index: number, array: string[][]) => number {
-    return children => facts.push(`parent(${parent}, ${children}).`)
-}
-
 function extractMultipleChildren(childrens: string[], facts: string[], parent: string): number[] {
     return childrens
-        .map((children: any) => facts.push(`parent(${parent}, ${children}).`))
+        .map(extractSingleChildren(facts, parent))
+}
+
+function extractSingleChildren(facts: string[], parent: string): (children: any) => number {
+    return children => facts.push(`parent(${parent}, ${children}).`)
 }

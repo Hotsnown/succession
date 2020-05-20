@@ -1,10 +1,11 @@
 /**
  * @jest-environment node
  */
-import { requestBuilder } from '../request-builder'
+import { getQualificationFrom } from '../request-builder'
+import { requestData } from './request-data'
 
 it('should return a 200 status code', async () => {
     
-    const data = await requestBuilder()
+    const data = await getQualificationFrom(requestData)
     expect(data).toMatchSnapshot()
 })

@@ -1,14 +1,12 @@
-import { requestData } from './request-data'
+import { Query } from './interface';
 const fetch = require('node-fetch')
 
-export async function requestBuilder () {
-
-    const raw = JSON.stringify(requestData);
+export async function getQualificationFrom (query: Query) {
     
     const requestOptions = {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
-      body: raw,
+      body: JSON.stringify(query)
     };
     
     const result  = await fetch("http://127.0.0.1:5000/todo/api/v1.0/tasks", requestOptions)
