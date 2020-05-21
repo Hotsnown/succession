@@ -16,20 +16,14 @@ export class Output {
     }
 
     appendFamily(member_id: string, childs: string[]) {
-        this.family.push(new Family(member_id, childs))
+        this.family.push({member_id: member_id, childs: childs, data: {}})
     }
 }
 
-class Family {
+interface Family {
     member_id: string;
     childs: string[];
     data: Data;
-    
-    constructor (member_id: string, childs: string[]) {
-        this.member_id = member_id
-        this.childs = childs
-        this.data = {}
-    }
 }
 
 interface Data {

@@ -1,5 +1,5 @@
 import { Tree, Node, HouseHold } from './interface'
-import { Output } from './json'
+import { Output } from './entities'
 
 function treeParser(tree: Tree) {
     let facts: Output = new Output("abe")
@@ -16,31 +16,45 @@ function parseNode(facts: Output): (value: [string, Node], index: number, array:
     return node => {
         let parent = node[0]
         let houseHold = node[1].children
-        if (houseHold) {
+        if (houseHold !== undefined && !isEmpty(houseHold) ) {
             if (hasMultipleChildren(houseHold)) {
-                getChildren(houseHold)
-                    .map(childrens => extractMultipleChildren(childrens, facts, parent))
+                extractMultipleChildren(getChildrenString(houseHold), facts, parent)
             }
             else {
-                getChildren(houseHold)
+                getChildrenArray(houseHold)
                     .map(extractSingleChildren(facts, parent))
             }
+        }
+        else {
+            facts.appendFamily(parent, [])
         }
     }
 }
 
-function getChildren(houseHold: HouseHold) {
+function getChildrenString(houseHold: HouseHold): string[] {
+    return getChildrenArray(houseHold).flat(1)
+}
+
+function getChildrenArray(houseHold: HouseHold) {
     return Object.values(houseHold)
 }
 
 function hasMultipleChildren(houseHold: HouseHold) {
-    return getChildren(houseHold).length
+    return getChildrenArray(houseHold).length
 }
 
-function extractMultipleChildren(childrens: any[], facts: Output, parent: string) {
-    facts.appendFamily(parent, childrens.map(c => c.id))
+function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
+    facts.appendFamily(parent, childrens)
 }
 
 function extractSingleChildren(facts: Output, parent: string) {
     return (children: any) =>  facts.appendFamily(parent, children.id)
+}
+
+function isEmpty(obj: Object) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
