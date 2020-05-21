@@ -1,14 +1,16 @@
 import { Tree, Node, HouseHold } from './interface'
 import { Output } from './json'
 
-export function treeParser(tree: Tree) {
-    let facts: Output = new Output("Pierre")
+function treeParser(tree: Tree) {
+    let facts: Output = new Output("abe")
 
     Object.entries(tree)
         .map(parseNode(facts))
 
     return facts
 }
+
+export default treeParser
 
 function parseNode(facts: Output): (value: [string, Node], index: number, array: [string, Node][]) => void {
     return node => {
@@ -35,11 +37,10 @@ function hasMultipleChildren(houseHold: HouseHold) {
     return getChildren(houseHold).length
 }
 
-function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
-    return childrens
-        .map(extractSingleChildren(facts, parent))
+function extractMultipleChildren(childrens: any[], facts: Output, parent: string) {
+    facts.appendFamily(parent, childrens.map(c => c.id))
 }
 
 function extractSingleChildren(facts: Output, parent: string) {
-    return (children: any) => facts.appendFamily(parent, children)
+    return (children: any) =>  facts.appendFamily(parent, children.id)
 }

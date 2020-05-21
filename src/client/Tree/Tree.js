@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
+import Result from '../Result/Result'
 
 class Tree extends React.Component {
 
@@ -37,14 +37,14 @@ class Tree extends React.Component {
   }
 
   getNewMember(name, id) {
-    return {'id': id, 'name': name, 'partners':[], 'children':[]}
+    return { 'id': id, 'name': name, 'partners': [], 'children': [] }
   }
 
   // HANDLERS //
 
   handleMemberEdit(member_id, data) {
     this.setState(function (prev_state, props) {
-      var memberlist = {...prev_state.memberlist};
+      var memberlist = { ...prev_state.memberlist };
       memberlist[member_id].name = data.name;
       return { 'memberlist': memberlist };
     });
@@ -52,7 +52,7 @@ class Tree extends React.Component {
 
   handleMemberDelete(member_id) {
     this.setState(function (prev_state, props) {
-      var memberlist = {...prev_state.memberlist};
+      var memberlist = { ...prev_state.memberlist };
       var member = memberlist[member_id];
       if (member.partners != null && member.partners.length > 0) alert('Cannot delete a member with partners');
       else alert('Delete capabilities still pending');
@@ -61,7 +61,7 @@ class Tree extends React.Component {
 
   handleAddPartner(root_id) {
     this.setState(function (prev_state, props) {
-      let memberlist = {...prev_state.memberlist};
+      let memberlist = { ...prev_state.memberlist };
       let new_id = this.getNextMemberId(memberlist);
       let new_member = this.getNewMember('New Partner', new_id);
       memberlist[new_member.id] = new_member;
@@ -73,12 +73,11 @@ class Tree extends React.Component {
 
   handleAddChild(root_id, partner_id) {
     this.setState(function (prev_state, props) {
-      let memberlist = {...prev_state.memberlist};
+      let memberlist = { ...prev_state.memberlist };
       let new_id = this.getNextMemberId(memberlist);
       let new_member = this.getNewMember('New Child', new_id);
       memberlist[new_member.id] = new_member;
-      if (!Array.isArray(memberlist[root_id].children[partner_id]))
-      {
+      if (!Array.isArray(memberlist[root_id].children[partner_id])) {
         memberlist[root_id].children[partner_id] = [];
       }
       memberlist[root_id].children[partner_id].push(new_member);
@@ -89,16 +88,20 @@ class Tree extends React.Component {
   // RENDERERS //
 
   render() {
-    var ret = <TreeMember
-      {...this.state.memberlist[this.state.rootid]}
-      onAddPartner = {this.handleAddPartner}
-      onAddChild = {this.handleAddChild}
-      onEdit = {this.handleMemberEdit}
-      onDelete = {this.handleMemberDelete}
-      parentPosition = {this.state.position}
-    />
 
-    return ret;
+    return (
+      <>
+        <TreeMember
+          {...this.state.memberlist[this.state.rootid]}
+          onAddPartner={this.handleAddPartner}
+          onAddChild={this.handleAddChild}
+          onEdit={this.handleMemberEdit}
+          onDelete={this.handleMemberDelete}
+          parentPosition={this.state.position}
+        />
+        <Result memberList={this.state.memberlist} />
+      </>
+      )
   }
 }
 

@@ -1,8 +1,8 @@
 import { Query } from './interface';
 const fetch = require('node-fetch')
 
-export async function getQualificationFrom (query: Query) {
-    
+async function getQualificationFrom (query: Query) {
+
     const requestOptions = {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -16,3 +16,5 @@ export async function getQualificationFrom (query: Query) {
 
     return result
 }
+
+export default getQualificationFrom

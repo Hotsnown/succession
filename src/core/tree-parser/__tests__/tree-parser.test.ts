@@ -1,8 +1,7 @@
-import { treeParser } from '../tree-parser'
+import treeParser from '../tree-parser'
 import { simpsonsTree } from './data'
-const target = require('./target.json')
+const target = require('./simpson.target.json')
 
 it('', () => {
-    //expect(treeParser(simpsonsTree)).toStrictEqual(target)
-    expect(true).toBeTruthy()
+    expect(treeParser(simpsonsTree)).toStrictEqual(target)
 })
