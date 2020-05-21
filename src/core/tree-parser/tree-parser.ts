@@ -2,7 +2,7 @@ import { Tree, Node, HouseHold } from './interface'
 import { Output } from './entities'
 
 function treeParser(tree: Tree) {
-    let facts: Output = new Output("abe")
+    const facts: Output = new Output("abe")
 
     Object.entries(tree)
         .map(parseNode(facts))
@@ -14,15 +14,17 @@ export default treeParser
 
 function parseNode(facts: Output): (value: [string, Node], index: number, array: [string, Node][]) => void {
     return node => {
-        let parent = node[0]
-        let houseHold = node[1].children
+        const parent = node[0]
+        const houseHold = node[1].children
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
-            if (hasMultipleChildren(houseHold)) {
-                extractMultipleChildren(getChildrenString(houseHold), facts, parent)
+            console.log(Object.values(houseHold))
+            if (Object.values(houseHold).length) {
+                facts.appendFamily(parent, getChildrenString(houseHold))
             }
             else {
-                getChildrenArray(houseHold)
-                    .map(extractSingleChildren(facts, parent))
+                //@ts-ignore
+                facts.appendFamily(parent, getSingleChildren(houseHold).id)
+                console.log(getSingleChildren(houseHold))
             }
         }
         else {
@@ -32,23 +34,11 @@ function parseNode(facts: Output): (value: [string, Node], index: number, array:
 }
 
 function getChildrenString(houseHold: HouseHold): string[] {
-    return getChildrenArray(houseHold).flat(1)
+    return Object.values(houseHold).flat(1)
 }
 
-function getChildrenArray(houseHold: HouseHold) {
-    return Object.values(houseHold)
-}
-
-function hasMultipleChildren(houseHold: HouseHold) {
-    return getChildrenArray(houseHold).length
-}
-
-function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
-    facts.appendFamily(parent, childrens)
-}
-
-function extractSingleChildren(facts: Output, parent: string) {
-    return (children: any) =>  facts.appendFamily(parent, children.id)
+function getSingleChildren(houseHold: HouseHold): string[] {
+    return Object.values(houseHold)[0]
 }
 
 function isEmpty(obj: Object) {
