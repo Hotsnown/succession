@@ -12,3 +12,12 @@ export interface Node {
 export interface HouseHold {
     [key: string]: string[]
 }
+
+export interface Data {
+}
+
+export interface Family {
+    member_id: string;
+    childs: string[];
+    data: Data;
+}

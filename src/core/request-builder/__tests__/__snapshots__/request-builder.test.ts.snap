@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should return a 200 status code 1`] = `
+exports[`should return a match the snapshot 1`] = `
 Object {
   "task": Array [
     Object {
@@ -26,7 +26,7 @@ Object {
       ],
       "data": Object {
         "degre": 1,
-        "ordre": 2,
+        "ordre": 3,
       },
       "member_id": "Fred",
     },

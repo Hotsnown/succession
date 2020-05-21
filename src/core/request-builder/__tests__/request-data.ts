@@ -1,3 +1,4 @@
-import { Query } from './interface'
+import { Query } from '../interface'
+it('', () => expect(true).toBeTruthy())
 
 export const requestData: Query = {"de_cujus":"Pierre","family":[{"member_id":"Pierre","childs":[],"data":{}},{"member_id":"Marie","childs":[],"data":{}},{"member_id":"Fred","childs":["Pierre","Marie"],"data":{}},{"member_id":"Bea","childs":["Armand","Morgane","Thibault","Romain"],"data":{}},{"member_id":"Armand","childs":[],"data":{}},{"member_id":"Morgane","childs":[],"data":{}},{"member_id":"Thibault","childs":[],"data":{}},{"member_id":"Romain","childs":[],"data":{}},{"member_id":"Sylvain","childs":[],"data":{}},{"member_id":"Steph","childs":[],"data":{}},{"member_id":"Bernard","childs":["Fred","Sylvain","Bea","Steph"],"data":{}},{"member_id":"Claudine","childs":["Fred","Sylvain","Bea","Steph"],"data":{}}]}
