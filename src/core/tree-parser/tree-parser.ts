@@ -1,7 +1,8 @@
 import { Tree, Node, HouseHold } from './interface'
+import { Output } from './json'
 
 export function treeParser(tree: Tree) {
-    let facts: string[] = []
+    let facts: Output = new Output("Pierre")
 
     Object.entries(tree)
         .map(parseNode(facts))
@@ -9,7 +10,7 @@ export function treeParser(tree: Tree) {
     return facts
 }
 
-function parseNode(facts: string[]): (value: [string, Node], index: number, array: [string, Node][]) => void {
+function parseNode(facts: Output): (value: [string, Node], index: number, array: [string, Node][]) => void {
     return node => {
         let parent = node[0]
         let houseHold = node[1].children
@@ -34,11 +35,11 @@ function hasMultipleChildren(houseHold: HouseHold) {
     return getChildren(houseHold).length
 }
 
-function extractMultipleChildren(childrens: string[], facts: string[], parent: string): number[] {
+function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
     return childrens
         .map(extractSingleChildren(facts, parent))
 }
 
-function extractSingleChildren(facts: string[], parent: string): (children: any) => number {
-    return children => facts.push(`parent(${parent}, ${children}).`)
+function extractSingleChildren(facts: Output, parent: string) {
+    return (children: any) => facts.appendFamily(parent, children)
 }

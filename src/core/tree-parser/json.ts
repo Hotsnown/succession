@@ -1,12 +1,10 @@
-import { Node, RootObject } from "./interface";
-
 export class Output {
     de_cujus: string
     family: Family[]
 
-    constructor(de_cujus: string, family: Family[]){
+    constructor(de_cujus: string){
         this.de_cujus = de_cujus
-        this.family = family
+        this.family = []
     }
 
     jsonify() {
