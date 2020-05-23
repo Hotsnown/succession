@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TreeListPartners from './../TreeListPartners/TreeListPartners';
 import TreeListChildren from './../TreeListChildren/TreeListChildren';
@@ -120,8 +120,8 @@ class TreeMember extends React.Component {
   }
 
   renderChildren() {
-    if (this.props.partners.length == 0) return null;
-    if (this.getChildCount() == 0) return null;
+    if (this.props.partners.length === 0) return null;
+    if (this.getChildCount() === 0) return null;
     return (
       <TreeChildrenSection>
         <VisuallyHiddenHeader>Children</VisuallyHiddenHeader>

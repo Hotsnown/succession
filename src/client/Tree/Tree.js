@@ -1,7 +1,9 @@
 import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
-import Result from '../Result/Result'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 class Tree extends React.Component {
 
@@ -91,6 +93,9 @@ class Tree extends React.Component {
 
     return (
       <>
+      <div className="overflow-auto">
+        <br></br>
+      <Row>
         <TreeMember
           {...this.state.memberlist[this.state.rootid]}
           onAddPartner={this.handleAddPartner}
@@ -99,7 +104,9 @@ class Tree extends React.Component {
           onDelete={this.handleMemberDelete}
           parentPosition={this.state.position}
         />
-        <Result memberList={this.state.memberlist} />
+      </Row>
+        </div>
+      
       </>
       )
   }

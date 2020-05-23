@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TreeMember from './../TreeMember/TreeMember';
 import * as CommonStyles from './../TreeStylesShared';
@@ -75,8 +75,8 @@ const ChildlistHeader = styled.h2`
 
   &::before {
     ${CommonStyles.LinkProperties}
-    bottom: -${props => props.childbracketWidth == 0 ? 2 : 1}em;
-    height: ${props => props.childbracketWidth == 0 ? 2 : 1}em;
+    bottom: -${props => props.childbracketWidth === 0 ? 2 : 1}em;
+    height: ${props => props.childbracketWidth === 0 ? 2 : 1}em;
     border-bottom-width: 0;
     display: block;
     ${props => props.left_to_right
@@ -100,7 +100,7 @@ class TreeListChildren extends React.Component {
 
   render() {
     if (!this.props.members) return null;
-    if (this.props.members.length == 0) return null;
+    if (this.props.members.length === 0) return null;
     let ret = [];
     ret.push(<ChildlistHeader key={'childlist_header_' + this.props.parent.id} {...this.props.linkprops} childcount={this.props.members.length}>Children with <a href={'#' + this.props.parent.id}>{this.props.parent.name}</a></ChildlistHeader>);
     ret.push(<ChildList key={'childlist_' + this.props.parent.id} {...this.props.linkprops} innerRef={this.listRef}>

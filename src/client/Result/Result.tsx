@@ -2,14 +2,14 @@ import React from 'react'
 import { IResult } from './interface'
 import getDevolution from '../../core/index'
 import ResponseParser from './response-parser'
+import Button from 'react-bootstrap/Button'
 
 const Result = (props: IResult) => {
     const [results, setResults]: any[] = React.useState([])
     const [displayResult, setDisplayResult] = React.useState(false)
 
     const memberList = props.memberList
-
-    console.log(memberList)
+    const extractMemberList = props.extractMemberList
 
     //@ts-ignore
     React.useEffect(() => {
@@ -22,7 +22,7 @@ const Result = (props: IResult) => {
         return <ResponseParser results= {results}/>
     }
     return (
-        <button onClick = {() => setDisplayResult(true)}>Click me</button>
+        <Button onChange = {() => {extractMemberList(); setDisplayResult(true)}} as="input" type="submit" value="Click me"/>
     )
 }
 

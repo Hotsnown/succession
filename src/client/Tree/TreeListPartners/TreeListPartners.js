@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TreeMember from './../TreeMember/TreeMember';
 import * as CommonStyles from './../TreeStylesShared';
-
-const VisuallyHidden = CommonStyles.VisuallyHidden;
 
 const VisuallyHiddenHeader = CommonStyles.VisuallyHidden.withComponent('h1');
 
@@ -42,12 +40,8 @@ const PartnerList = styled(CommonStyles.TreeList)`
 
 class TreeListPartners extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    if (this.props.members.length == 0) return null;
+    if (this.props.members.length === 0) return null;
     return (
       <TreePartnerSection>
         <VisuallyHiddenHeader>Partners</VisuallyHiddenHeader>

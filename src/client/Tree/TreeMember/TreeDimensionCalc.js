@@ -65,7 +65,7 @@ export function getNodeWidth(m) {
 
 
 export function getChildlistArray(m) {
-  if (m.partners.length == 0) return [];
+  if (m.partners.length === 0) return [];
   return m.partners.map(p => m.children[p.id] ? m.children[p.id] : []);
 }
 
