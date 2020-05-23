@@ -1,4 +1,4 @@
-export const simpsonsTree = {
+const simpsonsTree = {
     abe: {
       id: "abe",
       name: "Abraham J. (Grandpa) Simpson",
@@ -27,5 +27,4 @@ export const simpsonsTree = {
     millhouse_jr: {id:"millhouse_jr", name: "Millhouse Van Houten Jr."}
   };
 
-it('', () => expect(true).toBeTruthy())
-  
+export default simpsonsTree

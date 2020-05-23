@@ -1,6 +1,10 @@
 import treeParser from '../tree-parser'
-import { simpsonsTree } from '../__mocks__/data'
-const target = require ('../__mocks__/simpson.target.json')
+import simpsonsTree from '../__mocks__/data'
+const target = require('../__mocks__/simpson.target.json')
+
+
+/* LES DONNEES DE TESTS SONT FAUSSES
+ */
 
 it (' should return empty childs when there is no childs', () => {
     const mock = {
@@ -21,7 +25,7 @@ it (' should return empty childs when there is no childs', () => {
             }]
     }
 
-    expect(treeParser(mock)).toEqual(target)
+    expect(treeParser(mock, 'abe')).toEqual(target)
 })
 
 it('should work with childrens', () => {
@@ -44,34 +48,62 @@ it('should work with childrens', () => {
                 }
             }]
     }
-    expect(treeParser(mock)).toEqual(target)
+    expect(treeParser(mock, 'abe')).toEqual(target)
 })
 
-it('should work with lisa', () => {
+it('should not append children to a partner ', () => {
     const mock = {
-        lisa: {
+        homer: {
+            id:"homer",
+            name: "Homer Jay Simpson",
+            partners: ["marge"],
+            children: {marge: ["bart", "lisa", "maggie"]}
+          },
+          marge: {id:"marge", name: "Marjorie (Marge) Simpson (née Bouvier)"},
+          bart: {id:"bart", name: "Bartholomew (Bart) JoJo Simpson"},
+          lisa: {
             id:"lisa",
             name: "Lisa Marie Simpson",
-            partners: ["millhouse"],
-            children: {millhouse: ["millhouse_jr"]}
           },
+          maggie: {id:"maggie", name: "Margaret (Maggie) Eve Simpson"}
     }
 
     const target = {
         "de_cujus": "abe",
         "family": [
             {
-                "member_id": "lisa",
-                "childs": ["millhouse_jr"],
+                "member_id" : "homer",
+                "childs" : ["bart", "lisa", "maggie"],
+                "data": {
+                }
+            },
+            {
+                "member_id" : "marge",
+                "childs" : [],
+                "data": {
+                }
+            },
+            {
+                "member_id" : "bart",
+                "childs" : [],
+                "data": {
+                }
+            },
+            {
+                "member_id" : "lisa",
+                "childs" : [],
+                "data": {
+                }
+            },
+            {
+                "member_id" : "maggie",
+                "childs" : [],
                 "data": {
                 }
             }]
     }
-
-    expect(treeParser(mock)).toEqual(target)
-
+    expect(treeParser(mock, 'abe')).toEqual(target)
 })
-
-it('should work with whole data', () => {
-    expect(simpsonsTree).toBe(target)
+it('should test an integration test', () => {
+    expect(treeParser(simpsonsTree, 'homer')).toEqual(target)
 })

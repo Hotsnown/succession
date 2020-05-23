@@ -1,8 +1,8 @@
 import { Tree, Node, HouseHold } from './interface'
 import { Output } from './entities'
 
-function treeParser(tree: Tree) {
-    const facts: Output = new Output("abe")
+function treeParser(tree: Tree, deCujus: string) {
+    let facts: Output = new Output(deCujus)
 
     Object.entries(tree)
         .map(parseNode(facts))
@@ -14,17 +14,15 @@ export default treeParser
 
 function parseNode(facts: Output): (value: [string, Node], index: number, array: [string, Node][]) => void {
     return node => {
-        const parent = node[0]
-        const houseHold = node[1].children
+        let parent = node[0]
+        let houseHold = node[1].children
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
-            console.log(Object.values(houseHold))
-            if (Object.values(houseHold).length) {
-                facts.appendFamily(parent, getChildrenString(houseHold))
+            if (hasMultipleChildren(houseHold)) {
+                extractMultipleChildren(getChildrenString(houseHold), facts, parent)
             }
             else {
-                //@ts-ignore
-                facts.appendFamily(parent, getSingleChildren(houseHold).id)
-                console.log(getSingleChildren(houseHold))
+                getChildrenArray(houseHold)
+                    .map(extractSingleChildren(facts, parent))
             }
         }
         else {
@@ -34,11 +32,23 @@ function parseNode(facts: Output): (value: [string, Node], index: number, array:
 }
 
 function getChildrenString(houseHold: HouseHold): string[] {
-    return Object.values(houseHold).flat(1)
+    return Object.values(houseHold).flat(1).map((c: any) => c.id)
 }
 
-function getSingleChildren(houseHold: HouseHold): string[] {
-    return Object.values(houseHold)[0]
+function getChildrenArray(houseHold: HouseHold) {
+    return Object.values(houseHold)
+}
+
+function hasMultipleChildren(houseHold: HouseHold) {
+    return getChildrenArray(houseHold).length
+}
+
+function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
+    facts.appendFamily(parent, childrens)
+}
+
+function extractSingleChildren(facts: Output, parent: string) {
+    return (children: any) =>  facts.appendFamily(parent, children.id)
 }
 
 function isEmpty(obj: Object) {
