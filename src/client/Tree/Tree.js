@@ -1,9 +1,6 @@
 import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
-import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 class Tree extends React.Component {
 
@@ -56,8 +53,8 @@ class Tree extends React.Component {
     this.setState(function (prev_state, props) {
       var memberlist = { ...prev_state.memberlist };
       var member = memberlist[member_id];
-      if (member.partners != null && member.partners.length > 0) alert('Cannot delete a member with partners');
-      else alert('Delete capabilities still pending');
+      if (member.partners != null && member.partners.length > 0) alert('On ne peut pas supprimer un membre ayant un partenaire');
+      else alert("Il n\' est pas encore possible de supprimer");
     });
   }
 
@@ -65,7 +62,7 @@ class Tree extends React.Component {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
       let new_id = this.getNextMemberId(memberlist);
-      let new_member = this.getNewMember('New Partner', new_id);
+      let new_member = this.getNewMember('Nouveau partenaire', new_id);
       memberlist[new_member.id] = new_member;
       memberlist[root_id].partners.push(new_member);
       memberlist[root_id].children[new_member.id] = [];
@@ -77,7 +74,7 @@ class Tree extends React.Component {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
       let new_id = this.getNextMemberId(memberlist);
-      let new_member = this.getNewMember('New Child', new_id);
+      let new_member = this.getNewMember('Nouvel enfant', new_id);
       memberlist[new_member.id] = new_member;
       if (!Array.isArray(memberlist[root_id].children[partner_id])) {
         memberlist[root_id].children[partner_id] = [];
@@ -91,11 +88,11 @@ class Tree extends React.Component {
 
   render() {
 
+    console.log(this.state.memberlist)
+
     return (
-      <>
       <div className="overflow-auto">
         <br></br>
-      <Row>
         <TreeMember
           {...this.state.memberlist[this.state.rootid]}
           onAddPartner={this.handleAddPartner}
@@ -104,10 +101,7 @@ class Tree extends React.Component {
           onDelete={this.handleMemberDelete}
           parentPosition={this.state.position}
         />
-      </Row>
         </div>
-      
-      </>
       )
   }
 }

@@ -3,8 +3,6 @@ const fetch = require('node-fetch')
 
 async function getQualificationFrom (query: Query) {
 
-  console.log(query)
-
     const requestOptions = {
       method: 'POST',
       headers: {"Content-Type": "application/json"},

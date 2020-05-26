@@ -124,7 +124,7 @@ class TreeMember extends React.Component {
     if (this.getChildCount() === 0) return null;
     return (
       <TreeChildrenSection>
-        <VisuallyHiddenHeader>Children</VisuallyHiddenHeader>
+        <VisuallyHiddenHeader>Enfants</VisuallyHiddenHeader>
         {this.props.partners.map((parent, i) =>
           <TreeListChildren
             key = {parent.id + '_children_' + i}

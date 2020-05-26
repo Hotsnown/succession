@@ -44,7 +44,7 @@ class TreeListPartners extends React.Component {
     if (this.props.members.length === 0) return null;
     return (
       <TreePartnerSection>
-        <VisuallyHiddenHeader>Partners</VisuallyHiddenHeader>
+        <VisuallyHiddenHeader>Partenaires</VisuallyHiddenHeader>
         <PartnerList>
           {this.props.members.map(member =>
             <li key={'partner_' + member.id}>

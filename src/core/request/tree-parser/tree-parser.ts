@@ -1,7 +1,7 @@
 import { Tree, Node, HouseHold } from './interface'
 import { Output } from './entities'
 
-function treeParser(tree: Tree, deCujus: string) {
+function treeParser(tree: any, deCujus: string) {
     let facts: Output = new Output(deCujus)
 
     Object.entries(tree)
@@ -12,8 +12,8 @@ function treeParser(tree: Tree, deCujus: string) {
 
 export default treeParser
 
-function parseNode(facts: Output): (value: [string, Node], index: number, array: [string, Node][]) => void {
-    return node => {
+function parseNode(facts: Output) {
+    return (node: any) => {
         let parent = node[0]
         let houseHold = node[1].children
         if (houseHold !== undefined && !isEmpty(houseHold) ) {

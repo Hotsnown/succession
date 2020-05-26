@@ -7,14 +7,6 @@ export class Output {
         this.family = []
     }
 
-    jsonify() {
-        return JSON.stringify(
-            {
-                de_cujus: this.de_cujus, 
-                family: this.family
-            })
-    }
-
     appendFamily(member_id: string, childs: string[]) {
         this.family.push({member_id: member_id, childs: childs, data: {}})
     }

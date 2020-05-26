@@ -90,7 +90,6 @@ const ChildlistHeader = styled.h2`
   }
 `;
 
-
 class TreeListChildren extends React.Component {
   constructor(props) {
     super(props);
