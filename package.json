@@ -9,12 +9,14 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "bootstrap": "^4.5.0",
+    "fp-ts": "^2.6.2",
     "node-fetch": "^2.6.0",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "shallow-equal-object": "^1.1.1",
     "styled-components": "^3.4.9"
   },
   "scripts": {
@@ -42,7 +44,7 @@
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.42",
     "@types/ramda": "github:types/npm-ramda#dist",
-    "ts-jest": "^26.0.0",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.3"
   }
 }

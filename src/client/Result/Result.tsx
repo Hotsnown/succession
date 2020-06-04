@@ -1,6 +1,6 @@
 import React from 'react'
 import { IResult } from './interface'
-import getDevolution from '../../core/request/index'
+import getDevolution from '../../core/qualification/index'
 import ResponseParser from './response-table'
 import Button from 'react-bootstrap/Button'
 
