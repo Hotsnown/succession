@@ -1,6 +1,5 @@
-import { representationOfADescendant } from '../représentation'
-import { Status } from '../../../entities'
-import * as R from 'ramda'
+import { representationOfADescendant } from '..'
+import { Status } from '../../../../entities'
 it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
     const secondOrdreHeirs = [
         {
@@ -80,7 +79,7 @@ it('should not be appliable when heirs are not parent with the représenté', ()
     ]
     expect(representationOfADescendant(unrelatedHeirs)
         .filter(heir => heir.isReprésenté))
-        .toHaveLength(1)
+        .toHaveLength(0)
 
     expect(representationOfADescendant(unrelatedHeirs)
         .filter(heir => heir.isReprésentant))

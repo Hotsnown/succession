@@ -1,5 +1,5 @@
-import { Heir, Status } from '../../entities'
-import { findParents } from '../utils'
+import { Heir, Status } from '../../../entities'
+import { findParents } from '../../utils'
 import * as R from 'ramda'
 
 export interface AwareOfRepresentation extends Heir {
@@ -15,7 +15,7 @@ export function representationOfADescendant(heirs: Heir[]): AwareOfRepresentatio
 
     const extractDescendantReprésentés = (heirs: Heir[]): AwareOfRepresentation[] =>
         heirs.map(
-            heir => belongsToFirstOrdre(heir) && !isEligibleToInherit(heir)
+            heir => belongsToFirstOrdre(heir) && !isEligibleToInherit(heir) && hasChildEligibleToInherit(heirs, heir)
                 ? Object.assign({ ...heir, isReprésenté: true }, heir)
                 : Object.assign({ ...heir, isReprésenté: false }, heir)
         )
@@ -31,7 +31,7 @@ export function representationOfASibling(heirs: Heir[]): AwareOfRepresentation[]
     
     const extractSiblingReprésentés = (heirs: Heir[]): AwareOfRepresentation[] =>
         heirs.map(
-            heir => belongsToSecondOrdre(heir) && !isEligibleToInherit(heir)
+            heir => belongsToSecondOrdre(heir) && !isEligibleToInherit(heir) && hasChildEligibleToInherit(heirs, heir)
                 ? Object.assign({ ...heir, isReprésenté: true }, heir)
                 : Object.assign({ ...heir, isReprésenté: false }, heir)
         )
@@ -43,7 +43,7 @@ function extractReprésentants(extractReprésentés: (heirs: Heir[]) => AwareOfR
     
     const extractReprésentants = (heirs: AwareOfRepresentation[]): AwareOfRepresentation[] =>
         heirs.map(
-            heir => belongsToFirstOrdre(heir) && isDescendantOfARepresenté(heirs, heir) && isEligibleToInherit(heir)
+            heir => isDescendantOfARepresenté(heirs, heir) && isEligibleToInherit(heir)
                 ? Object.assign({ ...heir, isReprésentant: true }, heir)
                 : Object.assign({ ...heir, isReprésentant: false }, heir))
     
@@ -66,4 +66,9 @@ function belongsToFirstOrdre(heir: Heir) {
 
 function isDescendantOfARepresenté(heirs: AwareOfRepresentation[], heir: AwareOfRepresentation) {
     return (findParents(heirs, heir.member_id).find(heir => heir.isReprésenté))
+}
+
+function hasChildEligibleToInherit(heirs: AwareOfRepresentation[], targetHeir: AwareOfRepresentation) {
+    return heirs.filter(heir => targetHeir.childs.includes(heir.member_id))
+                .find(heir => isEligibleToInherit(heir))
 }
