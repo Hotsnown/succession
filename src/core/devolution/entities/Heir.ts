@@ -1,4 +1,4 @@
-import { Degree, Ordre, Solution, Family } from ".";
+import { Degree, Ordre, Family } from ".";
 import { ValueObject } from '../../../shared/domain/value-objects'
 import { findParents } from '../useCases/utils'
 
@@ -19,8 +19,9 @@ interface HeirProps {
             status: Status;
             //TODO add name
         }
-        isReprésenté: boolean
-        isReprésentant: boolean
+        isReprésenté: Representable
+        isReprésentant: Representant
+        legalRights: number
     }
 }
 
@@ -43,6 +44,10 @@ export class Heir extends ValueObject<HeirProps> {
         this.props.value.isReprésentant = value
     }
 
+    set legalRights (value: number) {
+        this.props.value.legalRights = value
+    }
+
     get childs(): string[] {
         return this.props.value.childs;
     }
@@ -63,7 +68,11 @@ export class Heir extends ValueObject<HeirProps> {
         return this.props.value.isReprésentant
     }
 
-    belongsTo(ordre: Ordre) {
+    get legalRights() {
+        return this.props.value.legalRights
+    }
+
+    belongsTo(ordre: Ordre): boolean {
         return this.data.ordre === ordre
     }
 
@@ -71,17 +80,25 @@ export class Heir extends ValueObject<HeirProps> {
         return this.data.status === Status.Valid
     }
 
-    hasChildEligibleToInheritIn(heirs: Family) {
-        return heirs.value.filter(heir => this.childs.includes(heir.member_id))
-                          .find(heir => heir.isEligibleToInherit())
+    hasChildEligibleToInheritIn(heirs: Family): boolean {
+        return heirs.value
+            .filter(heir => 
+                this.childs.includes(heir.member_id) && 
+                heir.isEligibleToInherit())
+                .length !== 0
     }
 
     isDescendantOfARepresenté(heirs: Family) {
         return findParents(heirs, this.props.value.member_id)
                 .find(heir => heir !== undefined ? heir.isReprésenté : null)
     }
+
+    isReprésentable(heirs: Family): Representable {
+        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) && 
+               !this.isEligibleToInherit() && 
+                this.hasChildEligibleToInheritIn(heirs)
+    }
 }
 
-export function findHeir(solutions: Solution[], heir: string): Solution {
-    return solutions.find(member => member.member_id === heir)!
-}
+type Representable = boolean
+type Representant = boolean

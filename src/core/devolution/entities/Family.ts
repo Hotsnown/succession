@@ -1,5 +1,5 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Heir } from '.'
+import { Heir, Ordres, Degrees } from '.'
 
 interface FamilyProps {
     value: Heir[]
@@ -18,4 +18,29 @@ export class Family extends ValueObject<FamilyProps> {
     get value(): Heir[] {
         return this.props.value;
     }
+
+    findHeir(heir: string) {
+        return this.value.find(member => member.member_id === heir)!
+    }
+
+     /**
+     * Relatives in the most favored class inherit to exclusion of other classes.
+     */
+    getMostFavoredHeirsByOrdre(): Family {
+        return Ordres
+            .create(this)
+            .getFirstAppliableOrdre()
+    }
+
+    /**
+     * The nearest relation in a class, determined by counting degrees,
+     * inherit to the exclusion of more distant relatives in that class.
+     * @param filteredHeirs heirs in the most favored class
+     */
+    getMostFavoredHeirsByDegre(mostFavoredOrder: Family): Family {
+        return Degrees
+            .create(this)
+            .getFirstAppliableDegree(mostFavoredOrder, this)
+    }
+
 }

@@ -1,18 +1,10 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
 import { Heir } from '.'
-import { assignLegalRights } from '../useCases/utils'
 import * as R from 'ramda'
+import { Family } from './Family'
 
 interface DegreesProps {
-    value: HeirsGroupedByDegrees
-}
-
-interface HeirsGroupedByDegrees {
-    1 : Heir[]
-    2 : Heir[]
-    3 : Heir[]
-    4 : Heir[]
-    unknown: Heir[]
+    value: Record<string, Heir[]>
 }
 
 /**
@@ -21,12 +13,11 @@ interface HeirsGroupedByDegrees {
  */
 export class Degrees extends ValueObject<DegreesProps> {
 
-    public static create(heirs: Heir[]): Degrees {
-        if (heirs === undefined || heirs === null || heirs.length < 0) {
+    public static create(heirs: Family): Degrees {
+        if (heirs === undefined || heirs === null || heirs.value.length < 0) {
             throw new Error()
         } else {
-            //@ts-ignore
-            return new Degrees({ value: byDegre(heirs)})
+            return new Degrees({ value: byDegre(heirs.value) })
         }
     }
 
@@ -34,18 +25,31 @@ export class Degrees extends ValueObject<DegreesProps> {
         return this.props.value;
     }
 
-    getFirstAppliableDegree(filteredHeirs:Heir[], allHeirs: Heir[]) {
+    get firstAppliableDegree() {
         for (const degre of degrees) {
-            if (byDegre(filteredHeirs)[degre] !== undefined) {
-                return allHeirs
-                        .filter(fact => fact.data.degre !== degre).map(r => assignLegalRights(r, 0))
-                        .concat(byDegre(filteredHeirs)[degre].map(r => assignLegalRights(r, 1 / byDegre(filteredHeirs)[degre].length)))
+            if (this.value[degre] !== undefined) {
+                return degre
             }
         }
+        return 4 //TODO Better Error Handling
+    }
+
+    getFirstAppliableDegree(filteredHeirs: Family, allHeirs: Family) {
+
+        const appliableDegree = byDegre(filteredHeirs.value)[this.firstAppliableDegree]
+
+        if (appliableDegree !== undefined) {
+            for (const heir of appliableDegree) {
+                heir.legalRights = 1 / appliableDegree.length
+                //default value is 0
+            }
+        }
+
+        return allHeirs
     }
 }
 
-const byDegre = R.groupBy(function(heir: Heir) {
+const byDegre = R.groupBy(function (heir: Heir) {
     const degre = heir.data.degre
     return degre === 1 ? '1' :
            degre === 2 ? '2' :

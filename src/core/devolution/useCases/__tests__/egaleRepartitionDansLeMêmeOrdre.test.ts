@@ -1,4 +1,4 @@
-import { findHeir, Status } from '../../entities'
+import { Status, Family, Heir } from '../../entities'
 import { repartitionParTête } from '..'
 
 it('should not return heirs when there is no heirs', () => {
@@ -10,15 +10,19 @@ it('should not return heirs when there is no heirs', () => {
                 "ordre": 0,
                 "status": Status.Valid
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         }
     ]
 
-    const devolution = repartitionParTête(noHeir)
-    const deCujus = findHeir(devolution, 'homer')
+    const family = Family.create({value: noHeir.map(heir => Heir.create({value: heir}))})
+    const devolution = repartitionParTête(family)
+    const deCujus = family.findHeir('homer')
 
-    expect(deCujus.legalRights.value).toBe(0)
-    expect(devolution).toHaveLength(1)
+    expect(deCujus.legalRights).toBe(0)
+    expect(devolution.value).toHaveLength(1)
 })
 
 describe('should give equal rights to everyone who belongs to the same order', () => {
@@ -32,7 +36,10 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 1,
                     "status": Status.Valid
                 },
-                "member_id": "maggie"
+                "member_id": "maggie",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [
@@ -45,14 +52,18 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 0,
                     "status": Status.Valid
                 },
-                "member_id": "homer"
+                "member_id": "homer",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             }
         ]
 
-        const devolution = repartitionParTête(firstOrderHeirs)
-        const maggie = findHeir(devolution, 'maggie')
+        const family = Family.create({value: firstOrderHeirs.map(heir => Heir.create({value: heir}))})
+        const devolution = repartitionParTête(family)
+        const maggie = family.findHeir('maggie')
 
-        expect(maggie.legalRights.value).toBe(1)
+        expect(maggie.legalRights).toBe(1)
     })
 
     it('should give equal rights to all second degree heirs when there is no first degree heir', () => {
@@ -64,7 +75,10 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 0,
                     "status": Status.Valid
                 },
-                "member_id": "abe"
+                "member_id": "abe",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [],
@@ -73,7 +87,10 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 1,
                     "status": Status.Valid
                 },
-                "member_id": "bart"
+                "member_id": "bart",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [
@@ -84,7 +101,10 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 1,
                     "status": Status.Valid
                 },
-                "member_id": "lisa"
+                "member_id": "lisa",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [],
@@ -93,7 +113,10 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 1,
                     "status": Status.Valid
                 },
-                "member_id": "millhouse_jr"
+                "member_id": "millhouse_jr",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [],
@@ -102,21 +125,25 @@ describe('should give equal rights to everyone who belongs to the same order', (
                     "ordre": 1,
                     "status": Status.Valid
                 },
-                "member_id": "maggie"
+                "member_id": "maggie",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
         ]
 
-        const devolution = repartitionParTête(secondDegreesHeirs)
+        const family = Family.create({value: secondDegreesHeirs.map(heir => Heir.create({value: heir}))})
+        const devolution = repartitionParTête(family)
+        devolution.value.map(c => console.log(c))
+        const lisa = family.findHeir('lisa')
+        const maggie = family.findHeir('maggie')
+        const bart = family.findHeir('bart')
+        const millhouse_jr = family.findHeir('millhouse_jr')
 
-        const lisa = findHeir(devolution, 'lisa')
-        const maggie = findHeir(devolution, 'maggie')
-        const bart = findHeir(devolution, 'bart')
-        const millhouse_jr = findHeir(devolution, 'millhouse_jr')
-
-        expect(lisa.legalRights.value).toBe(1/3)
-        expect(maggie.legalRights.value).toBe(1/3)
-        expect(bart.legalRights.value).toBe(1/3)
-        expect(millhouse_jr.legalRights.value).toBe(0)
+        expect(lisa.legalRights).toBe(1/3)
+        expect(maggie.legalRights).toBe(1/3)
+        expect(bart.legalRights).toBe(1/3)
+        expect(millhouse_jr.legalRights).toBe(0)
 
     })
 })
@@ -131,7 +158,10 @@ describe('test ordre', () => {
                     "ordre": 0,
                     "status": Status.Valid
                 },
-                "member_id": "maggie"
+                "member_id": "maggie",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             },
             {
                 "childs": [
@@ -144,13 +174,17 @@ describe('test ordre', () => {
                     "ordre": 2,
                     "status": Status.Valid
                 },
-                "member_id": "homer"
+                "member_id": "homer",
+                "isReprésenté": false,
+                "isReprésentant": false,
+                "legalRights": 0
             }
         ]
+
+        const family = Family.create({value: secondOrdreHeirs.map(heir => Heir.create({value: heir}))})    
+        const devolution = repartitionParTête(family)
+        const homer = devolution.findHeir('homer')
     
-        const devolution = repartitionParTête(secondOrdreHeirs)
-        const homer = findHeir(devolution, 'homer')
-    
-        expect(homer.legalRights.value).toBe(1)
+        expect(homer.legalRights).toBe(1)
     })
 })

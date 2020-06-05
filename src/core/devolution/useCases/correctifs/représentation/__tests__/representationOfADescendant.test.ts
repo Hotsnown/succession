@@ -1,4 +1,4 @@
-import { representationOfADescendant } from '..'
+import { representation } from '../extractReprésentationAttribute'
 import { Status, Family, Heir } from '../../../../entities'
 it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
     const secondOrdreHeirs = [
@@ -11,7 +11,8 @@ it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
             },
             "member_id": "maggie",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [
@@ -26,11 +27,12 @@ it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
             },
             "member_id": "homer",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         }
     ]
 
-    const {value} = representationOfADescendant(
+    const {value} = representation(
         Family.create({value: 
             secondOrdreHeirs.map(heir => Heir.create({value: heir}))}))
 
@@ -55,7 +57,8 @@ it('should not be appliable when heirs are not parent with the représenté', ()
             },
             "member_id": "abe",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [
@@ -69,7 +72,8 @@ it('should not be appliable when heirs are not parent with the représenté', ()
             },
             "member_id": "homer",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [],
@@ -80,7 +84,8 @@ it('should not be appliable when heirs are not parent with the représenté', ()
             },
             "member_id": "alphonse",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [],
@@ -91,11 +96,12 @@ it('should not be appliable when heirs are not parent with the représenté', ()
             },
             "member_id": "maggie",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
     ]
 
-    const {value} = representationOfADescendant(
+    const {value} = representation(
         Family.create({value: 
             unrelatedHeirs.map(heir => Heir.create({value: heir}))}))
 
@@ -161,7 +167,7 @@ it('should be appliable when heirs belong to Ordre 1', () => {
         },
     ]
 
-    const {value} = representationOfADescendant(
+    const {value} = representation(
         Family.create({value: 
             firstOrderHeirs.map(heir => Heir.create({value: heir}))}))
 
@@ -237,7 +243,7 @@ it('should not work when a potential représentant is not eligible for inheritan
         },
     ]
 
-    const {value} = representationOfADescendant(
+    const {value} = representation(
         Family.create({value: 
             deadAlphonse.map(heir => Heir.create({value: heir}))}))
 

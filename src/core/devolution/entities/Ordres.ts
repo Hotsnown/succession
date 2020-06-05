@@ -1,9 +1,10 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
 import { Heir } from '.';
 import * as R from 'ramda'
+import { Family } from './Family';
 
 interface OrdreProps {
-    value: HeirsGroupedByOrdre
+    value: Record<string, Heir[]>
 }
 
 /**
@@ -12,12 +13,11 @@ interface OrdreProps {
  */
 export class Ordres extends ValueObject<OrdreProps> {
 
-    public static create(heirs: Heir[]): Ordres {
-        if (heirs === undefined || heirs === null || heirs.length < 0) {
+    public static create(heirs: Family): Ordres {
+        if (heirs === undefined || heirs === null || heirs.value.length < 0) {
             throw new Error()
         } else {
-            //@ts-ignore
-            return new Ordres({ value: byOrdre(heirs) })
+            return new Ordres({ value: byOrdre(heirs.value) })
         }
     }
 
@@ -25,15 +25,13 @@ export class Ordres extends ValueObject<OrdreProps> {
         return this.props.value;
     }
 
-    getFirstAppliableOrdre(): Heir[] {
+    getFirstAppliableOrdre(): Family {
         for (const ordre in ordres) {
-            //@ts-ignore
             if (this.props.value[ordre] !== undefined) {
-                //@ts-ignore
-                return this.props.value[ordre]
+                return Family.create({value: this.props.value[ordre]})
             }
         }
-        return [] //TODO Error handling
+        return Family.create({value: []}) //TODO Error handling
     }
 }
 
@@ -53,11 +51,3 @@ export enum Ordre {
 }
 
 const ordres = [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4]
-
-interface HeirsGroupedByOrdre {
-    1 : Heir[]
-    2 : Heir[]
-    3 : Heir[]
-    4 : Heir[]
-    unknown: Heir[]
-}

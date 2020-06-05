@@ -1,4 +1,4 @@
-import { representationOfASibling } from '..'
+import { representation } from '../extractReprésentationAttribute'
 import { Status, Family, Heir } from '../../../../entities'
 
 
@@ -64,12 +64,10 @@ it('should be appliable when heirs are child of a sibling', () => {
         },
     ]
 
-    const {value} = representationOfASibling(
+    const {value} = representation(
         Family.create({value: 
             firstOrderHeirs.map(heir => Heir.create({value: heir}))}))
-    
-    value.map(heir => console.log(heir.isReprésenté))
-    
+        
     expect(value
         .filter(heir => heir.isReprésentant)
         .find(heir => heir.member_id === "nephew"))
