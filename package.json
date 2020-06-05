@@ -45,6 +45,7 @@
     "@types/node": "^12.12.42",
     "@types/ramda": "github:types/npm-ramda#dist",
     "ts-jest": "^26.1.0",
+    "typedoc": "^0.17.7",
     "typescript": "^3.9.3"
   }
 }

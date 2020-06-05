@@ -1,4 +1,4 @@
-import { repartitionParTête } from './useCases/withoutWife'
+import { repartitionParTête } from './useCases/principe/withoutWife'
 import { Heir, Solution } from './entities'
 
 type IDevolution = {

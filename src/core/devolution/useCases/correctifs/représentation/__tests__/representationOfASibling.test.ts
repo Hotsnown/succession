@@ -1,5 +1,5 @@
 import { representationOfASibling } from '..'
-import { Status } from '../../../../entities'
+import { Status, Family, Heir } from '../../../../entities'
 
 
 it('should be appliable when heirs are child of a sibling', () => {
@@ -14,7 +14,9 @@ it('should be appliable when heirs are child of a sibling', () => {
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "abe"
+            "member_id": "abe",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -23,7 +25,9 @@ it('should be appliable when heirs are child of a sibling', () => {
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -32,7 +36,9 @@ it('should be appliable when heirs are child of a sibling', () => {
                 "ordre": 2,
                 "status": Status.Valid
             },
-            "member_id": "validSibling"
+            "member_id": "validSibling",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": ["nephew"],
@@ -41,7 +47,9 @@ it('should be appliable when heirs are child of a sibling', () => {
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "deadSibling"
+            "member_id": "deadSibling",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -50,25 +58,33 @@ it('should be appliable when heirs are child of a sibling', () => {
                 "ordre": 2,
                 "status": Status.Valid
             },
-            "member_id": "nephew"
+            "member_id": "nephew",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
     ]
 
-    expect(representationOfASibling(firstOrderHeirs)
+    const {value} = representationOfASibling(
+        Family.create({value: 
+            firstOrderHeirs.map(heir => Heir.create({value: heir}))}))
+    
+    value.map(heir => console.log(heir.isReprésenté))
+    
+    expect(value
         .filter(heir => heir.isReprésentant)
         .find(heir => heir.member_id === "nephew"))
         .toBeTruthy()
     
-    expect(representationOfASibling(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésentant))
         .toHaveLength(1)
 
-    expect(representationOfASibling(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésenté)
         .find(heir => heir.member_id === "deadSibling"))
         .toBeTruthy()
 
-    expect(representationOfASibling(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésenté))
         .toHaveLength(1)
 })

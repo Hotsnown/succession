@@ -1,2 +1,2 @@
 export * from './correctifs/représentation'
-export * from './withoutWife'
+export * from './principe/withoutWife'

@@ -1,5 +1,6 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Solution, Heir, LegalRights } from '.'
+import { Heir } from '.'
+import { assignLegalRights } from '../useCases/utils'
 import * as R from 'ramda'
 
 interface DegreesProps {
@@ -64,5 +65,3 @@ export enum Degree {
 }
 
 const degrees = [Degree.Degree1, Degree.Degree2, Degree.Degree3, Degree.Degree4, Degree.Degree5, Degree.Degree6]
-
-const assignLegalRights = (heir: Heir, legalRights: number): Solution => ({ ...heir, legalRights: LegalRights.create(legalRights) });

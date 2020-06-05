@@ -1,5 +1,5 @@
 import { representationOfADescendant } from '..'
-import { Status } from '../../../../entities'
+import { Status, Family, Heir } from '../../../../entities'
 it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
     const secondOrdreHeirs = [
         {
@@ -9,7 +9,9 @@ it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
                 "ordre": 0,
                 "status": Status.Valid
             },
-            "member_id": "maggie"
+            "member_id": "maggie",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [
@@ -22,11 +24,18 @@ it('should not be appliable when heirs doesnt belong do Ordre 1', () => {
                 "ordre": 2,
                 "status": Status.Valid
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésentant": false,
+            "isReprésenté": false
         }
     ]
 
-    expect(representationOfADescendant(secondOrdreHeirs)
+    const {value} = representationOfADescendant(
+        Family.create({value: 
+            secondOrdreHeirs.map(heir => Heir.create({value: heir}))}))
+
+
+    expect(value
         .filter(heir => heir.isReprésenté))
         .toHaveLength(0)
 })
@@ -44,7 +53,9 @@ it('should not be appliable when heirs are not parent with the représenté', ()
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "abe"
+            "member_id": "abe",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [
@@ -56,7 +67,9 @@ it('should not be appliable when heirs are not parent with the représenté', ()
                 "ordre": 1,
                 "status": Status.Deceased
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -65,7 +78,9 @@ it('should not be appliable when heirs are not parent with the représenté', ()
                 "ordre": 1,
                 "status": Status.Valid
             },
-            "member_id": "alphonse"
+            "member_id": "alphonse",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -74,14 +89,21 @@ it('should not be appliable when heirs are not parent with the représenté', ()
                 "ordre": 1,
                 "status": Status.Valid
             },
-            "member_id": "maggie"
+            "member_id": "maggie",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
     ]
-    expect(representationOfADescendant(unrelatedHeirs)
+
+    const {value} = representationOfADescendant(
+        Family.create({value: 
+            unrelatedHeirs.map(heir => Heir.create({value: heir}))}))
+
+    expect(value
         .filter(heir => heir.isReprésenté))
         .toHaveLength(0)
 
-    expect(representationOfADescendant(unrelatedHeirs)
+    expect(value
         .filter(heir => heir.isReprésentant))
         .toHaveLength(0)
 })
@@ -97,7 +119,9 @@ it('should be appliable when heirs belong to Ordre 1', () => {
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "abe"
+            "member_id": "abe",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [
@@ -109,7 +133,9 @@ it('should be appliable when heirs belong to Ordre 1', () => {
                 "ordre": 1,
                 "status": Status.Deceased
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -118,7 +144,9 @@ it('should be appliable when heirs belong to Ordre 1', () => {
                 "ordre": 1,
                 "status": Status.Valid
             },
-            "member_id": "alphonse"
+            "member_id": "alphonse",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -127,25 +155,31 @@ it('should be appliable when heirs belong to Ordre 1', () => {
                 "ordre": 1,
                 "status": Status.Valid
             },
-            "member_id": "maggie"
+            "member_id": "maggie",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
     ]
 
-    expect(representationOfADescendant(firstOrderHeirs)
+    const {value} = representationOfADescendant(
+        Family.create({value: 
+            firstOrderHeirs.map(heir => Heir.create({value: heir}))}))
+
+    expect(value
         .filter(heir => heir.isReprésentant)
-        .find(heir => heir.member_id === "maggie"))
+        .find(heir => heir.props.value.member_id === "maggie"))
         .toBeTruthy()
     
-    expect(representationOfADescendant(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésentant))
         .toHaveLength(2)
 
-    expect(representationOfADescendant(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésenté)
         .find(heir => heir.member_id === "homer"))
         .toBeTruthy()
 
-    expect(representationOfADescendant(firstOrderHeirs)
+    expect(value
         .filter(heir => heir.isReprésenté))
         .toHaveLength(1)
 })
@@ -161,7 +195,9 @@ it('should not work when a potential représentant is not eligible for inheritan
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "abe"
+            "member_id": "abe",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [
@@ -171,9 +207,11 @@ it('should not work when a potential représentant is not eligible for inheritan
             "data": {
                 "degre": 1,
                 "ordre": 1,
-                "status": Status.Deceased
+                "status": Status.Deceased,
             },
-            "member_id": "homer"
+            "member_id": "homer",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": ["theo"],
@@ -182,7 +220,9 @@ it('should not work when a potential représentant is not eligible for inheritan
                 "ordre": 1,
                 "status": Status.Deceased
             },
-            "member_id": "alphonse"
+            "member_id": "alphonse",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
         {
             "childs": [],
@@ -191,11 +231,17 @@ it('should not work when a potential représentant is not eligible for inheritan
                 "ordre": 1,
                 "status": Status.Valid
             },
-            "member_id": "theo"
+            "member_id": "theo",
+            "isReprésentant": false,
+            "isReprésenté": false
         },
     ]
 
-    expect(representationOfADescendant(deadAlphonse)
+    const {value} = representationOfADescendant(
+        Family.create({value: 
+            deadAlphonse.map(heir => Heir.create({value: heir}))}))
+
+    expect(value
         .filter(heir => heir.isReprésentant)
         .find(heir => heir.member_id === "alphonse"))
         .toBeFalsy()
