@@ -72,6 +72,12 @@ export class Heir extends ValueObject<HeirProps> {
         return this.props.value.legalRights
     }
 
+    isReprésentableIn(heirs: Family): Representable {
+        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) && 
+               !this.isEligibleToInherit() && 
+                this.hasChildEligibleToInheritIn(heirs)
+    }
+
     belongsTo(ordre: Ordre): boolean {
         return this.data.ordre === ordre
     }
@@ -80,24 +86,24 @@ export class Heir extends ValueObject<HeirProps> {
         return this.data.status === Status.Valid
     }
 
-    hasChildEligibleToInheritIn(heirs: Family): boolean {
-        return heirs.value
+    hasChildEligibleToInheritIn({value}: Family): boolean {
+        return value
             .filter(heir => 
                 this.childs.includes(heir.member_id) && 
                 heir.isEligibleToInherit())
                 .length !== 0
     }
 
-    isDescendantOfARepresenté(heirs: Family) {
-        return findParents(heirs, this.props.value.member_id)
-                .find(heir => heir !== undefined ? heir.isReprésenté : null)
+    isRepresentativeIn(heirs: Family) {
+        return this.isDescendantOfARepresenté(heirs) && this.isEligibleToInherit()
     }
 
-    isReprésentable(heirs: Family): Representable {
-        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) && 
-               !this.isEligibleToInherit() && 
-                this.hasChildEligibleToInheritIn(heirs)
+    isDescendantOfARepresenté(heirs: Family) {
+        return findParents(heirs, this.props.value.member_id)
+                .filter(heir => heir !== undefined ? heir.isReprésenté : null)
+                .length !== 0
     }
+    
 }
 
 type Representable = boolean

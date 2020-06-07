@@ -134,7 +134,6 @@ describe('should give equal rights to everyone who belongs to the same order', (
 
         const family = Family.create({value: secondDegreesHeirs.map(heir => Heir.create({value: heir}))})
         const devolution = repartitionParTête(family)
-        devolution.value.map(c => console.log(c))
         const lisa = family.findHeir('lisa')
         const maggie = family.findHeir('maggie')
         const bart = family.findHeir('bart')

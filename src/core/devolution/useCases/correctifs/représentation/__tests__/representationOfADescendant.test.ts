@@ -127,7 +127,8 @@ it('should be appliable when heirs belong to Ordre 1', () => {
             },
             "member_id": "abe",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": [
@@ -141,7 +142,8 @@ it('should be appliable when heirs belong to Ordre 1', () => {
             },
             "member_id": "homer",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": [],
@@ -152,7 +154,8 @@ it('should be appliable when heirs belong to Ordre 1', () => {
             },
             "member_id": "alphonse",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": [],
@@ -163,7 +166,8 @@ it('should be appliable when heirs belong to Ordre 1', () => {
             },
             "member_id": "maggie",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
     ]
 
@@ -203,7 +207,8 @@ it('should not work when a potential représentant is not eligible for inheritan
             },
             "member_id": "abe",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": [
@@ -217,7 +222,8 @@ it('should not work when a potential représentant is not eligible for inheritan
             },
             "member_id": "homer",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": ["theo"],
@@ -228,7 +234,8 @@ it('should not work when a potential représentant is not eligible for inheritan
             },
             "member_id": "alphonse",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
         {
             "childs": [],
@@ -239,7 +246,8 @@ it('should not work when a potential représentant is not eligible for inheritan
             },
             "member_id": "theo",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            'legalRights': 0
         },
     ]
 

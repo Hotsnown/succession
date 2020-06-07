@@ -15,18 +15,22 @@ export class Family extends ValueObject<FamilyProps> {
         }
     }
 
-    get value(): Heir[] {
+    get value (): Heir[] {
         return this.props.value;
     }
 
-    findHeir(heir: string) {
+    set value (updatatedHeirs: Heir[]) {
+        Object.assign(this.props.value, [...updatatedHeirs].map(heir => Heir.create({value: heir.props.value})))
+    }
+
+    findHeir (heir: string) {
         return this.value.find(member => member.member_id === heir)!
     }
 
      /**
      * Relatives in the most favored class inherit to exclusion of other classes.
      */
-    getMostFavoredHeirsByOrdre(): Family {
+    getMostFavoredHeirsByOrdre (): Family {
         return Ordres
             .create(this)
             .getFirstAppliableOrdre()
@@ -37,7 +41,7 @@ export class Family extends ValueObject<FamilyProps> {
      * inherit to the exclusion of more distant relatives in that class.
      * @param filteredHeirs heirs in the most favored class
      */
-    getMostFavoredHeirsByDegre(mostFavoredOrder: Family): Family {
+    getMostFavoredHeirsByDegre (mostFavoredOrder: Family): Family {
         return Degrees
             .create(this)
             .getFirstAppliableDegree(mostFavoredOrder, this)

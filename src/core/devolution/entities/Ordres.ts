@@ -1,10 +1,16 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Heir } from '.';
+import { Heir, Family } from '.';
 import * as R from 'ramda'
-import { Family } from './Family';
 
 interface OrdreProps {
     value: Record<string, Heir[]>
+}
+
+export enum Ordre {
+    Ordre1 = 1, 
+    Ordre2,
+    Ordre3,
+    Ordre4
 }
 
 /**
@@ -26,6 +32,7 @@ export class Ordres extends ValueObject<OrdreProps> {
     }
 
     getFirstAppliableOrdre(): Family {
+        const ordres = [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4]
         for (const ordre in ordres) {
             if (this.props.value[ordre] !== undefined) {
                 return Family.create({value: this.props.value[ordre]})
@@ -42,12 +49,3 @@ const byOrdre = R.groupBy(function(heir: Heir) {
             ordre === 3 ? '3' :
             ordre === 4 ? '4' : 'unknown'
     })
-
-export enum Ordre {
-    Ordre1 = 1, 
-    Ordre2,
-    Ordre3,
-    Ordre4
-}
-
-const ordres = [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4]

@@ -16,7 +16,8 @@ it('should be appliable when heirs are child of a sibling', () => {
             },
             "member_id": "abe",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [],
@@ -27,7 +28,8 @@ it('should be appliable when heirs are child of a sibling', () => {
             },
             "member_id": "homer",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [],
@@ -38,7 +40,8 @@ it('should be appliable when heirs are child of a sibling', () => {
             },
             "member_id": "validSibling",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": ["nephew"],
@@ -49,7 +52,8 @@ it('should be appliable when heirs are child of a sibling', () => {
             },
             "member_id": "deadSibling",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
         {
             "childs": [],
@@ -60,7 +64,8 @@ it('should be appliable when heirs are child of a sibling', () => {
             },
             "member_id": "nephew",
             "isReprésentant": false,
-            "isReprésenté": false
+            "isReprésenté": false,
+            "legalRights": 0
         },
     ]
 
