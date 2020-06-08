@@ -1,9 +1,10 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Heir, Family } from '.';
+import { Member, Family } from '.';
 import * as R from 'ramda'
 
 interface OrdreProps {
-    value: Record<string, Heir[]>
+    value: Record<string, Member[]>
+    ordres: Ordre[]
 }
 
 export enum Ordre {
@@ -14,16 +15,20 @@ export enum Ordre {
 }
 
 /**
- * @desc Heirs are divided into four classes where each classe exclude other classes.
- *  If there are no heirs in one class, the property goes to all the heirs in the next class.
+ * @desc Members are divided into four classes where each classe exclude other classes.
+ *  If there are no members in one class, the property goes to all the members in the next class.
  */
 export class Ordres extends ValueObject<OrdreProps> {
 
-    public static create(heirs: Family): Ordres {
-        if (heirs === undefined || heirs === null || heirs.value.length < 0) {
+    public static create(members: Family): Ordres {
+        if (members === undefined || members === null || members.members.length < 0) {
             throw new Error()
         } else {
-            return new Ordres({ value: byOrdre(heirs.value) })
+            return new Ordres(
+                {
+                    value: byOrdre(members.members),
+                    ordres: [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4],
+                })
         }
     }
 
@@ -32,20 +37,20 @@ export class Ordres extends ValueObject<OrdreProps> {
     }
 
     getFirstAppliableOrdre(): Family {
-        const ordres = [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4]
-        for (const ordre in ordres) {
+        for (const ordre in this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
-                return Family.create({value: this.props.value[ordre]})
+                return Family.create(this.props.value[ordre])
             }
         }
-        return Family.create({value: []}) //TODO Error handling
+        return Family.create([]) //TODO Error handling
     }
 }
 
-const byOrdre = R.groupBy(function(heir: Heir) {
-    const ordre = heir.data.ordre
-    return  ordre === 1 ? '1' :
-            ordre === 2 ? '2' :
-            ordre === 3 ? '3' :
-            ordre === 4 ? '4' : 'unknown'
-    })
+const byOrdre = R.groupBy(
+    (member: Member) => {
+        const ordre = member.attributes.ordre
+        return  ordre === 1 ? '1' :
+                ordre === 2 ? '2' :
+                ordre === 3 ? '3' :
+                ordre === 4 ? '4' : 'unknown'
+        })

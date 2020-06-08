@@ -5,8 +5,8 @@ interface ValueObjectProps {
 }
 
 /**
- * @desc ValueObjects are objects that we determine their
- * equality through their structrual property.
+ * @desc ValueObjects are objects that we determine tmember
+ * equality through tmember structrual property.
  */
 
 export abstract class ValueObject<T extends ValueObjectProps> {

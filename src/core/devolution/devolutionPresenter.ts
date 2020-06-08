@@ -1,8 +1,8 @@
-import { repartitionParTête } from './useCases/principe/withoutWife'
+import { repartitionParTête } from './useCases/principe/withoutSpouse'
 import { Family } from './entities'
 
 type IDevolution = {
-    getDevolution: (allHeirs: Family) => Family
+    getDevolution: (allMembers: Family) => Family
 }
 
 export class DevolutionPresenter {
@@ -11,7 +11,7 @@ export class DevolutionPresenter {
         this.devolutionEngine = devolutionEngine
     }
 
-    getDevolution(allHeirs: Family) {
-        return this.devolutionEngine.getDevolution(allHeirs)
+    getDevolution(allMembers: Family) {
+        return this.devolutionEngine.getDevolution(allMembers)
     }
 }

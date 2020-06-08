@@ -1,36 +1,51 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Heir, Ordres, Degrees } from '.'
+import { Member, Ordres, Degrees } from '.'
 
 interface FamilyProps {
-    value: Heir[]
+    value: {
+        members: Member[],
+        heirs: Member[],
+        deCujus: Member
+        }
 }
 
 export class Family extends ValueObject<FamilyProps> {
 
-    public static create(heirs: FamilyProps): Family {
-        if (heirs === undefined || heirs === null) {
+    public static create (members: Member[]): Family {
+        if (members === undefined || members === null) {
             throw new Error()
         } else {
-            return new Family(heirs)
+            return new Family (
+                {
+                    value: {
+                        members: members,
+                        heirs: [],
+                        deCujus: members.find(member => member.attributes.ordre === 0)! //TODO Better error handling
+                    }
+                })
         }
     }
 
-    get value (): Heir[] {
-        return this.props.value;
+    get members (): Member[] {
+        return this.props.value.members;
     }
 
-    set value (updatatedHeirs: Heir[]) {
-        Object.assign(this.props.value, [...updatatedHeirs].map(heir => Heir.create({value: heir.props.value})))
+    set value (upattributestedMembers: Member[]) {
+        Object.assign(this.props.value, [...upattributestedMembers].map(member => Member.create(member.props.value)))
     }
 
-    findHeir (heir: string) {
-        return this.value.find(member => member.member_id === heir)!
+    findMember (heir: string) {
+        return this.members.find(member => member.member_id === heir)! //TODO fault tolerance
+    }
+
+    findSpouseOf (knownSpouseName: string) {
+        return this.members.find(member => member.attributes.spouse === knownSpouseName)! //TODO fault tolerance
     }
 
      /**
-     * Relatives in the most favored class inherit to exclusion of other classes.
+     * Members in the most favored class inherit to exclusion of other classes.
      */
-    getMostFavoredHeirsByOrdre (): Family {
+    getMostFavoredMembersByOrdre (): Family {
         return Ordres
             .create(this)
             .getFirstAppliableOrdre()
@@ -39,12 +54,16 @@ export class Family extends ValueObject<FamilyProps> {
     /**
      * The nearest relation in a class, determined by counting degrees,
      * inherit to the exclusion of more distant relatives in that class.
-     * @param filteredHeirs heirs in the most favored class
+     * @param filteredMembers members in the most favored class
      */
-    getMostFavoredHeirsByDegre (mostFavoredOrder: Family): Family {
+    getMostFavoredMembersByDegre (mostFavoredOrder: Family): Family {
         return Degrees
             .create(this)
             .getFirstAppliableDegree(mostFavoredOrder, this)
     }
+
+    /* 
+    drawFamily(){} //Ascii art for debugging
+    */
 
 }

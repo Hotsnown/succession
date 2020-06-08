@@ -1,10 +1,11 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Heir } from '.'
+import { Member } from '.'
 import * as R from 'ramda'
 import { Family } from './Family'
 
 interface DegreesProps {
-    value: Record<string, Heir[]>
+    value: Record<string, Member[]>
+    degrees: Degree[]
 }
 
 export enum Degree {
@@ -18,25 +19,27 @@ export enum Degree {
 
 /**
  * In each class, the nearest relation in a class, determined by counting degrees, 
- * inherit to the exclusion of more distant relatives in that class.
+ * inherit to the exclusion of more distant members in that class.
  */
 export class Degrees extends ValueObject<DegreesProps> {
 
     public static create(heirs: Family): Degrees {
-        if (heirs === undefined || heirs === null || heirs.value.length < 0) {
+        if (heirs === undefined || heirs === null || heirs.members.length < 0) {
             throw new Error()
         } else {
-            return new Degrees({ value: byDegre(heirs.value) })
+            return new Degrees({ 
+                value: byDegre(heirs.members),
+                degrees: [Degree.Degree1, Degree.Degree2, Degree.Degree3, Degree.Degree4, Degree.Degree5, Degree.Degree6],
+            })
         }
     }
 
-    get value() {
+    get value () {
         return this.props.value;
     }
 
     get firstAppliableDegree() {
-        const degrees = [Degree.Degree1, Degree.Degree2, Degree.Degree3, Degree.Degree4, Degree.Degree5, Degree.Degree6]
-        for (const degre of degrees) {
+        for (const degre of this.props.degrees) {
             if (this.value[degre] !== undefined) {
                 return degre
             }
@@ -44,28 +47,27 @@ export class Degrees extends ValueObject<DegreesProps> {
         return Degree.Degree6 //TODO Better Error Handling
     }
 
-    getFirstAppliableDegree(filteredHeirs: Family, allHeirs: Family) {
+    getFirstAppliableDegree(filteredMembers: Family, allMembers: Family) {
 
         const appliableDegree = Degrees
-                    .create(filteredHeirs)
+                    .create(filteredMembers)
                     .value[this.firstAppliableDegree]
 
-        if (appliableDegree !== undefined) {
-            for (const heir of appliableDegree) {
-                heir.legalRights = 1 / appliableDegree.length //default value is 0
-            }
+        if (appliableDegree !== undefined) {           
+            appliableDegree.forEach(
+                heir => heir.legalRights = 1 / appliableDegree.length) //default value is 0
         }
 
-        return allHeirs
+        return allMembers
     }
 }
 
-const byDegre = R.groupBy(function (heir: Heir) {
-    const degre = heir.data.degre
+const byDegre = R.groupBy(function (heir: Member) {
+    const degre = heir.attributes.degre
     return degre === 1 ? '1' :
            degre === 2 ? '2' :
            degre === 3 ? '3' :
            degre === 4 ? '4' :
            degre === 5 ? '5' :
-           degre === 6 ? '6' : 'unknown'
+           degre === 6 ? '6' : 'unknown' 
 })

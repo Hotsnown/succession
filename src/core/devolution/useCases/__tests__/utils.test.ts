@@ -1,11 +1,11 @@
 import { findParents } from '../utils'
-import { Status, Family, Heir } from '../../entities'
+import { Status, Family, Member } from '../../entities'
 
-it('should find the parents of a heir', () => {
-    const secondOrdreHeirs = [
+it('should find the parents of a member', () => {
+    const secondOrdreMembers = [
         {
             "childs": [],
-            "data": {
+            "attributes": {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Valid
@@ -18,7 +18,7 @@ it('should find the parents of a heir', () => {
                 "lisa",
                 "maggie"
             ],
-            "data": {
+            "attributes": {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Valid
@@ -27,12 +27,12 @@ it('should find the parents of a heir', () => {
         }
     ]
 
-    const family = Family.create({value: 
-        secondOrdreHeirs.map(heir => Heir.create({value: heir}))
-        })
+    const family = Family.create( 
+        secondOrdreMembers.map(member => Member.create(member))
+        )
 
     expect(
         findParents(family, 'maggie')
-        .find(heir => heir.member_id === 'homer'))
+        .find(member => member.member_id === 'homer'))
         .toBeTruthy()
 })

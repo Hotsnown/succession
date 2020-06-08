@@ -4,76 +4,94 @@ it('should find both fente', () => {
     const existingFente = [
         {
             "childs": [],
-            "data": {
+            "attributes": {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "de_cujus"
+            "member_id": "de_cujus",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
         {
             "childs": [
                 "de_cujus",
             ],
-            "data": {
+            "attributes": {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "father"
+            "member_id": "father",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
         {
             "childs": [
                 "de_cujus"
             ],
-            "data": {
+            "attributes": {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "mother"
+            "member_id": "mother",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
         {
             "childs": [
                 "father"
             ],
-            "data": {
+            "attributes": {
                 "degre": 2,
                 "ordre": 3,
                 "status": Status.Valid
             },
-            "member_id": "paternal_grand_father"
+            "member_id": "paternal_grand_father",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
         {
             "childs": [
                 "mother"
             ],
-            "data": {
+            "attributes": {
                 "degre": 2,
                 "ordre": 3,
                 "status": Status.Deceased
             },
-            "member_id": "maternal_grand_father"
+            "member_id": "maternal_grand_father",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
         {
             "childs": [
                 "maternal_grand_father"
             ],
-            "data": {
+            "attributes": {
                 "degre": 3,
                 "ordre": 3,
                 "status": Status.Valid
             },
-            "member_id": "maternal_grand_grand_father"
+            "member_id": "maternal_grand_grand_father",
+            "isReprésenté": false,
+            "isReprésentant": false,
+            "legalRights": 0
         },
     ]
 
-    const data = fenteAscendante(existingFente)
+    const attributes = fenteAscendante(existingFente)
 /*     expect(fenteAscendante(existingFente)
-        .filter(heir => heir.branch === 'paternelle'))
+        .filter(member => member.branch === 'paternelle'))
         .toHaveLength(2)
 
     expect(fenteAscendante(existingFente)
-        .filter(heir => heir.branch === 'maternelle'))
+        .filter(member => member.branch === 'maternelle'))
         .toHaveLength(2) */
 })
