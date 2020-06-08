@@ -21,6 +21,7 @@ interface MemberProps {
             isReprésentant: Representant
             legalRights: number
             spouse: string
+            branch: 'paternelle' | 'maternelle' | 'unknown'
             //TODO add name
         }
     }
@@ -53,6 +54,7 @@ export class Member extends ValueObject<MemberProps> {
                             ordre: member.attributes.ordre,
                             status: member.attributes.status,
                             spouse: member.attributes.spouse || '', //TODO fault tolerance
+                            branch: 'unknown',
                             isReprésenté: false,
                             isReprésentant: false,
                             legalRights: 0,

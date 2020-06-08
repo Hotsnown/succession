@@ -1,4 +1,4 @@
-import { Status } from '../../../../entities'
+import { Status, Family, Member } from '../../../../entities'
 import { fenteAscendante } from '../fente'
 it('should find both fente', () => {
     const existingFente = [
@@ -9,10 +9,7 @@ it('should find both fente', () => {
                 "ordre": 0,
                 "status": Status.Deceased
             },
-            "member_id": "de_cujus",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "de_cujus"
         },
         {
             "childs": [
@@ -23,10 +20,7 @@ it('should find both fente', () => {
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "father",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "father"
         },
         {
             "childs": [
@@ -37,10 +31,7 @@ it('should find both fente', () => {
                 "ordre": 2,
                 "status": Status.Deceased
             },
-            "member_id": "mother",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "mother"
         },
         {
             "childs": [
@@ -51,10 +42,7 @@ it('should find both fente', () => {
                 "ordre": 3,
                 "status": Status.Valid
             },
-            "member_id": "paternal_grand_father",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "paternal_grand_father"
         },
         {
             "childs": [
@@ -65,10 +53,7 @@ it('should find both fente', () => {
                 "ordre": 3,
                 "status": Status.Deceased
             },
-            "member_id": "maternal_grand_father",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "maternal_grand_father"
         },
         {
             "childs": [
@@ -79,19 +64,35 @@ it('should find both fente', () => {
                 "ordre": 3,
                 "status": Status.Valid
             },
-            "member_id": "maternal_grand_grand_father",
-            "isReprésenté": false,
-            "isReprésentant": false,
-            "legalRights": 0
+            "member_id": "maternal_grand_grand_father"
         },
     ]
 
-    const attributes = fenteAscendante(existingFente)
-/*     expect(fenteAscendante(existingFente)
-        .filter(member => member.branch === 'paternelle'))
-        .toHaveLength(2)
+    const family = Family.create(existingFente.map(member => Member.create(member)))
+    const solution = fenteAscendante(family)
 
-    expect(fenteAscendante(existingFente)
-        .filter(member => member.branch === 'maternelle'))
-        .toHaveLength(2) */
+    expect(solution
+        .find(member => member.member_id === 'father')
+        ?.attributes.branch)
+        .toStrictEqual('paternelle')
+    
+    expect(solution
+        .find(member => member.member_id === 'paternal_grand_father')
+        ?.attributes.branch)
+        .toStrictEqual('paternelle')
+
+    expect(solution
+        .find(member => member.member_id === 'mother')
+        ?.attributes.branch)
+        .toStrictEqual('maternelle')
+ 
+    expect(solution
+        .find(member => member.member_id === 'maternal_grand_father')
+        ?.attributes.branch)
+        .toStrictEqual('maternelle')
+    
+    expect(solution
+        .find(member => member.member_id === 'maternal_grand_grand_father')
+        ?.attributes.branch)
+        .toStrictEqual('maternelle')    
 })

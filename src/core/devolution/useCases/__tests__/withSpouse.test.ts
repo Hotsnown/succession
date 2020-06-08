@@ -256,7 +256,6 @@ it('gives equal shares to all descendants', () => {
         spouse.legalRights
     ).toStrictEqual(1)
 
-    
     expect(
         solution.findMember("deCujus")
         .legalRights)

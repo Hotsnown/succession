@@ -1,11 +1,6 @@
-import { Member } from "../../../entities";
+import { Member, Family } from "../../../entities";
 import { findParents } from "../../utils";
-import { isEligibleToInherit } from '../utils'
 import * as R from 'ramda'
-
-interface AwareOfBranch extends Member {
-    branch: 'paternelle' | 'maternelle' | 'unknown'
-}
 
 /**
  * If the ascendants in the paternal and maternal lines are in the
@@ -14,42 +9,112 @@ interface AwareOfBranch extends Member {
  * the maternal side, whether the number of ascendants on each side be equal
  * or not.
  */
-export function fenteAscendante(members: Member[]) {
+export function fenteAscendante(family: Family) {
 
-    const extractMother = (members: Member[]): AwareOfBranch[] | Member[] =>
-        members.map(
-            member => isParentOfDeCujus(members, isDecujus(members)) && !isEligibleToInherit(member) && isMother(member)
-                ? Object.assign({ ...member, branch: 'maternelle' as AwareOfBranch["branch"] }, member)
-                : member
-        )
+    const members = family.members
+    const deCujus = family.props.value.deCujus
 
-    const extractFather = (members: Member[]): AwareOfBranch[] | Member[] =>
-        members.map(
-            member => isParentOfDeCujus(members, isDecujus(members)) && !isEligibleToInherit(member) && isFather(member)
-                ? Object.assign({ ...member, branch: 'paternelle' as AwareOfBranch["branch"] }, member)
-                : member
-        )
+    const extractMother = 
+        (members: Member[]): Member[] => {
+            members
+                .filter(member => 
+                    isParentOfDeCujus(members, deCujus) && 
+                    !member.isEligibleToInherit() && 
+                    isMother(member))
+                .forEach(member => 
+                    member.attributes.branch = 'maternelle')
+            return members
+        }
 
-    const extractMaternalAscendants = (members: Member[]): AwareOfBranch[] | Member[] =>
-        members.map(
-            member => isAscendantOfMother(members, findParents(members, member.member_id))
-                ? Object.assign({ ...member, branch: 'maternelle' as AwareOfBranch["branch"] }, member)
-                : member
-        )
+    const extractFather = 
+        (members: Member[]): Member[] => {
+            members
+                .filter(member => 
+                    isParentOfDeCujus(members, deCujus) && 
+                    !member.isEligibleToInherit() && 
+                    isFather(member))
+                .forEach(member => 
+                    member.attributes.branch = 'paternelle')
+            
+            return members
+        }
 
-    const extractPaternalAscendants = (members: Member[]): AwareOfBranch[] | Member[] =>
-        members.map(
-            member => isAscendantOfFather(members, findParents(members, member.member_id))
-                ? Object.assign({ ...member, branch: 'paternelle' as AwareOfBranch["branch"] }, member)
-                : member
-        )
+    const extractMaternalAscendants = 
+            (members: Member[]): Member[] => {
+                members
+                    .flatMap(member =>
+                        isAscendantOfMother(findParents(family, member.member_id)))
+                    .forEach(member =>
+                        member.attributes.branch = 'maternelle')
+                return members
+            }
+
+    const extractPaternalAscendants =
+        (members: Member[]): Member[] => {
+            members
+                .flatMap(member =>
+                    isAscendantOfFather(findParents(family, member.member_id)))
+                .forEach(member =>
+                    member.attributes.branch = 'paternelle')
+            return members
+        }
+
+    const extractAscendants =
+        (members: Member[]): Member[] => {
+            members
+                .map(c => findParents(family, c.member_id).map(c => c?.member_id))
+                .map(c => family.findMember(c[0]))
+                .forEach(member => 
+                    member
+                    ? member.attributes.branch === 'unknown'
+                        ? member.attributes.branch = 'maternelle'
+                        : null
+                    : null)
+            return members
+        }
+
+    const isParentOfDeCujus =
+        (members: Member[], deCujus: Member) =>
+            members.filter(member => member.member_id ===
+                findParents(family, deCujus.member_id)[0].member_id ||
+                findParents(family, deCujus.member_id)[1].member_id)
+
+    const isAscendantOfMother =
+        (parents: Member[]): Member[] => {
+            const result = []
+            for (const parent of parents) {
+                if (parent !== undefined) {
+                    if (isMother(parent)) {
+                        result.push(findParents(family, parent.member_id)[0])
+                    }
+                }
+            }
+            return result[0]
+                ? [family.findMember(result[0].member_id)]
+                : []
+        }
+
+    const isAscendantOfFather =
+        (parents: Member[]): Member[] => {
+            const result = []
+            for (const parent of parents) {
+                if (parent !== undefined) {
+                    if (isFather(parent)) {
+                        result.push(findParents(family, parent.member_id)[0])
+                    }
+                }
+            }
+            return result[0]
+                ? [family.findMember(result[0].member_id)]
+                : []
+        }
 
     return R.pipe(
         extractMother,
         extractFather,
         extractPaternalAscendants,
         extractMaternalAscendants,
-        )(members)
+        extractAscendants)(members)
 }
 
 const isFather =
@@ -57,39 +122,3 @@ const isFather =
 
 const isMother =
     (member: Member) => member.member_id === 'mother'
-
-const isParentOfDeCujus =
-    (members: Member[], deCujus: Member) => //Family now know who is the de cujus
-        members.filter(member => member.member_id ===
-            findParents(members, deCujus.member_id)[0].member_id ||
-            findParents(members, deCujus.member_id)[1].member_id)
-
-const isDecujus =
-    (members: Member[]): Member => members.filter(member => member.attributes.ordre === 0)[0]
-
-const isAscendantOfMother =
-    (members: Member[], parents: Member[]): Member[] => {
-        const result = []
-        for (const parent of parents) {
-            if (parent !== undefined && typeof parent !== undefined) {
-                if (isMother(parent)) {
-                    result.push(findParents(members, parent.member_id)[0])
-                }
-            }
-        }
-        return result
-    }
-
-
-const isAscendantOfFather =
-    (members: Member[], parents: Member[]): Member[] => {
-        const result = []
-        for (const parent of parents) {
-            if (parent !== undefined) {
-                if (isFather(parent)) {
-                    result.push(findParents(members, parent.member_id)[0])
-                }
-            }
-        }
-        return result
-    }
