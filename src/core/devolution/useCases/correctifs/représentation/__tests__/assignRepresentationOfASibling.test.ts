@@ -55,9 +55,8 @@ it('should be appliable when members are child of a sibling', () => {
     ]
 
     const {members} = assignRepresentation(
-        Family.create( 
-            firstOrderMembers.map(member => Member.create(member))))
-        
+        Family.create( firstOrderMembers))
+                
     expect(members
         .filter(member => member.isReprésentant)
         .find(member => member.member_id === "nephew"))

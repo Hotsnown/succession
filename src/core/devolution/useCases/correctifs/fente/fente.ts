@@ -1,5 +1,6 @@
-import { Member, Family } from "../../../entities";
+import { Family } from "../../../entities";
 import { findParents } from "../../utils";
+import { isMother, isFather, isAscendantOfFather, isAscendantOfMother, isParentOfDeCujus} from './utils'
 import * as R from 'ramda'
 
 /**
@@ -9,59 +10,58 @@ import * as R from 'ramda'
  * the maternal side, whether the number of ascendants on each side be equal
  * or not.
  */
-export function fenteAscendante(family: Family) {
+export function assignFenteAscendante(family: Family) {
 
-    const members = family.members
     const deCujus = family.props.value.deCujus
 
     const extractMother = 
-        (members: Member[]): Member[] => {
-            members
+        (family: Family): Family => {
+            family.members
                 .filter(member => 
-                    isParentOfDeCujus(members, deCujus) && 
+                    isParentOfDeCujus(family, deCujus) && 
                     !member.isEligibleToInherit() && 
                     isMother(member))
                 .forEach(member => 
                     member.attributes.branch = 'maternelle')
-            return members
+            return family
         }
 
     const extractFather = 
-        (members: Member[]): Member[] => {
-            members
+        (family: Family): Family => {
+            family.members
                 .filter(member => 
-                    isParentOfDeCujus(members, deCujus) && 
+                    isParentOfDeCujus(family, deCujus) && 
                     !member.isEligibleToInherit() && 
                     isFather(member))
                 .forEach(member => 
                     member.attributes.branch = 'paternelle')
             
-            return members
+            return family
         }
 
     const extractMaternalAscendants = 
-            (members: Member[]): Member[] => {
-                members
+        (family: Family): Family => {
+                family.members
                     .flatMap(member =>
-                        isAscendantOfMother(findParents(family, member.member_id)))
+                        isAscendantOfMother(findParents(family, member.member_id), family))
                     .forEach(member =>
                         member.attributes.branch = 'maternelle')
-                return members
+                return family
             }
 
     const extractPaternalAscendants =
-        (members: Member[]): Member[] => {
-            members
+        (family: Family): Family => {
+            family.members
                 .flatMap(member =>
-                    isAscendantOfFather(findParents(family, member.member_id)))
+                    isAscendantOfFather(findParents(family, member.member_id), family))
                 .forEach(member =>
                     member.attributes.branch = 'paternelle')
-            return members
+            return family
         }
 
     const extractAscendants =
-        (members: Member[]): Member[] => {
-            members
+        (family: Family): Family => {
+            family.members
                 .map(c => findParents(family, c.member_id).map(c => c?.member_id))
                 .map(c => family.findMember(c[0]))
                 .forEach(member => 
@@ -70,43 +70,7 @@ export function fenteAscendante(family: Family) {
                         ? member.attributes.branch = 'maternelle'
                         : null
                     : null)
-            return members
-        }
-
-    const isParentOfDeCujus =
-        (members: Member[], deCujus: Member) =>
-            members.filter(member => member.member_id ===
-                findParents(family, deCujus.member_id)[0].member_id ||
-                findParents(family, deCujus.member_id)[1].member_id)
-
-    const isAscendantOfMother =
-        (parents: Member[]): Member[] => {
-            const result = []
-            for (const parent of parents) {
-                if (parent !== undefined) {
-                    if (isMother(parent)) {
-                        result.push(findParents(family, parent.member_id)[0])
-                    }
-                }
-            }
-            return result[0]
-                ? [family.findMember(result[0].member_id)]
-                : []
-        }
-
-    const isAscendantOfFather =
-        (parents: Member[]): Member[] => {
-            const result = []
-            for (const parent of parents) {
-                if (parent !== undefined) {
-                    if (isFather(parent)) {
-                        result.push(findParents(family, parent.member_id)[0])
-                    }
-                }
-            }
-            return result[0]
-                ? [family.findMember(result[0].member_id)]
-                : []
+            return family
         }
 
     return R.pipe(
@@ -114,11 +78,5 @@ export function fenteAscendante(family: Family) {
         extractFather,
         extractPaternalAscendants,
         extractMaternalAscendants,
-        extractAscendants)(members)
+        extractAscendants)(family)   
 }
-
-const isFather =
-    (member: Member) => member.member_id === 'father'
-
-const isMother =
-    (member: Member) => member.member_id === 'mother'

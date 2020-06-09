@@ -27,7 +27,7 @@ interface MemberProps {
     }
 }
 
-interface MemberConstructor {
+export interface MemberConstructor {
     childs: string[];
     member_id: string;
     attributes: { 

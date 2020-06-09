@@ -1,5 +1,5 @@
 import { Status, Family, Member } from '../../../../entities'
-import { fenteAscendante } from '../fente'
+import { assignFenteAscendante } from '../fente'
 it('should find both fente', () => {
     const existingFente = [
         {
@@ -65,33 +65,33 @@ it('should find both fente', () => {
                 "status": Status.Valid
             },
             "member_id": "maternal_grand_grand_father"
-        },
+        }
     ]
 
-    const family = Family.create(existingFente.map(member => Member.create(member)))
-    const solution = fenteAscendante(family)
+    const family = Family.create(existingFente)
+    const solution = assignFenteAscendante(family)
 
-    expect(solution
+    expect(solution.members
         .find(member => member.member_id === 'father')
         ?.attributes.branch)
         .toStrictEqual('paternelle')
     
-    expect(solution
+    expect(solution.members
         .find(member => member.member_id === 'paternal_grand_father')
         ?.attributes.branch)
         .toStrictEqual('paternelle')
 
-    expect(solution
+    expect(solution.members
         .find(member => member.member_id === 'mother')
         ?.attributes.branch)
         .toStrictEqual('maternelle')
  
-    expect(solution
+    expect(solution.members
         .find(member => member.member_id === 'maternal_grand_father')
         ?.attributes.branch)
         .toStrictEqual('maternelle')
     
-    expect(solution
+    expect(solution.members
         .find(member => member.member_id === 'maternal_grand_grand_father')
         ?.attributes.branch)
         .toStrictEqual('maternelle')    

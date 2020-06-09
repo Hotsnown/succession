@@ -27,9 +27,7 @@ it('should not be appliable when members doesnt belong do Ordre 1', () => {
     ]
 
     const {members} = assignRepresentation(
-        Family.create( 
-            secondOrdreMembers.map(member => Member.create(member))))
-
+        Family.create(secondOrdreMembers))
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -83,9 +81,7 @@ it('should not be appliable when members are not parent with the représenté', 
         },
     ]
 
-    const {members} = assignRepresentation(
-        Family.create( 
-            unrelatedMembers.map(member => Member.create(member))))
+    const {members} = assignRepresentation(Family.create(unrelatedMembers))
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -142,8 +138,7 @@ it('should be appliable when members belong to Ordre 1', () => {
     ]
 
     const {members} = assignRepresentation(
-        Family.create( 
-            firstOrderMembers.map(member => Member.create(member))))
+        Family.create(firstOrderMembers))
 
     expect(members
         .filter(member => member.isReprésentant)
@@ -164,7 +159,8 @@ it('should be appliable when members belong to Ordre 1', () => {
         .toHaveLength(1)
 })
 
-it('should not work when a potential représentant is not eligible for inheritance', () => {
+it('should not work when a potential représentant' +
+    'is not eligible for inheritance', () => {
     const deadAlphonse = [
         {
             "childs": [
@@ -210,8 +206,7 @@ it('should not work when a potential représentant is not eligible for inheritan
     ]
 
     const {members} = assignRepresentation(
-        Family.create( 
-            deadAlphonse.map(member => Member.create(member))))
+        Family.create(deadAlphonse))
 
     expect(members
         .filter(member => member.isReprésentant)

@@ -1,5 +1,5 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Member, Ordres, Degrees } from '.'
+import { Member, Ordres, Degrees, MemberConstructor } from '.'
 
 interface FamilyProps {
     value: {
@@ -11,16 +11,17 @@ interface FamilyProps {
 
 export class Family extends ValueObject<FamilyProps> {
 
-    public static create (members: Member[]): Family {
+    public static create (members: MemberConstructor[]): Family {
         if (members === undefined || members === null) {
             throw new Error()
         } else {
             return new Family (
                 {
                     value: {
-                        members: members,
+                        members: members.map(member => Member.create(member)),
                         heirs: [],
-                        deCujus: members.find(member => member.attributes.ordre === 0)! //TODO Better error handling
+                        deCujus: members.map(member => Member.create(member))
+                                        .find(member => member.attributes.ordre === 0)! //TODO Better error handling
                     }
                 })
         }
@@ -31,7 +32,7 @@ export class Family extends ValueObject<FamilyProps> {
     }
 
     set value (upattributestedMembers: Member[]) {
-        Object.assign(this.props.value, [...upattributestedMembers].map(member => Member.create(member.props.value)))
+        Family.create(upattributestedMembers)
     }
 
     findMember (heir: string) {

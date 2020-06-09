@@ -14,7 +14,7 @@ it('should not return members when there is no members', () => {
         }
     ]
 
-    const family = Family.create(noMember.map(member => Member.create(member)))
+    const family = Family.create(noMember)
     const devolution = repartitionParTête(family)
     const deCujus = family.props.value.deCujus
 
@@ -50,7 +50,7 @@ describe('should give equal rights to everyone who belongs to the same order', (
             }
         ]
 
-        const family = Family.create(firstOrderMembers.map(member => Member.create(member)))
+        const family = Family.create(firstOrderMembers)
         const devolution = repartitionParTête(family)
         const maggie = family.findMember('maggie')
 
@@ -108,7 +108,7 @@ describe('should give equal rights to everyone who belongs to the same order', (
             },
         ]
 
-        const family = Family.create(secondDegreesMembers.map(member => Member.create(member)))
+        const family = Family.create(secondDegreesMembers)
         const devolution = repartitionParTête(family)
         const lisa = family.findMember('lisa')
         const maggie = family.findMember('maggie')
@@ -150,7 +150,7 @@ describe('test ordre', () => {
             }
         ]
 
-        const family = Family.create(secondOrdreMembers.map(member => Member.create(member)))    
+        const family = Family.create(secondOrdreMembers)    
         const devolution = repartitionParTête(family)
         const homer = devolution.findMember('homer')
     

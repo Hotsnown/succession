@@ -47,8 +47,7 @@ it('should give to the représentant the same right as the other members', () =>
     ]
 
     const family = assignRepresentation(
-        Family.create( 
-            oneRepresentantOneValid.map(member => Member.create(member))))
+        Family.create(oneRepresentantOneValid))
         
     expect(
         computeRepresentation(family)
@@ -107,8 +106,7 @@ it('should not give to the représentant the same right as the other members whe
     ]
     
     const family = assignRepresentation(
-        Family.create( 
-            oneRepresentantOneValid.map(member => Member.create(member))))
+        Family.create(oneRepresentantOneValid))
     
     expect(
         computeRepresentation(family)
