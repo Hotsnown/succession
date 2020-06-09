@@ -19,7 +19,6 @@ export function assignFenteAscendante(family: Family) {
             family.members
                 .filter(member => 
                     isParentOfDeCujus(family, deCujus) && 
-                    !member.isEligibleToInherit() && 
                     isMother(member))
                 .forEach(member => 
                     member.attributes.branch = 'maternelle')
@@ -31,7 +30,6 @@ export function assignFenteAscendante(family: Family) {
             family.members
                 .filter(member => 
                     isParentOfDeCujus(family, deCujus) && 
-                    !member.isEligibleToInherit() && 
                     isFather(member))
                 .forEach(member => 
                     member.attributes.branch = 'paternelle')
@@ -66,7 +64,7 @@ export function assignFenteAscendante(family: Family) {
                 .map(c => family.findMember(c[0]))
                 .forEach(member => 
                     member
-                    ? member.attributes.branch === 'unknown'
+                    ? member.attributes.branch === 'unassessed'
                         ? member.attributes.branch = 'maternelle'
                         : null
                     : null)

@@ -1,5 +1,5 @@
-import { Status, Family, Member } from '../../entities'
-import { withSpouse } from '../principe/withSpouse'
+import { Status, Family, Member } from '../../../entities'
+import { withSpouse } from '../withSpouse'
 
 it('find who is the spouse', () => {
 
@@ -28,7 +28,6 @@ it('find who is the spouse', () => {
 
     const family = Family.create(withSpouseMembers.map(member => Member.create(member)))
 
-    family.members.map(c => console.log(c.attributes))
     expect(
         family
         .findSpouseOf("deCujus")
@@ -73,7 +72,6 @@ it('gives 100% to the spouse without descendants', () => {
     ]
 
     const family = Family.create(withSpouseMembers.map(member => Member.create(member)))
-
     const solution = withSpouse(family)
 
     expect(
@@ -249,8 +247,9 @@ it('gives equal shares to all descendants', () => {
         childTwo
         .legalRights)
         .toStrictEqual(0.375)
-
+    
     expect(
+        //@ts-ignore
         childOne.legalRights +
         childTwo.legalRights +
         spouse.legalRights

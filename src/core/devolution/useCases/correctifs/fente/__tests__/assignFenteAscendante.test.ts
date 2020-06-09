@@ -1,4 +1,4 @@
-import { Status, Family, Member } from '../../../../entities'
+import { Status, Family } from '../../../../entities'
 import { assignFenteAscendante } from '../fente'
 it('should find both fente', () => {
     const existingFente = [

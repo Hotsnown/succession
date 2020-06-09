@@ -1,5 +1,4 @@
-import { assignRepresentation } from '../extractReprésentationAttribute'
-import { Status, Family, Member } from '../../../../entities'
+import { Status, Family } from '../../../../entities'
 
 
 it('should be appliable when members are child of a sibling', () => {
@@ -54,9 +53,10 @@ it('should be appliable when members are child of a sibling', () => {
         },
     ]
 
-    const {members} = assignRepresentation(
-        Family.create( firstOrderMembers))
-                
+    const {members} = Family
+    .create( firstOrderMembers)
+    .assignRepresentation()
+
     expect(members
         .filter(member => member.isReprésentant)
         .find(member => member.member_id === "nephew"))

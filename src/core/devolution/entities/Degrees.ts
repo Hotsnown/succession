@@ -47,18 +47,27 @@ export class Degrees extends ValueObject<DegreesProps> {
         return Degree.Degree6 //TODO Better Error Handling
     }
 
-    getFirstAppliableDegree(filteredMembers: Family, allMembers: Family) {
+    getFirstAppliableDegree(filteredMembers: Family, family: Family): Family {
 
         const appliableDegree = Degrees
                     .create(filteredMembers)
                     .value[this.firstAppliableDegree]
+                    .map(member => member.member_id)
+                    .filter(member => member !== undefined)
 
-        if (appliableDegree !== undefined) {           
-            appliableDegree.forEach(
-                heir => heir.legalRights = 1 / appliableDegree.length) //default value is 0
-        }
+        family.members
+            .filter(member => appliableDegree.includes(member.member_id))
+            .forEach(
+                member => member.legalRights = 1 / appliableDegree.length
+            )
+        family.members
+            .filter(member => !appliableDegree.includes(member.member_id))
+            .forEach(
+                member => member.legalRights = 0
+            )
 
-        return allMembers
+
+        return family
     }
 }
 

@@ -36,13 +36,22 @@ export class Ordres extends ValueObject<OrdreProps> {
         return this.props.value;
     }
 
-    getFirstAppliableOrdre(): Family {
+    getFirstAppliableOrdre (): Family {
         for (const ordre in this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
                 return Family.create(this.props.value[ordre])
             }
         }
         return Family.create([]) //TODO Error handling
+    }
+
+    getFirstAppliableOrdreNumber (): number {
+        for (const ordre in this.props.ordres) {
+            if (this.props.value[ordre] !== undefined) {
+                return parseInt(ordre)
+            }
+        }
+        return 0 //TODO Error handling
     }
 }
 

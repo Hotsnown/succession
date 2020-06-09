@@ -1,5 +1,5 @@
-import { findParents } from '../utils'
-import { Status, Family, Member } from '../../entities'
+import { findParents } from '../../utils'
+import { Status, Family, Member } from '../../../entities'
 
 it('should find the parents of a member', () => {
     const secondOrdreMembers = [

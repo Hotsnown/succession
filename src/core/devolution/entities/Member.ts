@@ -19,9 +19,9 @@ interface MemberProps {
             status: Status;
             isReprésenté: Representable
             isReprésentant: Representant
-            legalRights: number
+            legalRights: LegalRights
             spouse: string
-            branch: 'paternelle' | 'maternelle' | 'unknown'
+            branch: 'paternelle' | 'maternelle' | 'unassessed'
             //TODO add name
         }
     }
@@ -35,6 +35,7 @@ export interface MemberConstructor {
         ordre: Ordre;
         status: Status;
         spouse?: string
+        legalRights?: LegalRights
     }
 }
 export class Member extends ValueObject<MemberProps> {
@@ -54,25 +55,25 @@ export class Member extends ValueObject<MemberProps> {
                             ordre: member.attributes.ordre,
                             status: member.attributes.status,
                             spouse: member.attributes.spouse || '', //TODO fault tolerance
-                            branch: 'unknown',
-                            isReprésenté: false,
-                            isReprésentant: false,
-                            legalRights: 0,
+                            branch: 'unassessed',
+                            isReprésenté: 'unassessed',
+                            isReprésentant: 'unassessed',
+                            legalRights: member.attributes.legalRights || 'unassessed',
                         },
                     }
                 })
         }
     }
 
-    set isReprésenté (value: boolean) {
+    set isReprésenté (value: Representable) {
         this.props.value.attributes.isReprésenté = value
     }
 
-    set isReprésentant (value: boolean) {
+    set isReprésentant (value: Representant) {
         this.props.value.attributes.isReprésentant = value
     }
 
-    set legalRights (value: number) {
+    set legalRights (value: LegalRights) {
         this.props.value.attributes.legalRights = value
     }
 
@@ -88,15 +89,15 @@ export class Member extends ValueObject<MemberProps> {
         return this.props.value.attributes
     }
 
-    get isReprésenté() {
+    get isReprésenté(): Representable {
         return this.props.value.attributes.isReprésenté
     }
 
-    get isReprésentant() {
+    get isReprésentant(): Representant {
         return this.props.value.attributes.isReprésentant
     }
 
-    get legalRights() {
+    get legalRights(): LegalRights {
         return this.props.value.attributes.legalRights
     }
 
@@ -134,5 +135,6 @@ export class Member extends ValueObject<MemberProps> {
     
 }
 
-type Representable = boolean
-type Representant = boolean
+type Representable = boolean | 'unassessed'
+type Representant = boolean | 'unassessed'
+type LegalRights = number | 'unassessed'

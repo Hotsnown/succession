@@ -1,5 +1,5 @@
-import { Status, Family, Member } from '../../../../entities'
-import { assignRepresentation, computeRepresentation } from '../extractReprésentationAttribute'
+import { Status, Family } from '../../../../entities'
+import { computeRepresentation } from '../extractReprésentationAttribute'
 
 it('should give to the représentant the same right as the other members', () => {
     const oneRepresentantOneValid = [
@@ -46,8 +46,9 @@ it('should give to the représentant the same right as the other members', () =>
         },
     ]
 
-    const family = assignRepresentation(
-        Family.create(oneRepresentantOneValid))
+    const family = Family
+        .create(oneRepresentantOneValid)
+        .assignRepresentation()
         
     expect(
         computeRepresentation(family)
@@ -105,8 +106,9 @@ it('should not give to the représentant the same right as the other members whe
         },
     ]
     
-    const family = assignRepresentation(
-        Family.create(oneRepresentantOneValid))
+    const family = Family
+        .create(oneRepresentantOneValid)
+        .assignRepresentation()
     
     expect(
         computeRepresentation(family)

@@ -1,5 +1,4 @@
-import { assignRepresentation } from '../extractReprésentationAttribute'
-import { Status, Family, Member } from '../../../../entities'
+import { Status, Family } from '../../../../entities'
 it('should not be appliable when members doesnt belong do Ordre 1', () => {
     const secondOrdreMembers = [
         {
@@ -26,8 +25,7 @@ it('should not be appliable when members doesnt belong do Ordre 1', () => {
         }
     ]
 
-    const {members} = assignRepresentation(
-        Family.create(secondOrdreMembers))
+    const {members} = Family.create(secondOrdreMembers).assignRepresentation()
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -81,7 +79,9 @@ it('should not be appliable when members are not parent with the représenté', 
         },
     ]
 
-    const {members} = assignRepresentation(Family.create(unrelatedMembers))
+    const {members} = Family
+        .create(unrelatedMembers)
+        .assignRepresentation()
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -137,8 +137,9 @@ it('should be appliable when members belong to Ordre 1', () => {
         },
     ]
 
-    const {members} = assignRepresentation(
-        Family.create(firstOrderMembers))
+    const {members} = Family
+        .create(firstOrderMembers)
+        .assignRepresentation()
 
     expect(members
         .filter(member => member.isReprésentant)
@@ -205,12 +206,12 @@ it('should not work when a potential représentant' +
         },
     ]
 
-    const {members} = assignRepresentation(
-        Family.create(deadAlphonse))
+    const {members} = Family
+        .create(deadAlphonse)
+        .assignRepresentation()
 
     expect(members
         .filter(member => member.isReprésentant)
         .find(member => member.member_id === "alphonse"))
         .toBeFalsy()
-
 })

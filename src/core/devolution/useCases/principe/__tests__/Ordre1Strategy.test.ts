@@ -1,5 +1,5 @@
-import { Status, Family, Member } from '../../entities'
-import { repartitionParTête } from '..'
+import { Status, Family } from '../../../entities'
+import { repartitionParTête } from '../..'
 
 it('should not return members when there is no members', () => {
     const noMember = [
@@ -18,7 +18,7 @@ it('should not return members when there is no members', () => {
     const devolution = repartitionParTête(family)
     const deCujus = family.props.value.deCujus
 
-    expect(deCujus.legalRights).toBe(0)
+    expect(deCujus.legalRights).toBe('unassessed')
     expect(devolution.members).toHaveLength(1)
 })
 
@@ -50,8 +50,7 @@ describe('should give equal rights to everyone who belongs to the same order', (
             }
         ]
 
-        const family = Family.create(firstOrderMembers)
-        const devolution = repartitionParTête(family)
+        const family = repartitionParTête(Family.create(firstOrderMembers))
         const maggie = family.findMember('maggie')
 
         expect(maggie.legalRights).toBe(1)
@@ -108,8 +107,7 @@ describe('should give equal rights to everyone who belongs to the same order', (
             },
         ]
 
-        const family = Family.create(secondDegreesMembers)
-        const devolution = repartitionParTête(family)
+        const family = repartitionParTête(Family.create(secondDegreesMembers))
         const lisa = family.findMember('lisa')
         const maggie = family.findMember('maggie')
         const bart = family.findMember('bart')
@@ -120,40 +118,5 @@ describe('should give equal rights to everyone who belongs to the same order', (
         expect(bart.legalRights).toBe(1/3)
         expect(millhouse_jr.legalRights).toBe(0)
 
-    })
-})
-
-describe('test ordre', () => {
-    it('should pass to ordre 2 when there is no ordre 1', () => {
-        const secondOrdreMembers = [
-            {
-                "childs": [],
-                "attributes": {
-                    "degre": 0,
-                    "ordre": 0,
-                    "status": Status.Valid
-                },
-                "member_id": "maggie"
-            },
-            {
-                "childs": [
-                    "bart",
-                    "lisa",
-                    "maggie"
-                ],
-                "attributes": {
-                    "degre": 1,
-                    "ordre": 2,
-                    "status": Status.Valid
-                },
-                "member_id": "homer"
-            }
-        ]
-
-        const family = Family.create(secondOrdreMembers)    
-        const devolution = repartitionParTête(family)
-        const homer = devolution.findMember('homer')
-    
-        expect(homer.legalRights).toBe(1)
     })
 })
