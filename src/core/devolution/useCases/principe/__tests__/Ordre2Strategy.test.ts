@@ -1,5 +1,5 @@
 import { Status, Family } from '../../../entities'
-import { repartitionParTête } from '../..'
+import { getSolution } from '../..'
 
 describe('test ordre 2', () => {
     it('should pass to ordre 2 when there is no ordre 1', () => {
@@ -28,7 +28,7 @@ describe('test ordre 2', () => {
             }
         ]
 
-        const family = repartitionParTête(Family.create(secondOrdreMembers))
+        const family = getSolution(Family.create(secondOrdreMembers))
         const homer = family.findMember('homer')
     
         expect(homer.legalRights).toBe(1)

@@ -1,13 +1,14 @@
-import { Family, Ordres, Member } from '../../entities'
+import { Family, Ordres, Devolution, Qualification } from '../../entities'
+
 /**
  * When the de cujus dies without a spouse.
  */
-export function repartitionParTête(family: Family): Family {
+export function getSolution(family: Family): Family {
    const strategy = Ordres.create(family).getFirstAppliableOrdreNumber()
 
-   switch(strategy) {
+   switch (strategy) {
       case 1: return ordreOneStrategy(family)
-       case 2: return OrdreTwoStrategy(family)
+      case 2: return OrdreTwoStrategy(family)
       case 3: return ordreThreeStrategy(family)
       case 4: return ordreFourStrategy(family)
       default: return family
@@ -15,20 +16,23 @@ export function repartitionParTête(family: Family): Family {
 }
 
 /**
+ * Conditions: 
  * Existence de descendants de X en ligne directe vivants ?(enfants, petits-
-*  enfants, arrière-petits-enfants...) On recherche dans O1 : les
-*  descendants en ligne directe. 
-*  1. OUI. Indiquer quels sont les enfants vivants et, si certains enfants sont
-*  défunts, si ces derniers ont laissé une postérité. Renouveler l'opération
-*  autant de fois que nécessaire comme en S1.0, en effectuant un
-*  partage similaire.
+ * enfants, arrière-petits-enfants...)
  */
 function ordreOneStrategy(family: Family): Family {
    /*
-   1) les personnes du meme degré ont la même part.
-   2) Si défunt dans le degré + enfant du défunt, les enfants qui remplacent le défunt se partagent la part du défunt. Réitérer 1
+   1) les personnes du même degré ont la même part.
+   2) Si 1 défunt dans le degré privilégié + le défunt a des enfants, les enfants 
+      se partagent la part du défunt. Réitérer 1
    */
-  return family.getMostFavoredMembersByDegre(family.getMostFavoredMembersByOrdre())
+
+   const qualification = new Qualification(family)
+   const devolution = new Devolution(family)
+
+   return devolution.getMostFavoredMembersByOrdre().members.some(member=> !member.isEligibleToInherit() && member.hasChildEligibleToInheritIn(family)) 
+   ? devolution.computeRepresentation(qualification.assignRepresentation())
+   : devolution.repartitionParTête(devolution.excludeInheligible(devolution.getMostFavoredMembersByOrdre()), family)
 }
 
 function OrdreTwoStrategy(family: Family): Family {
@@ -39,8 +43,9 @@ function OrdreTwoStrategy(family: Family): Family {
    //    si parent survivant = 1 : 50% + 50% / nombre de collatéraux (ne pas oublier la représentation)
    //    si parent survivant = 2 : 25% + 25% + 50% / nombre de collatéraux (ne pas oublier la représentation)
    //
-   return family
-}
+   const devolution = new Devolution(family)
+   return devolution.repartitionParTête(devolution.getMostFavoredMembersByOrdre(), family)
+   }
 
 function ordreThreeStrategy(family: Family): Family {
    /*

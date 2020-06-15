@@ -1,5 +1,4 @@
-import { Status, Family } from '../../../../entities'
-import { computeRepresentation } from '../extractReprésentationAttribute'
+import { Status, Family, Qualification, Devolution } from '../../../entities'
 
 it('should give to the représentant the same right as the other members', () => {
     const oneRepresentantOneValid = [
@@ -46,17 +45,16 @@ it('should give to the représentant the same right as the other members', () =>
         },
     ]
 
-    const family = Family
-        .create(oneRepresentantOneValid)
-        .assignRepresentation()
+    const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
+    const devolution = new Devolution(family)
         
     expect(
-        computeRepresentation(family)
+        devolution.computeRepresentation(family)
         .findMember('alphonse')
         .legalRights).toStrictEqual(1/2)
 
     expect(
-        computeRepresentation(family)
+        devolution.computeRepresentation(family)
         .findMember('validDescendant')
         .legalRights).toStrictEqual(1/2)
 })
@@ -105,18 +103,17 @@ it('should not give to the représentant the same right as the other members whe
             "member_id": "alphonse"
         },
     ]
-    
-    const family = Family
-        .create(oneRepresentantOneValid)
-        .assignRepresentation()
+
+    const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
+    const devolution = new Devolution(family)
     
     expect(
-        computeRepresentation(family)
+        devolution.computeRepresentation(family)
         .findMember('alphonse')
         .legalRights).toStrictEqual(0)
 
     expect(
-        computeRepresentation(family)
+        devolution.computeRepresentation(family)
         .findMember('validDescendant')
         .legalRights).toStrictEqual(1)
 })

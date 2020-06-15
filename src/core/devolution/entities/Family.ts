@@ -1,88 +1,79 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Member, Ordres, Degrees, MemberConstructor } from '.'
+import { Member, MemberConstructor } from '.'
+import * as R from 'ramda'
 
 interface FamilyProps {
     value: {
         members: Member[],
-        heirs: Member[],
         deCujus: Member
     }
 }
 
+/**
+ * An Immutable Dataclass holding the state of all members
+ */
 export class Family extends ValueObject<FamilyProps> {
 
     public static create(members: MemberConstructor[]): Family {
-        if (members === undefined || members === null) {
-            throw new Error()
-        } else {
-            return new Family(
-                {
-                    value: {
-                        members: members.map(member => Member.create(member)),
-                        heirs: [],
-                        deCujus: members.map(member => Member.create(member))
-                            .find(member => member.attributes.ordre === 0)! //TODO Better error handling
-                    }
-                })
-        }
+        if (R.isNil(members)) console.error('Validation Error : Family members can not be Nil.')
+        if (haveDuplicates(members)) console.error('Invariant Error : Duplicates found.') //members.map(member => member.member_id))
+        if (sumOfLegalRightsExceedOneHundredPercent(members)) console.error('Invariant Error : Sum of legal rights exceeds 100%.', members.map(member => ({ id: member.member_id, legalRights: member.attributes.legalRights })))
+        if (moreThanOneDeCujus(members)) console.error('Invariant Error : More than one de cujus found.', members.filter(member => isDecujus(member)))
+        
+        return new Family(
+            {
+                value: {
+                    members: members.map(member => Member.create(member)),
+                    deCujus: members.map(member => Member.create(member))
+                        .find(isDecujus)! //TODO Better error handling
+                }
+            })
     }
 
     get members(): Member[] {
         return this.props.value.members;
     }
 
-    set value(upattributestedMembers: Member[]) {
-        Family.create(upattributestedMembers)
+    public findMember(querriedMember: string) {
+        return this.members.find(member => member.member_id === querriedMember)! //TODO fault tolerance
     }
 
-    findMember(heir: string) {
-        return this.members.find(member => member.member_id === heir)! //TODO fault tolerance
-    }
-
-    findSpouseOf(knownSpouseName: string) {
+    public findSpouseOf(knownSpouseName: string) {
         return this.members.find(member => member.attributes.spouse === knownSpouseName)! //TODO fault tolerance
     }
 
-    /**
-    * Members in the most favored class inherit to exclusion of other classes.
-    */
-    getMostFavoredMembersByOrdre(): Family {
-        return Ordres
-            .create(this)
-            .getFirstAppliableOrdre()
+    public findParentsOf = (childName: string): Parents => {
+        const result = this.members.filter(member => member.props.value.childs.includes(childName))
+        return [result[0], result[1]]
     }
 
-    /**
-     * The nearest relation in a class, determined by counting degrees,
-     * inherit to the exclusion of more distant relatives in that class.
-     * @param filteredMembers members in the most favored class
-     */
-    getMostFavoredMembersByDegre(mostFavoredOrder: Family): Family {
-        return Degrees
-            .create(this)
-            .getFirstAppliableDegree(mostFavoredOrder, this)
+    public copyWith(members: Member[]): Family {
+        return Family.create(members);
     }
 
-    debug() {
+    public debug(): Family {
         this.members.map(member => console.log({ id: member.member_id, attributes: member.attributes }))
-    }
-
-    /**
-     * If a descendant or a sibling predeceases the de cujus, his share goes to his descendants
-     * by representation — for example, if a father leaves property to his daughter, and at his 
-     * death the daughter has already died, leaving two grandchildren, the grandchildren would 
-     * take their mother’s share.
-     * @param members Family structure under examination
-     **/
-    assignRepresentation(): Family {
-
-        //sequence matter
-        this.members.forEach(member =>
-            member.isReprésenté = member.isReprésentableIn(this))
-            this.members.forEach(member =>
-            member.isReprésentant = member.isRepresentativeIn(this))
-
         return this
     }
+}
 
+type Parents = [Member, Member]
+
+function haveDuplicates(members: MemberConstructor[]): boolean {
+    return R.uniq(members).length !== members.length
+}
+
+function sumOfLegalRightsExceedOneHundredPercent(members: MemberConstructor[]): boolean {
+    return members.every(
+        member => member.attributes.legalRights !== 'unassigned') &&
+        members.map(member => member.attributes.legalRights)
+            .reduce((a, b) => (a as number) + (b as number))! > 1
+}
+
+function isDecujus<T extends MemberConstructor>(member: T): boolean {
+    return member.attributes.ordre === 0 && member.attributes.degre === 0
+}
+
+function moreThanOneDeCujus(members: MemberConstructor[]): boolean {
+    return members.filter(member => isDecujus(member)).length > 1
 }

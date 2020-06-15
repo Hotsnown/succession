@@ -1,6 +1,7 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
 import { Member, Family } from '.';
 import * as R from 'ramda'
+import { Status } from './Member';
 
 interface OrdreProps {
     value: Record<string, Member[]>
@@ -39,16 +40,22 @@ export class Ordres extends ValueObject<OrdreProps> {
     getFirstAppliableOrdre (): Family {
         for (const ordre in this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
-                return Family.create(this.props.value[ordre])
+                if(this.atLeastOneMemberEligibleToInheritIn(ordre)) {
+                    return Family.create(this.props.value[ordre])
+                }
             }
         }
         return Family.create([]) //TODO Error handling
     }
 
+    private atLeastOneMemberEligibleToInheritIn(ordre: string) {
+        return this.props.value[ordre].some(member => member.isEligibleToInherit());
+    }
+
     getFirstAppliableOrdreNumber (): number {
         for (const ordre in this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
-                return parseInt(ordre)
+                return parseInt(ordre) //TODO: handle unknown case
             }
         }
         return 0 //TODO Error handling

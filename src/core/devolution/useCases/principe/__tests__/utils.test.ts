@@ -1,5 +1,4 @@
-import { findParents } from '../../utils'
-import { Status, Family, Member } from '../../../entities'
+import { Status, Family } from '../../../entities'
 
 it('should find the parents of a member', () => {
     const secondOrdreMembers = [
@@ -27,12 +26,10 @@ it('should find the parents of a member', () => {
         }
     ]
 
-    const family = Family.create( 
-        secondOrdreMembers.map(member => Member.create(member))
-        )
+    const family = Family.create(secondOrdreMembers)
 
     expect(
-        findParents(family, 'maggie')
+        family.findParentsOf('maggie')
         .find(member => member.member_id === 'homer'))
         .toBeTruthy()
 })

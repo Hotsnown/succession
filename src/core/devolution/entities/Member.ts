@@ -1,6 +1,5 @@
 import { Degree, Ordre, Family } from ".";
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { findParents } from '../useCases/utils'
 
 export enum Status {
     Deceased,
@@ -21,7 +20,7 @@ interface MemberProps {
             isReprésentant: Representant
             legalRights: LegalRights
             spouse: string
-            branch: 'paternelle' | 'maternelle' | 'unassessed'
+            branch: Branch
             //TODO add name
         }
     }
@@ -30,14 +29,23 @@ interface MemberProps {
 export interface MemberConstructor {
     childs: string[];
     member_id: string;
-    attributes: { 
+    attributes: MemberAttributes
+}
+
+interface MemberAttributes {
         degre: Degree;
         ordre: Ordre;
         status: Status;
         spouse?: string
         legalRights?: LegalRights
-    }
+        branch?: Branch
+        isReprésenté?: Representable
+        isReprésentant?: Representant
 }
+
+/**
+ * An immutable data class holding a family member's informations
+ */
 export class Member extends ValueObject<MemberProps> {
 
     public static create(member: MemberConstructor): Member {
@@ -54,24 +62,21 @@ export class Member extends ValueObject<MemberProps> {
                             degre: member.attributes.degre,
                             ordre: member.attributes.ordre,
                             status: member.attributes.status,
-                            spouse: member.attributes.spouse || '', //TODO fault tolerance
-                            branch: 'unassessed',
-                            isReprésenté: 'unassessed',
-                            isReprésentant: 'unassessed',
-                            legalRights: member.attributes.legalRights || 'unassessed',
+                            spouse: member.attributes.spouse || '',
+                            branch: member.attributes.branch || 'unassigned',
+                            isReprésenté: member.attributes.isReprésenté === false || 
+                                          member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
+                            isReprésentant: member.attributes.isReprésentant === false || 
+                                            member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
+                            legalRights: member.attributes.legalRights === 0 || 
+                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' //wtf js
                         },
                     }
                 })
         }
     }
 
-    set isReprésenté (value: Representable) {
-        this.props.value.attributes.isReprésenté = value
-    }
 
-    set isReprésentant (value: Representant) {
-        this.props.value.attributes.isReprésentant = value
-    }
 
     set legalRights (value: LegalRights) {
         this.props.value.attributes.legalRights = value
@@ -101,10 +106,20 @@ export class Member extends ValueObject<MemberProps> {
         return this.props.value.attributes.legalRights
     }
 
-    isReprésentableIn(members: Family): Representable {
+    /** Create new immutable member based on an existent one.
+     * @argument attributesToUpdate POJO that includes new values that you want to change. 
+     * @returns new instance of the same type and with new values.
+     */
+    public copyWith (attributesToUpdate: { [P in keyof MemberAttributes]?: MemberAttributes[P] }): Member {
+        return Member.create(
+            Object.assign({}, this.props.value, 
+                Object.assign({}, this.props.value.attributes, {attributes: {...this.props.value.attributes, ...attributesToUpdate}})));
+    }
+
+    isReprésentéIn(family: Family): Representable {
         return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) && 
                !this.isEligibleToInherit() && 
-                this.hasChildEligibleToInheritIn(members)
+                this.hasChildEligibleToInheritIn(family)
     }
 
     belongsTo(ordre: Ordre): boolean {
@@ -123,18 +138,24 @@ export class Member extends ValueObject<MemberProps> {
                 .length !== 0
     }
 
-    isRepresentativeIn(members: Family) {
-        return this.isDescendantOfARepresenté(members) && this.isEligibleToInherit()
+    isReprésentantIn(family: Family): boolean {
+        return this.isDescendantOfARepresenté(family)
     }
 
-    isDescendantOfARepresenté(members: Family) {
-        return findParents(members, this.props.value.member_id)
+    isDescendantOfARepresenté(family: Family): boolean {
+        return family.findParentsOf(this.props.value.member_id)
                 .filter(member => member !== undefined ? member.isReprésenté : null)
                 .length !== 0
     }
-    
+
+    isIn (members: Member[]): boolean {
+        return members
+                .map(member => member.member_id)
+                .includes(this.member_id)
+    }   
 }
 
-type Representable = boolean | 'unassessed'
-type Representant = boolean | 'unassessed'
-type LegalRights = number | 'unassessed'
+export type Branch = 'paternelle' | 'maternelle' | 'unassigned';
+export type Representable = boolean | 'unassigned';
+export type Representant = boolean | 'unassigned';
+export type LegalRights = number | 'unassigned';

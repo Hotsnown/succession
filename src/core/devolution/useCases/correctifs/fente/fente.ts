@@ -1,5 +1,4 @@
 import { Family } from "../../../entities";
-import { findParents } from "../../utils";
 import { isMother, isFather, isAscendantOfFather, isAscendantOfMother, isParentOfDeCujus} from './utils'
 import * as R from 'ramda'
 
@@ -41,7 +40,7 @@ export function assignFenteAscendante(family: Family) {
         (family: Family): Family => {
                 family.members
                     .flatMap(member =>
-                        isAscendantOfMother(findParents(family, member.member_id), family))
+                        isAscendantOfMother(family.findParentsOf(member.member_id), family))
                     .forEach(member =>
                         member.attributes.branch = 'maternelle')
                 return family
@@ -51,7 +50,7 @@ export function assignFenteAscendante(family: Family) {
         (family: Family): Family => {
             family.members
                 .flatMap(member =>
-                    isAscendantOfFather(findParents(family, member.member_id), family))
+                    isAscendantOfFather(family.findParentsOf(member.member_id), family))
                 .forEach(member =>
                     member.attributes.branch = 'paternelle')
             return family
@@ -60,11 +59,11 @@ export function assignFenteAscendante(family: Family) {
     const extractAscendants =
         (family: Family): Family => {
             family.members
-                .map(c => findParents(family, c.member_id).map(c => c?.member_id))
+                .map(c => family.findParentsOf(c.member_id).map(c => c?.member_id))
                 .map(c => family.findMember(c[0]))
                 .forEach(member => 
                     member
-                    ? member.attributes.branch === 'unassessed'
+                    ? member.attributes.branch === 'unassigned'
                         ? member.attributes.branch = 'maternelle'
                         : null
                     : null)

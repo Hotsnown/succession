@@ -23,15 +23,15 @@ export enum Degree {
  */
 export class Degrees extends ValueObject<DegreesProps> {
 
-    public static create(heirs: Family): Degrees {
-        if (heirs === undefined || heirs === null || heirs.members.length < 0) {
-            throw new Error()
-        } else {
-            return new Degrees({ 
-                value: byDegre(heirs.members),
+    public static create(family: Family): Degrees {
+        if (family === undefined || family === null || family.members.length < 0) throw new Error()
+        if (family.members.some(member => member === undefined)) throw new Error()
+
+        return new Degrees(
+            { 
+                value: byDegre(family.members),
                 degrees: [Degree.Degree1, Degree.Degree2, Degree.Degree3, Degree.Degree4, Degree.Degree5, Degree.Degree6],
             })
-        }
     }
 
     get value () {
@@ -39,41 +39,38 @@ export class Degrees extends ValueObject<DegreesProps> {
     }
 
     get firstAppliableDegree() {
-        for (const degre of this.props.degrees) {
+        for (const degre in this.props.degrees) {
             if (this.value[degre] !== undefined) {
-                return degre
+                if(this.atLeastOneMemberEligibleToInheritIn(degre)) {
+                    return degre
+                }
             }
         }
         return Degree.Degree6 //TODO Better Error Handling
     }
 
-    getFirstAppliableDegree(filteredMembers: Family, family: Family): Family {
+    private atLeastOneMemberEligibleToInheritIn(degre: string) {
+        return this.props.value[degre].some(member => member.isEligibleToInherit());
+    }
 
-        const appliableDegree = Degrees
-                    .create(filteredMembers)
-                    .value[this.firstAppliableDegree]
-                    .map(member => member.member_id)
-                    .filter(member => member !== undefined)
+    getMembersOfDegre(querriedDegree: Degree, family: Family): Member[] {
+        return Degrees
+                .create(family)
+                .value[querriedDegree]
+                //.map(memberOfSameDegre => {console.assert(memberOfSameDegre.attributes.degre === querriedDegree); return memberOfSameDegre})
+    }
 
-        family.members
-            .filter(member => appliableDegree.includes(member.member_id))
-            .forEach(
-                member => member.legalRights = 1 / appliableDegree.length
-            )
-        family.members
-            .filter(member => !appliableDegree.includes(member.member_id))
-            .forEach(
-                member => member.legalRights = 0
-            )
-
-
-        return family
+    getFirstAppliableDegreeMembers(filteredMembers: Family, family: Family): Member[] {
+        return Degrees
+                .create(filteredMembers)
+                .value[this.firstAppliableDegree]
     }
 }
 
-const byDegre = R.groupBy(function (heir: Member) {
-    const degre = heir.attributes.degre
-    return degre === 1 ? '1' :
+const byDegre = R.groupBy(function (member: Member) {
+    const degre = member.attributes.degre
+    return degre === 0 ? 'deCujus' :
+           degre === 1 ? '1' :
            degre === 2 ? '2' :
            degre === 3 ? '3' :
            degre === 4 ? '4' :

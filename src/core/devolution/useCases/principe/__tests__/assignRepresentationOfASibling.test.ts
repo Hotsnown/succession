@@ -1,4 +1,4 @@
-import { Status, Family } from '../../../../entities'
+import { Status, Family, Qualification } from '../../../entities'
 
 
 it('should be appliable when members are child of a sibling', () => {
@@ -53,9 +53,8 @@ it('should be appliable when members are child of a sibling', () => {
         },
     ]
 
-    const {members} = Family
-    .create( firstOrderMembers)
-    .assignRepresentation()
+    const family = Family.create(firstOrderMembers)
+    const {members} = new Qualification(family).assignRepresentation()
 
     expect(members
         .filter(member => member.isReprésentant)
