@@ -1,5 +1,5 @@
-import { Status, Family } from '../../../entities'
-import { getSolution } from '../..'
+import { Status, Family } from '../../entities'
+import { getSolutionController } from '..'
 
 describe("Respect de l'incpacité", () => {
     it('should not give legalRights when there is no heirs', () => {
@@ -16,9 +16,9 @@ describe("Respect de l'incpacité", () => {
         ]
     
         const family = Family.create(noMember)
-        const deCujus = getSolution(family).findMember('deCujus')
+        const deCujus = getSolutionController(family).findMember('deCujus')
     
-        expect(deCujus.legalRights).toBe('unassigned')
+        expect(deCujus.legalRights).toBe('unqualified')
     })
 
     it('should not not give legalRights to deceased members in Degre1', () => {
@@ -52,7 +52,7 @@ describe("Respect de l'incpacité", () => {
             }
         ]
 
-        const solution = getSolution(Family.create(oneDeadInSameDegree))
+        const solution = getSolutionController(Family.create(oneDeadInSameDegree))
         const validSon = solution.findMember('validSon')
         const deadSon = solution.findMember('deadSon')
         expect(validSon.legalRights).toBe(1)
@@ -99,7 +99,7 @@ describe("Respect de l'incpacité", () => {
             }
         ]
 
-        const solution = getSolution(Family.create(oneDeadInSameDegreeTwo))
+        const solution = getSolutionController(Family.create(oneDeadInSameDegreeTwo))
         const deadGrandSon = solution.findMember('deadGrandSon')
         const validGrandSon = solution.findMember('validGrandSon')
 
@@ -161,7 +161,7 @@ describe('Respect du degré', () => {
             },
         ]
     
-        const solution = getSolution(Family.create(firstDegreeMember))
+        const solution = getSolutionController(Family.create(firstDegreeMember))
         const child1 = solution.findMember('child1')
         const child2 = solution.findMember('child2')
         const child3 = solution.findMember('child3')
@@ -222,7 +222,7 @@ describe('Respect du degré', () => {
                 "member_id": "maggie"
             },
         ]
-        const solution = getSolution(Family.create(secondDegreesMembers))
+        const solution = getSolutionController(Family.create(secondDegreesMembers))
         const lisa = solution.findMember('lisa')
         const maggie = solution.findMember('maggie')
         const bart = solution.findMember('bart')
@@ -276,7 +276,7 @@ describe('Respect du degré', () => {
             }
         ]
     
-        const solution = getSolution(Family.create(thirdDegreesMembers))
+        const solution = getSolutionController(Family.create(thirdDegreesMembers))
         const grandGrandchild1 = solution.findMember('grandGrandchild1')
         const grandGrandchild2 = solution.findMember('grandGrandchild2')
         const deadSon = solution.findMember('deadSon')
@@ -337,7 +337,7 @@ describe('Respect du degré', () => {
             }
         ]
     
-        const solution = getSolution(Family.create(fourthDegreesMembers))
+        const solution = getSolutionController(Family.create(fourthDegreesMembers))
         const deadGrandchild2 = solution.findMember('deadGrandchild')
         const grandGrandGrandchild1 = solution.findMember('grandGrandGrandchild')
     
@@ -405,7 +405,7 @@ describe('Respect du degré', () => {
             }
         ]
 
-        const solution = getSolution(Family.create(fifthDegreesMembers))
+        const solution = getSolutionController(Family.create(fifthDegreesMembers))
         const grandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandchild')
     
         expect(grandGrandGrandGrandchild.legalRights).toStrictEqual(1)
@@ -481,7 +481,7 @@ describe('Respect du degré', () => {
 
         ]
 
-        const solution = getSolution(Family.create(sixthDegree))
+        const solution = getSolutionController(Family.create(sixthDegree))
         const grandGrandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandGrandchild')
     
         expect(grandGrandGrandGrandGrandchild.legalRights).toStrictEqual(1)
@@ -545,14 +545,16 @@ describe('Respect de la représentation', () => {
             }
         ]
     
-        const solution = getSolution(Family.create(oneRepresentant))
+        const solution = getSolutionController(Family.create(oneRepresentant))
+
         const normalHeir = solution.findMember('normalHeir')
         const représentant1 = solution.findMember('représentant1')
         const représentant2 = solution.findMember('représentant2')
         const représenté = solution.findMember('représenté')
+
+        expect(normalHeir.legalRights).toStrictEqual(1/2)
         expect(représentant1.legalRights).toStrictEqual(1/4)
         expect(représentant2.legalRights).toStrictEqual(1/4)
-        expect(normalHeir.legalRights).toStrictEqual(1/2)
         expect(représenté.legalRights).toStrictEqual(0)
 
     })
@@ -631,7 +633,7 @@ describe('Respect de la représentation', () => {
             }
         ]
     
-        const solution = getSolution(Family.create(oneRepresentéTwoNormalHeirsThreeRepresentants))
+        const solution = getSolutionController(Family.create(oneRepresentéTwoNormalHeirsThreeRepresentants))
 
         const normalHeir1 = solution.findMember('normalHeir1')
         const normalHeir2 = solution.findMember('normalHeir2')
@@ -640,11 +642,11 @@ describe('Respect de la représentation', () => {
         const représentant3 = solution.findMember('représentant3')
         const représenté = solution.findMember('représenté')
 
+        expect(normalHeir1.legalRights).toStrictEqual(1/3)
+        expect(normalHeir2.legalRights).toStrictEqual(1/3)
         expect(représentant1.legalRights).toStrictEqual(1/9)
         expect(représentant2.legalRights).toStrictEqual(1/9)
         expect(représentant3.legalRights).toStrictEqual(1/9)
-        expect(normalHeir1.legalRights).toStrictEqual(1/3)
-        expect(normalHeir2.legalRights).toStrictEqual(1/3)
         expect(représenté.legalRights).toStrictEqual(0)
 
     })
@@ -724,8 +726,8 @@ describe('Respect de la représentation', () => {
                 "member_id": "recursiveReprésentanté"
             }
         ]
-    
-        const solution = getSolution(Family.create(recursiveReprésentation))
+        const family = Family.create(recursiveReprésentation)
+        const solution = getSolutionController(family)
 
         const normalHeir = solution.findMember('normalHeir')!
         const représentant1 = solution.findMember('représentant1')
@@ -734,9 +736,9 @@ describe('Respect de la représentation', () => {
         const représenté = solution.findMember('représenté')
         const recursiveReprésentanté = solution.findMember('recursiveReprésentanté')
 
+        expect(normalHeir.legalRights).toStrictEqual(1/2)
         expect(représentant1.legalRights).toStrictEqual(1/6)
         expect(représentant2.legalRights).toStrictEqual(1/6)
-        expect(normalHeir.legalRights).toStrictEqual(1/2)
         expect(représenté.legalRights).toStrictEqual(0)
         expect(deadReprésentant.legalRights).toStrictEqual(0)
         expect(recursiveReprésentanté.legalRights).toStrictEqual(1/6)

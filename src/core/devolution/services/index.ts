@@ -1,0 +1,5 @@
+export * from './withoutSpouseStrategy'
+export * from './ordre1'
+export * from './ordre2'
+export * from './ordre3'
+export * from './ordre4'

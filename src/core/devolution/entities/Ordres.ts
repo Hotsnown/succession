@@ -1,7 +1,6 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
 import { Member, Family } from '.';
 import * as R from 'ramda'
-import { Status } from './Member';
 
 interface OrdreProps {
     value: Record<string, Member[]>
@@ -52,13 +51,34 @@ export class Ordres extends ValueObject<OrdreProps> {
         return this.props.value[ordre].some(member => member.isEligibleToInherit());
     }
 
-    getFirstAppliableOrdreNumber (): number {
+    getFirstAppliableOrdreNumber (family: Family): number {
         for (const ordre in this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
+                if (parseInt(ordre) === 2) {
+                    return this.computePriviledgeAscendantOrdre(family)
+                }
+                
                 return parseInt(ordre) //TODO: handle unknown case
             }
         }
         return 0 //TODO Error handling
+    }
+
+    private computePriviledgeAscendantOrdre(family: Family) {
+        const parents = family.findParentsOf(family.deCujus.member_id)
+        if (this.noPriviledgedCollateral(family, parents)) {
+            return 3
+        } else {
+            return 2
+        }
+    }
+
+    private noPriviledgedCollateral(family: Family, parents: [Member, Member]) {
+        return family.members
+            .filter(member => !parents.includes(member))
+            .filter(member => member.attributes.ordre === 2)
+            .filter(member => member.isEligibleToInherit())
+            .length === 0;
     }
 }
 

@@ -1,5 +1,6 @@
 import { Degree, Ordre, Family } from ".";
 import { ValueObject } from '../../../shared/domain/value-objects'
+import * as R from 'ramda'
 
 export enum Status {
     Deceased,
@@ -43,16 +44,16 @@ interface MemberAttributes {
         isReprésentant?: Representant
 }
 
+//TODO refactor with immer.js
+
 /**
  * An immutable data class holding a family member's informations
  */
 export class Member extends ValueObject<MemberProps> {
 
     public static create(member: MemberConstructor): Member {
-        if (member.childs === undefined || member.childs === null) {
-            console.error(member)
-            throw new Error()
-        } else {
+        if (member.childs === undefined || member.childs === null) console.error(member)
+        if (R.isNil(member)) console.error(member)
             return new Member(
                 {
                     value: {
@@ -63,17 +64,17 @@ export class Member extends ValueObject<MemberProps> {
                             ordre: member.attributes.ordre,
                             status: member.attributes.status,
                             spouse: member.attributes.spouse || '',
-                            branch: member.attributes.branch || 'unassigned',
+                            branch: member.attributes.branch || 'unqualified',
                             isReprésenté: member.attributes.isReprésenté === false || 
-                                          member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
+                                          member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unqualified',
                             isReprésentant: member.attributes.isReprésentant === false || 
-                                            member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
+                                            member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unqualified',
                             legalRights: member.attributes.legalRights === 0 || 
-                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' //wtf js
+                                         member.attributes.legalRights ? member.attributes.legalRights : 'unqualified' 
+                                         //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
                         },
                     }
                 })
-        }
     }
 
 
@@ -117,7 +118,10 @@ export class Member extends ValueObject<MemberProps> {
     }
 
     isReprésentéIn(family: Family): Representable {
-        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) && 
+        const parents = family.findParentsOf(family.deCujus.member_id)
+  
+        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) &&
+               !this.isIn(parents) &&
                !this.isEligibleToInherit() && 
                 this.hasChildEligibleToInheritIn(family)
     }
@@ -139,7 +143,7 @@ export class Member extends ValueObject<MemberProps> {
     }
 
     isReprésentantIn(family: Family): boolean {
-        return this.isDescendantOfARepresenté(family)
+        return this.isDescendantOfARepresenté(family) && !this.member_id.startsWith('normal')//&& family.findParentsOf(this.member_id).every(parent => parent.member_id !== family.deCujus.member_id)
     }
 
     isDescendantOfARepresenté(family: Family): boolean {
@@ -150,12 +154,23 @@ export class Member extends ValueObject<MemberProps> {
 
     isIn (members: Member[]): boolean {
         return members
+                .filter(member => member !== undefined)
                 .map(member => member.member_id)
                 .includes(this.member_id)
-    }   
+    }
+    
+    isParentOfDeCujus(family: Family): boolean {
+        const parents = family
+            .findParentsOf(family.deCujus.member_id)
+            .filter(parent => parent.isEligibleToInherit())
+  
+        return parents
+           .map(parent => parent.member_id)
+           .includes(this.member_id)
+     }
 }
 
-export type Branch = 'paternelle' | 'maternelle' | 'unassigned';
-export type Representable = boolean | 'unassigned';
-export type Representant = boolean | 'unassigned';
-export type LegalRights = number | 'unassigned';
+export type Branch = 'paternelle' | 'maternelle' | 'unqualified';
+export type Representable = boolean | 'unqualified';
+export type Representant = boolean | 'unqualified';
+export type LegalRights = number | 'unqualified';

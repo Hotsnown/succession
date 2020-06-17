@@ -1,4 +1,5 @@
-import { Family } from "./Family"
+import { Family, Branch, isMother, isFather, isAscendantOfFather, isAscendantOfMother } from "."
+import * as R from 'ramda'
 
 export class Qualification {
     family: Family
@@ -8,25 +9,116 @@ export class Qualification {
     }
 
     /**
-     * If a descendant or a sibling predeceases the de cujus, his share goes to his descendants
-     * by representation.
-     * @param members Family structure under examination
-     * @example If a father leaves property to his daughter, and at his 
-     * death the daughter has already died, leaving two grandchildren, the grandchildren would 
-     * take their mother’s share.
+     * A representant is a descendant of a predeceased heir (a représenté).
      **/
-    assignRepresentation(): Family {
+    assignRepresentation(family: Family): Family {
 
         const assignReprésenté =
             (family: Family) =>
                 family.copyWith(family.members.map(member =>
-                    member.copyWith({isReprésenté : member.isReprésentéIn(family)})))
+                    member.copyWith({ isReprésenté: member.isReprésentéIn(family) })))
 
         const assignReprésentant =
             (family: Family) =>
                 family.copyWith(family.members.map(member =>
-                    member.copyWith({isReprésentant : member.isReprésentantIn(family)})))
-        
-        return assignReprésentant(assignReprésenté(this.family))
+                    member.copyWith({ isReprésentant: member.isReprésentantIn(family) })))
+
+        return R.pipe(
+            assignReprésentant,
+            assignReprésenté,
+        )(family)
     }
+
+
+    /**
+     * - A member belongs to the **maternal branch** if he is an ascendant of the de cujus' mother
+     * - A member belongs to the **paternal branch** if he is an ascendant of the de cujus' father
+     */
+    assignFenteAscendante(family: Family) {
+
+        const deCujus = family.props.value.deCujus
+
+        const extractMother =
+            (family: Family): Family => {
+                family.members
+                    .filter(member =>
+                        member.isParentOfDeCujus(family) &&
+                        isMother(member))
+                    .forEach(member =>
+                        member.attributes.branch = 'maternelle')
+                return family
+            }
+
+        const extractFather =
+            (family: Family): Family => {
+                family.members
+                    .filter(member =>
+                        member.isParentOfDeCujus(family) &&
+                        isFather(member))
+                    .forEach(member =>
+                        member.attributes.branch = 'paternelle')
+
+                return family
+            }
+
+        const extractMaternalGrandParents =
+            (family: Family): Family => {
+                family.members
+                    .flatMap(member =>
+                        isAscendantOfMother(family.findParentsOf(member.member_id), family))
+                    .forEach(member =>
+                        member.attributes.branch = 'maternelle')
+                return family
+            }
+
+        const extractPaternalGrandParents =
+            (family: Family): Family => {
+                family.members
+                    .flatMap(member =>
+                        isAscendantOfFather(family.findParentsOf(member.member_id), family))
+                    .forEach(member =>
+                        member.attributes.branch = 'paternelle')
+                return family
+            }
+
+        const extractAscendants =
+            (family: Family, targetBranch: Branch): Family => {
+
+                function extract(family: Family): Family {
+                    family.members
+                        .filter(member => member.attributes.branch === targetBranch)
+                        .map(member => family.findParentsOf(member.member_id)
+                            .filter(member => member !== undefined)
+                            .map(member => member.member_id)
+                            .map(member => family.findMember(member))
+                            .forEach(member =>
+                                member
+                                    ? member.attributes.branch === 'unqualified'
+                                        ? member.attributes.branch = targetBranch
+                                        : null
+                                    : null))
+
+                    return family
+                }
+
+                let recursiveFamily = family
+                for (let n = 0; n < 6; n++) {
+                    recursiveFamily = extract(recursiveFamily)
+                }
+                return recursiveFamily
+            }
+
+        const extractPaternalAscendants = R.partialRight(extractAscendants, ['paternelle'])
+        const extractMaternalAscendants = R.partialRight(extractAscendants, ['maternelle'])
+
+        return R.pipe(
+            extractMother,
+            extractFather,
+            extractMaternalGrandParents,
+            extractPaternalGrandParents,
+            extractPaternalAscendants,
+            extractMaternalAscendants,
+        )(family)
+    }
+
 }

@@ -1,4 +1,4 @@
-import { repartitionParTête } from './useCases/principe/withoutSpouse'
+import { getSolution } from './services/withoutSpouseStrategy'
 import { Family } from './entities'
 
 type IDevolution = {
@@ -7,7 +7,7 @@ type IDevolution = {
 
 export class DevolutionPresenter {
     devolutionEngine: IDevolution
-    constructor(devolutionEngine: IDevolution = {getDevolution: repartitionParTête}) {
+    constructor(devolutionEngine: IDevolution = {getDevolution: getSolution}) {
         this.devolutionEngine = devolutionEngine
     }
 

@@ -1,4 +1,4 @@
-import { Status, Family, Member } from '../../../entities'
+import { Status, Family, Member } from '../../entities'
 import { withSpouse } from '../withSpouse'
 
 it('find who is the spouse', () => {

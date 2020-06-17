@@ -6,7 +6,7 @@ interface ValueObjectProps {
 }
 
 /**
- * @desc ValueObjects are objects that we determine tmember
+ * @desc ValueObjects are objects that we determine member
  * equality through tmember structrual property.
  */
 

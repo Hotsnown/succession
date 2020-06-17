@@ -1,4 +1,4 @@
-import { Status, Family, Qualification, Devolution } from '../../../entities'
+import { Status, Family, Qualification, Devolution } from '..'
 
 it('should give to the représentant the same right as the other members', () => {
     const oneRepresentantOneValid = [
@@ -47,16 +47,13 @@ it('should give to the représentant the same right as the other members', () =>
 
     const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
     const devolution = new Devolution(family)
-        
-    expect(
-        devolution.computeRepresentation(family)
-        .findMember('alphonse')
-        .legalRights).toStrictEqual(1/2)
+    const solution = devolution.computeRepresentation(family)
 
-    expect(
-        devolution.computeRepresentation(family)
-        .findMember('validDescendant')
-        .legalRights).toStrictEqual(1/2)
+    const alphonse = solution.findMember('alphonse')
+    const validDescendant = solution.findParentsOf('validDescendant')
+        
+    expect(alphonse.legalRights).toStrictEqual(1/2)
+    expect(validDescendant.length).toStrictEqual(1/2)
 })
 
 it('should not give to the représentant the same right as the other members when representant is dead', () => {
@@ -106,14 +103,12 @@ it('should not give to the représentant the same right as the other members whe
 
     const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
     const devolution = new Devolution(family)
-    
-    expect(
-        devolution.computeRepresentation(family)
-        .findMember('alphonse')
-        .legalRights).toStrictEqual(0)
 
-    expect(
-        devolution.computeRepresentation(family)
-        .findMember('validDescendant')
-        .legalRights).toStrictEqual(1)
+    const solution = devolution.computeRepresentation(family)
+
+    const alphonse = solution.findMember('alphonse')
+    const validDescendant = solution.findMember('validDescendant')
+
+    expect(alphonse.legalRights).toStrictEqual(0)
+    expect(validDescendant.legalRights).toStrictEqual(1)
 })

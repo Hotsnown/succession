@@ -38,6 +38,10 @@ export class Degrees extends ValueObject<DegreesProps> {
         return this.props.value;
     }
 
+    static get degrees() {
+        return [Degree.Degree1, Degree.Degree2, Degree.Degree3, Degree.Degree4, Degree.Degree5, Degree.Degree6]
+    }
+
     get firstAppliableDegree() {
         for (const degre in this.props.degrees) {
             if (this.value[degre] !== undefined) {
@@ -53,10 +57,10 @@ export class Degrees extends ValueObject<DegreesProps> {
         return this.props.value[degre].some(member => member.isEligibleToInherit());
     }
 
-    getMembersOfDegre(querriedDegree: Degree, family: Family): Member[] {
-        return Degrees
+    static getMembersOfDegre(querriedDegree: Degree, family: Family): Family {
+        return Family.create(Degrees
                 .create(family)
-                .value[querriedDegree]
+                .value[querriedDegree])
                 //.map(memberOfSameDegre => {console.assert(memberOfSameDegre.attributes.degre === querriedDegree); return memberOfSameDegre})
     }
 

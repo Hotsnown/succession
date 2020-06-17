@@ -1,22 +1,17 @@
-import { Family, Degrees, Ordres, Representable, Member } from '../entities'
-
-interface Heir extends Member { }
+import { Family, Degrees, Ordres, Representable, Member, Parents } from '../entities'
+import * as R from 'ramda'
 
 export class Devolution {
-    family: Family
-    heirs: Heir[]
-    n: number
+    private family: Family
 
     constructor(family: Family) {
         this.family = family
-        this.heirs = []
-        this.n = 0
     }
 
     /**
    * Members in the most favored class inherit to exclusion of other classes.
    */
-    getMostFavoredMembersByOrdre(): Family {
+    public getMostFavoredMembersByOrdre(): Family {
         return Ordres
             .create(this.family)
             .getFirstAppliableOrdre()
@@ -27,7 +22,7 @@ export class Devolution {
      * inherit to the exclusion of more distant relatives in that class.
      * @param filteredMembers members in the most favored class
      */
-    getMostFavoredMembersByDegre(mostFavoredOrder: Family): Member[] {
+    public getMostFavoredMembersByDegre(mostFavoredOrder: Family): Member[] {
         return Degrees
             .create(this.family)
             .getFirstAppliableDegreeMembers(mostFavoredOrder, this.family)
@@ -36,25 +31,28 @@ export class Devolution {
     /** 
      * Each heir who comes to the succession of their chief 
      * receives a share corresponding to their own vocation,
-     *  that is to say the share which is personally assigned to them. 
+     * that is to say the share which is personally assigned to them.
+     * @param filteredMembers
+     * @param family
+     * @param shares
      * */
-    repartitionParTête(filteredMembers: Family, family: Family): Family {
+    public repartitionParTête(filteredMembers: Family, family: Family, shares = 1): Family {
 
-        const shareByHead = (members: Member[]): number => 1 / members.length    
-
-        const appliableDegree = Degrees
+        const priviledgedMembers = Degrees
             .create(family)
             .getFirstAppliableDegreeMembers(filteredMembers, family)
+            .filter(member => member.isEligibleToInherit() || member.isReprésenté)
 
-        return family.copyWith(family.members
-            .map(member => 
-                member.copyWith({ legalRights: member.isIn(appliableDegree) 
-                    ? shareByHead(appliableDegree) 
-                    : 0 })
-            ))
+        const getLegalRightsByHead = (member: Member): number => member.isIn(priviledgedMembers) ? shareByHead(priviledgedMembers, shares) : 0
+        const shareByHead = (members: Member[], shares: number): number => shares / members.length
+
+        const updatedMembers = family.members
+            .map(member => member.copyWith({ legalRights: getLegalRightsByHead(member) }))
+
+        return family.copyWith(updatedMembers)
     }
 
-    excludeInheligible(family: Family): Family {
+    public excludeInheligible(family: Family): Family {
         return Family.create(family.members.filter(member => member.isEligibleToInherit()))
     }
 
@@ -69,71 +67,47 @@ export class Devolution {
      *     are divided between his child. Repeat first step between childs if
      *     a child is deceased.
      */
-    computeRepresentation(family: Family): Family {       
-        this.n = this.n + 1
-        const immutableFamily = this.repartitionParTête(this.family, this.family)
-        const getSameDegres = (n: number): Family => {
-            switch(n) {
-                case 1: return this.repartitionParTête(Family.create(Degrees.create(family).getMembersOfDegre(1, family)), family)
-                case 2: return Family.create(Degrees.create(family).getMembersOfDegre(2, family))
-                default: throw new Error('Should not be reached')
-            }
-        }
+    public computeRepresentation(family: Family): Family {
 
-        //base condition
-        if(this.n === 3) {
-            return family
-        } else {
-            return this.computeRepresentation(this.assignLegalRightsComputation(family, getSameDegres(this.n), immutableFamily))
+        let recursiveFamily = this.repartitionParTête(family, family)
+        for (let n=1; n < 3; n++) {
+            const membersOfCurrentDegres = Degrees.getMembersOfDegre(n, recursiveFamily)
+            recursiveFamily = this.assignLegalRightsComputation(recursiveFamily, membersOfCurrentDegres)
         }
+        return recursiveFamily
     }
 
-    assignLegalRightsComputation(family: Family, sameDegres: Family, immutableFamily: Family): Family {        
-        for (const member of sameDegres.members) {
-            if (isSouche(member)) {
-                return distributeReprésentéShareBetweenReprésentant(sameDegres, member, family, immutableFamily, this.n)
-            }
+    private assignLegalRightsComputation(family: Family, membersOfCurrentDegres: Family): Family {
+        const rootOfSouches = souchesIn(membersOfCurrentDegres)
+        for (const rootOfsouche of rootOfSouches) { //TODO handle multiple roots
+            return Family.create(
+                family.members.map(member => updateMember(member, rootOfsouche))
+            )
         }
         return family
     }
 }
 
-const isSouche = (sameDegre: Member): Representable => sameDegre.isReprésenté
-
-function distributeReprésentéShareBetweenReprésentant(sameDegres: Family, member: Member, family: Family, immutableFamily: Family, n: number): Family {
-    return n === 1
-        ? sameDegres
-            .copyWith(updatedSouche(member, family)
-                .concat(updatedReprésenté(family, 'représenté'))
-                .concat(otherMembers(immutableFamily)))
-        : sameDegres
-            .copyWith(updatedSouche(member, family)
-                .concat(updatedReprésenté(sameDegres, 'deadReprésentant'))
-                .concat(otherMembers(immutableFamily))
-                .concat(addReprésentants(family))
-                .concat(family.findMember('représenté')))
+const updateMember = (member: Member, rootOfsouche: Member) => {
+    //WARNINF, you may need to use family.findMember(rootOfSourche) 
+    //when rootOfSouche is updated before membersOfSouche to prevent race conditions
+    if (memberIsPartOfSouche(rootOfsouche, member)) {
+        return member.copyWith({ legalRights: distributeSharesOf(rootOfsouche) })
+    } else if (memberIsRootOfSouche(member, rootOfsouche)) {
+        return member.copyWith({ legalRights: 0 })
+    } else {
+        return member
+    }
 }
 
-const equalShareIn = (souche: Member): number => (souche.legalRights as number) / souche.childs.length
-const updatedSouche = (sameDegre: Member, family: Family) => {
-    return sameDegre.childs
-        .filter(souche => souche !== undefined)
-        .map(souche => family.findMember(souche))
-        .filter(souche => souche !== undefined)
-        .filter(souche => souche.isReprésentant)
-        .map(souche => souche.copyWith({ legalRights: equalShareIn(sameDegre) }))
-}
+const distributeSharesOf = (rootOfsouche: Member): number =>
+    (rootOfsouche.legalRights as number) / rootOfsouche.childs.length
 
-const otherMembers = (immutableFamily: Family): ConcatArray<Member> => {
-    return immutableFamily.members.filter(other => other.member_id.startsWith('normal') || 
-                                          other.member_id.startsWith('recursive') ||
-                                          other.member_id.startsWith('deCujus'))                         
-}
+const memberIsRootOfSouche = (member: Member, rootOfsouche: Member) =>
+    member.member_id === rootOfsouche.member_id
 
-const updatedReprésenté = (sameMember: Family, target: string): Member => {
-    return sameMember.findMember(target).copyWith({ legalRights: 0 })
-}
+const memberIsPartOfSouche = (rootOfsouche: Member, member: Member) => 
+    rootOfsouche.childs.includes(member.member_id) && member.isReprésentant
 
-const addReprésentants = (family: Family): Member[]=> {
-    return [family.findMember('représentant1'), family.findMember('représentant2')]
-}
+const souchesIn = (membersOfCurrentDegres: Family) =>
+    membersOfCurrentDegres.members.filter(member => member.isReprésenté)
