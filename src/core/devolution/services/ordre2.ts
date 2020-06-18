@@ -1,9 +1,9 @@
-import { Family, Devolution, Member, Status, Qualification } from '../entities'
+import { Family, Member, repartitionParTête, computeRepresentation, assignRepresentation } from '../entities'
 
 //TODO potential bug when there is only one parent in input
 
 export function OrdreTwoStrategy(family: Family): Family {
-    // 1/ QUALIFICATION
+    // 1/ qualifiedFamily
     //    Nombre de collatéraux = nombre de membres du degrés le plus proche + nombre de souche
     //    Nombre de parent survivant
     // 2/ CALCUL
@@ -15,52 +15,65 @@ export function OrdreTwoStrategy(family: Family): Family {
         .findParentsOf(family.deCujus.member_id)
         .filter(parent => parent.isEligibleToInherit())
 
-    switch(parents.length) {
+    switch (parents.length) {
         case 1: return oneParentStrategy(family, parents)
         case 2: return twoParentsStrategy(family, parents)
         case 0: return normalStrategy(family)
         default: throw new Error('Should not be reachable')
     }
-    } 
+}
 
-    function normalStrategy(family: Family): Family {
-        const qualification = new Qualification(family).assignRepresentation(family)
-        const devolution = new Devolution(qualification)
+function normalStrategy(family: Family): Family {
+    const qualifiedFamily = assignRepresentation(family)
 
-        const représentantsExist = qualification.members.some(member => member.isReprésentant)
+    const représentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)
 
-        if (représentantsExist) {
-            return devolution.computeRepresentation(qualification)
-        } else {
-            return devolution.repartitionParTête(qualification, qualification)
-        }
+    if (représentantsExist) {
+        return computeRepresentation(qualifiedFamily)
+    } else {
+        return repartitionParTête(qualifiedFamily, qualifiedFamily)
+    }
+}
+
+function oneParentStrategy(family: Family, parents: Member[]): Family {
+
+    const familyWithoutParents = Family.create(family.members.filter(member => !member.isIn(parents)))
+    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, 1 / 2)
+
+    return family.copyWith(family.members
+        .map(member => member.isIn(parents)
+            ? member.copyWith({ legalRights: 1 / 2 })
+            : member.copyWith({ legalRights: priviledgedMembers.findMember(member.member_id)!.legalRights })))
+}
+
+function twoParentsStrategy(family: Family, parents: Member[]): Family {
+
+    const qualifiedFamily = assignRepresentation(family)
+
+    const représentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)
+
+    const familyWithoutParents = Family.create(family.members.filter(member => !member.isIn(parents)))
+    const qualifiedFamilyWithoutParents = assignRepresentation(familyWithoutParents)
+
+    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, 1 / 2)
+    const priviledgedMemberswithReprésentantion = computeRepresentation(qualifiedFamilyWithoutParents, 2, 1 / 2)
+
+    if (représentantsExist) {
+        return family.copyWith(family.members
+            .map(member => member.copyWith({
+                legalRights: member.isIn(parents)
+                    ? 1 / 4
+                    : priviledgedMemberswithReprésentantion.findMember(member.member_id)!.legalRights
+            })))
+    } else {
+        return family.copyWith(family.members
+            .map(member => member.copyWith({
+                legalRights: member.isIn(parents)
+                    ? 1 / 4
+                    : priviledgedMembers.findMember(member.member_id) !== undefined
+                        ? priviledgedMembers.findMember(member.member_id)!.legalRights
+                        : 999
+            })))
     }
 
-    function oneParentStrategy(family: Family, parents: Member[]): Family {
-
-        const devolution = new Devolution(family)
-
-        const familyWithoutParents = Family.create(family.members.filter(member => !isParent(parents, member)))
-        const priviledgedMembers = devolution.repartitionParTête(familyWithoutParents, familyWithoutParents, 1/2)
-
-        return family.copyWith(family.members
-           .map(member => isParent(parents, member)
-              ? member.copyWith({ legalRights: 1 / 2 })
-              : member.copyWith({ legalRights: priviledgedMembers.findMember(member.member_id).legalRights})))
-     }
-
-     function twoParentsStrategy(family: Family, parents: Member[]): Family {
-        const devolution = new Devolution(family)
-
-        const familyWithoutParents = Family.create(family.members.filter(member => !isParent(parents, member)))
-        const priviledgedMembers = devolution.repartitionParTête(familyWithoutParents, familyWithoutParents, 1/2)
-
-        return family.copyWith(family.members
-           .map(member => member.copyWith({ legalRights: isParent(parents, member) ? 1 / 4 : priviledgedMembers.findMember(member.member_id).legalRights })))
-     }
-     
-     function isParent(parents: Member[], member: Member) {
-        return parents
-           .map(parent => parent.member_id)
-           .includes(member.member_id)
-     }
+}

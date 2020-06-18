@@ -19,7 +19,7 @@ export const isAscendantOfMother =
             .filter(member => isMother(member))
             .flatMap(mother => family.findParentsOf(mother.member_id)
                 .filter(ascendantOfMother => ascendantOfMother !== undefined)
-                .map(ascendantOfMother => family.findMember(ascendantOfMother.member_id))
+                .map(ascendantOfMother => family.findMember(ascendantOfMother.member_id)!)
             )
 
 export const isAscendantOfFather =
@@ -29,5 +29,5 @@ export const isAscendantOfFather =
             .filter(member => isFather(member))
             .flatMap(father => family.findParentsOf(father.member_id)
                 .filter(ascendantOfFather => ascendantOfFather !== undefined)
-                .map(ascendantOfFather => family.findMember(ascendantOfFather.member_id))
+                .map(ascendantOfFather => family.findMember(ascendantOfFather.member_id)!)
                 )

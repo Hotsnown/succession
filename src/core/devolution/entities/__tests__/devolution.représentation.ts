@@ -1,4 +1,4 @@
-import { Status, Family, Qualification, Devolution } from '..'
+import { Status, Family, computeRepresentation, assignRepresentation } from '..'
 
 it('should give to the représentant the same right as the other members', () => {
     const oneRepresentantOneValid = [
@@ -45,12 +45,12 @@ it('should give to the représentant the same right as the other members', () =>
         },
     ]
 
-    const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
-    const devolution = new Devolution(family)
-    const solution = devolution.computeRepresentation(family)
+    const family = Family.create(oneRepresentantOneValid)
+    const qualification = assignRepresentation(family)
+    const solution = computeRepresentation(qualification)
 
-    const alphonse = solution.findMember('alphonse')
-    const validDescendant = solution.findParentsOf('validDescendant')
+    const alphonse = solution.findMember('alphonse')!
+    const validDescendant = solution.findParentsOf('validDescendant')!
         
     expect(alphonse.legalRights).toStrictEqual(1/2)
     expect(validDescendant.length).toStrictEqual(1/2)
@@ -101,13 +101,12 @@ it('should not give to the représentant the same right as the other members whe
         },
     ]
 
-    const family = new Qualification(Family.create(oneRepresentantOneValid)).assignRepresentation()
-    const devolution = new Devolution(family)
+    const family = Family.create(oneRepresentantOneValid)
+    const qualification = assignRepresentation(family)
+    const solution = computeRepresentation(qualification)
 
-    const solution = devolution.computeRepresentation(family)
-
-    const alphonse = solution.findMember('alphonse')
-    const validDescendant = solution.findMember('validDescendant')
+    const alphonse = solution.findMember('alphonse')!
+    const validDescendant = solution.findMember('validDescendant')!
 
     expect(alphonse.legalRights).toStrictEqual(0)
     expect(validDescendant.legalRights).toStrictEqual(1)

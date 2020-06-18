@@ -50,10 +50,10 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
     
             const family = getSolutionController(Family.create(onlyOneParent))
             
-            const deCujus = family.findMember('deCujus')
-            const father = family.findMember('father')
-            const mother = family.findMember('mother')
-            const sibling1 = family.findMember('sibling1')
+            const deCujus = family.findMember('deCujus')!
+            const father = family.findMember('father')!
+            const mother = family.findMember('mother')!
+            const sibling1 = family.findMember('sibling1')!
         
             expect(deCujus.legalRights).toStrictEqual(0)
             expect(father.legalRights).toStrictEqual(0)
@@ -133,12 +133,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
 
         const family = getSolutionController(Family.create(secondOrdreMembers))
         
-        const deCujus = family.findMember('deCujus')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
-        const sibling1 = family.findMember('sibling1')
-        const sibling2 = family.findMember('sibling2')
-        const nephew = family.findMember('nephew')
+        const deCujus = family.findMember('deCujus')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
+        const sibling1 = family.findMember('sibling1')!
+        const sibling2 = family.findMember('sibling2')!
+        const nephew = family.findMember('nephew')!
     
         expect(deCujus.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(1/4)
@@ -146,6 +146,91 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
         expect(sibling1.legalRights).toStrictEqual(1/2)
         expect(sibling2.legalRights).toStrictEqual(0)
         expect(nephew.legalRights).toStrictEqual(0)
+    })
+
+    it('should give 25% to the two remaining parents (with representation)', () => {
+        const secondOrdreMembers = [
+            {
+                "childs": [],
+                "attributes": {
+                    "degre": 0,
+                    "ordre": 0,
+                    "status": Status.Deceased
+                },
+                "member_id": "deCujus"
+            },
+            {
+                "childs": [
+                    "deCujus",
+                    "normalSibling",
+                    "représentéSibling"
+                ],
+                "attributes": {
+                    "degre": 1,
+                    "ordre": 2,
+                    "status": Status.Valid
+                },
+                "member_id": "father"
+            },
+            {
+                "childs": [
+                    "deCujus",
+                    "normalSibling",
+                    "représentéSibling"
+                ],
+                "attributes": {
+                    "degre": 1,
+                    "ordre": 2,
+                    "status": Status.Valid
+                },
+                "member_id": "mother"
+            },
+            {
+                "childs": [],
+                "attributes": {
+                    "degre": 2,
+                    "ordre": 2,
+                    "status": Status.Valid
+                },
+                "member_id": "normalSibling"
+            },
+            {
+                "childs": [],
+                "attributes": {
+                    "degre": 3,
+                    "ordre": 2,
+                    "status": Status.Valid
+                },
+                "member_id": "représentantNephew"
+            },
+            {
+                "childs": [
+                    "représentantNephew"
+                ],
+                "attributes": {
+                    "degre": 2,
+                    "ordre": 2,
+                    "status": Status.Deceased
+                },
+                "member_id": "représentéSibling"
+            }
+        ]
+
+        const family = getSolutionController(Family.create(secondOrdreMembers))
+        
+        const deCujus = family.findMember('deCujus')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
+        const normalSibling = family.findMember('normalSibling')!
+        const représentéSibling = family.findMember('représentéSibling')!
+        const représentantNephew = family.findMember('représentantNephew')!
+    
+        expect(deCujus.legalRights).toStrictEqual(0)
+        expect(father.legalRights).toStrictEqual(1/4)
+        expect(mother.legalRights).toStrictEqual(1/4)
+        expect(normalSibling.legalRights).toStrictEqual(1/4)
+        expect(représentéSibling.legalRights).toStrictEqual(0)
+        expect(représentantNephew.legalRights).toStrictEqual(1/4)
     })
 })
 
@@ -220,12 +305,12 @@ describe('si parent survivant = 0', () => {
 
         const family = getSolutionController(Family.create(noParents))
         
-        const deCujus = family.findMember('deCujus')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
-        const sibling1 = family.findMember('sibling1')
-        const sibling2 = family.findMember('sibling2')
-        const nephew = family.findMember('nephew')
+        const deCujus = family.findMember('deCujus')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
+        const sibling1 = family.findMember('sibling1')!
+        const sibling2 = family.findMember('sibling2')!
+        const nephew = family.findMember('nephew')!
     
         expect(deCujus.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(0)
@@ -234,7 +319,7 @@ describe('si parent survivant = 0', () => {
         expect(sibling2.legalRights).toStrictEqual(0)
         expect(nephew.legalRights).toStrictEqual(0)
     })
-    it('should give 0% to deceased parents (no représentation)', () => {
+    it('should give 0% to deceased parents (with représentation)', () => {
         const noParents = [
             {
                 "childs": [],
@@ -304,12 +389,12 @@ describe('si parent survivant = 0', () => {
 
         const family = getSolutionController(Family.create(noParents))
         
-        const deCujus = family.findMember('deCujus')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
-        const sibling1 = family.findMember('sibling1')
-        const sibling2 = family.findMember('sibling2')
-        const nephew = family.findMember('nephew')
+        const deCujus = family.findMember('deCujus')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
+        const sibling1 = family.findMember('sibling1')!
+        const sibling2 = family.findMember('sibling2')!
+        const nephew = family.findMember('nephew')!
     
         expect(deCujus.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(0)

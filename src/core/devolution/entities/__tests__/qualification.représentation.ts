@@ -1,4 +1,4 @@
-import { Status, Family, Qualification } from '..'
+import { Status, Family, assignRepresentation } from '..'
 
 it('should not be appliable when members doesnt belong do Ordre 1', () => {
     const secondOrdreMembers = [
@@ -27,7 +27,7 @@ it('should not be appliable when members doesnt belong do Ordre 1', () => {
     ]
 
     const family = Family.create(secondOrdreMembers)
-    const {members} = new Qualification(family).assignRepresentation()
+    const {members} = assignRepresentation(family)
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -83,7 +83,7 @@ it('should not be appliable when members are not parent with the représenté', 
 
 
     const family = Family.create(unrelatedMembers)
-    const {members} = new Qualification(family).assignRepresentation()
+    const {members} = assignRepresentation(family)
 
     expect(members
         .filter(member => member.isReprésenté))
@@ -140,7 +140,7 @@ it('should be appliable when members belong to Ordre 1', () => {
     ]
 
     const family = Family.create(firstOrderMembers)
-    const {members} = new Qualification(family).assignRepresentation()
+    const {members} = assignRepresentation(family)
 
     expect(members
         .filter(member => member.isReprésentant)
@@ -208,7 +208,7 @@ it('should not work when a potential représentant' +
     ]
 
     const family = Family.create(deadAlphonse)
-    const {members} = new Qualification(family).assignRepresentation()
+    const {members} = assignRepresentation(family)
 
     expect(members
         .filter(member => member.isReprésentant)
@@ -269,7 +269,7 @@ it('should be appliable when members are child of a sibling', () => {
     ]
 
     const family = Family.create(firstOrderMembers)
-    const {members} = new Qualification(family).assignRepresentation()
+    const {members} = assignRepresentation(family)
 
     expect(members
         .filter(member => member.isReprésentant)

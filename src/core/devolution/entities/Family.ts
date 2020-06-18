@@ -21,7 +21,7 @@ export class Family extends ValueObject<FamilyProps> {
         if (R.isNil(members)) console.error('Validation Error : Family members can not be Nil.')
         if (members.some(member => member === undefined)) console.error('Validation Error : Family members can not be Nil.')
         if (haveDuplicates(members)) console.error('Invariant Error : Duplicates found.') //members.map(member => member.member_id))
-        if (sumOfLegalRightsExceedOneHundredPercent(members)) console.error('Invariant Error : Sum of legal rights exceeds 100%.', members.map(member => ({ id: member.member_id, legalRights: member.attributes.legalRights })))
+        if (sumOfLegalRightsExceedsOneHundredPercent(members)) console.error('Invariant Error : Sum of legal rights exceeds 100%.', members.map(member => ({ id: member.member_id, legalRights: member.attributes.legalRights })))
         if (moreThanOneDeCujus(members)) console.error('Invariant Error : More than one de cujus found.', members.filter(member => isDecujus(member)).map(deCujus => ({id: deCujus.member_id, attributes: deCujus.attributes})))
         if (invalidHeir(members)) console.error('Invariant Error : ineligible to inherit member has inheritance share.', members.filter(member => memberHasLegalRights(member) && MemberIsInvalid(member))
                                                                                                                          .map(member => ({id: member.member_id, status: member.attributes.status, legalRights: member.attributes.legalRights})))
@@ -49,11 +49,11 @@ export class Family extends ValueObject<FamilyProps> {
     }
 
     public findMember(querriedMember: string) {
-        return this.members.find(member => member.member_id === querriedMember)!
+        return this.members.find(member => member.member_id === querriedMember)
     }
 
     public findSpouseOf(knownSpouseName: string) {
-        return this.members.find(member => member.attributes.spouse === knownSpouseName)!
+        return this.members.find(member => member.attributes.spouse === knownSpouseName)
     }
 
     public findParentsOf = (childName: string): Parents => {
@@ -76,11 +76,11 @@ export class Family extends ValueObject<FamilyProps> {
             .filter(parent => parent.isEligibleToInherit())
     }
 
-    getMaternals(): Family {
+    public getMaternals(): Family {
         return Family.create(this.members.filter(member => member.attributes.branch === 'maternelle'))
     }
 
-    getPaternals(): Family {
+    public getPaternals(): Family {
         return Family.create(this.members.filter(member => member.attributes.branch === 'paternelle'))
     }
 }
@@ -96,18 +96,22 @@ function memberHasLegalRights(member: MemberConstructor): boolean {
 }
 
 function invalidHeir(members: MemberConstructor[]): boolean {
-    return members.some(member => MemberIsInvalid(member) && memberHasLegalRights(member))
+    return members.some(member => MemberIsInvalid(member) && memberHasLegalRights(member) && !member.attributes.isReprésenté)
 }
 
 function haveDuplicates(members: MemberConstructor[]): boolean {
     return R.uniq(members).length !== members.length
 }
 
-function sumOfLegalRightsExceedOneHundredPercent(members: MemberConstructor[]): boolean {
-    return members.every(
-        member => member.attributes.legalRights !== 'unqualified') &&
-        members.map(member => member.attributes.legalRights)
-            .reduce((a, b) => (a as number) + (b as number), 0)! > 1
+function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]): boolean {
+    if (members.some(member => member.attributes.legalRights === undefined)) {
+        return false
+    } else {
+        return members.every(
+            member => member.attributes.legalRights !== 'unqualified') &&
+            members.map(member => member.attributes.legalRights)
+                .reduce((a, b) => (a as number) + (b as number), 0)! > 1
+    }
 }
 
 function isDecujus<T extends MemberConstructor>(member: T): boolean {

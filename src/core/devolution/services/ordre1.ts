@@ -1,4 +1,4 @@
-import { Family, Qualification, Devolution } from '../entities'
+import { Family, Devolution, repartitionParTête, computeRepresentation, assignRepresentation } from '../entities'
 
 /**
  * Conditions: 
@@ -12,10 +12,10 @@ export function ordreOneStrategy(family: Family): Family {
        se partagent la part du défunt. Réitérer 1
     */
  
-   const qualification = new Qualification(family).assignRepresentation(family)
+   const qualification = assignRepresentation(family)
    const devolution = new Devolution(family)
- 
+
     return qualification.members.some(member => member.isReprésentant)
-    ? devolution.computeRepresentation(qualification)
-    : devolution.repartitionParTête(devolution.excludeInheligible(devolution.getMostFavoredMembersByOrdre()), family)
+      ? computeRepresentation(qualification)
+      : repartitionParTête(devolution.excludeInheligible(devolution.getMostFavoredMembersByOrdre()), family)
  }

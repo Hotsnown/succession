@@ -1,5 +1,5 @@
-import { Family } from '../entities'
+import { Family, repartitionParTête } from '../entities'
 
 export function ordreFourStrategy(family: Family): Family {
-    return family
+    return repartitionParTête(family, family)
  }

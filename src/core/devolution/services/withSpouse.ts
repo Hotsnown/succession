@@ -40,7 +40,7 @@ export function withSpouseController(family: Family): Family {
          */
         const withDescendants = (family: Family): Family => {
             deCujus.childs.forEach(
-                child => family.findMember(child).legalRights = 3 / deCujus.childs.length / 4
+                child => family.findMember(child)!.legalRights = 3 / deCujus.childs.length / 4
             )
             spouse.legalRights = 1/4
             return family

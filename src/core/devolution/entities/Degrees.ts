@@ -61,10 +61,9 @@ export class Degrees extends ValueObject<DegreesProps> {
         return Family.create(Degrees
                 .create(family)
                 .value[querriedDegree])
-                //.map(memberOfSameDegre => {console.assert(memberOfSameDegre.attributes.degre === querriedDegree); return memberOfSameDegre})
     }
 
-    getFirstAppliableDegreeMembers(filteredMembers: Family, family: Family): Member[] {
+    public getFirstAppliableDegreeMembers(filteredMembers: Family, family: Family): Member[] {
         return Degrees
                 .create(filteredMembers)
                 .value[this.firstAppliableDegree]

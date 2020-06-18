@@ -52,16 +52,17 @@ export class Ordres extends ValueObject<OrdreProps> {
     }
 
     getFirstAppliableOrdreNumber (family: Family): number {
-        for (const ordre in this.props.ordres) {
+        for (const ordre of this.props.ordres) {
             if (this.props.value[ordre] !== undefined) {
-                if (parseInt(ordre) === 2) {
-                    return this.computePriviledgeAscendantOrdre(family)
+                if(this.atLeastOneMemberEligibleToInheritIn(ordre.toString())) {
+                    if (parseInt(ordre.toString()) === 2) {
+                        return this.computePriviledgeAscendantOrdre(family)
+                    }    
+                    return parseInt(ordre.toString()) //TODO: handle unknown case
                 }
-                
-                return parseInt(ordre) //TODO: handle unknown case
             }
         }
-        return 0 //TODO Error handling
+        return 10 //TODO Error handling
     }
 
     private computePriviledgeAscendantOrdre(family: Family) {

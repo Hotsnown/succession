@@ -60,11 +60,11 @@ describe('test parents', () => {
         ]
 
         const family = getSolutionController(Family.create(existingFente))
-        const de_cujus = family.findMember('de_cujus')
-        const mother = family.findMember('mother')
-        const father = family.findMember('father')
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
+        const de_cujus = family.findMember('de_cujus')!
+        const mother = family.findMember('mother')!
+        const father = family.findMember('father')!
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
 
         expect(de_cujus.legalRights).toStrictEqual(0)
         expect(mother.legalRights).toStrictEqual(1 / 2)
@@ -131,11 +131,11 @@ describe('test parents', () => {
         ]
 
         const family = getSolutionController(Family.create(existingFente))
-        const de_cujus = family.findMember('de_cujus')
-        const mother = family.findMember('mother')
-        const father = family.findMember('father')
-        const paternal_grand_mother = family.findMember('paternal_grand_mother')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
+        const de_cujus = family.findMember('de_cujus')!
+        const mother = family.findMember('mother')!
+        const father = family.findMember('father')!
+        const paternal_grand_mother = family.findMember('paternal_grand_mother')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
 
         expect(de_cujus.legalRights).toStrictEqual(0)
         expect(mother.legalRights).toStrictEqual(1 / 2)
@@ -227,10 +227,11 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
         ]
 
         const family = getSolutionController(Family.create(existingFente))
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
+
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
         expect(paternal_grand_father.legalRights).toStrictEqual(1/2)
         expect(maternal_grand_father.legalRights).toStrictEqual(0)
@@ -319,10 +320,10 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
 
         const family = getSolutionController(Family.create(existingFente))
 
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
         expect(paternal_grand_father.legalRights).toStrictEqual(1/2)
         expect(maternal_grand_father.legalRights).toStrictEqual(0)
@@ -429,11 +430,11 @@ describe('The ascendants of the same degree divide the succession by head', () =
 
         const family = getSolutionController(Family.create(existingFente))
 
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const paternal_grand_mother = family.findMember('paternal_grand_mother')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const paternal_grand_mother = family.findMember('paternal_grand_mother')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
         expect(paternal_grand_father.legalRights).toStrictEqual(1/4)
         expect(paternal_grand_mother.legalRights).toStrictEqual(1/4)
@@ -534,13 +535,13 @@ describe('The ascendants of the same degree divide the succession by head', () =
     
         const family = getSolutionController(Family.create(existingFente))
     
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const paternal_grand_mother = family.findMember('paternal_grand_mother')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const paternal_grand_mother = family.findMember('paternal_grand_mother')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
         
         expect(mother.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(0)
@@ -552,7 +553,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
     })
 })
 
-describe('If there is no ascendant in one branch, the ascendants in the other branch collect the entire estate', () => {
+describe('If there is no ascendant in one branch, the ascendants in the other branch collects the entire estate', () => {
     it('should give all estate to the paternal side when all members of the mother side deceased', () => {
         const onlyPaternalBranchRemaining = [
             {
@@ -645,13 +646,13 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
     
         const family = getSolutionController(Family.create(onlyPaternalBranchRemaining))
     
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const paternal_grand_mother = family.findMember('paternal_grand_mother')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const paternal_grand_mother = family.findMember('paternal_grand_mother')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
 
         expect(mother.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(0)
@@ -754,13 +755,13 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
     
         const family = getSolutionController(Family.create(onlyPaternalBranchRemaining))
     
-        const maternal_grand_father = family.findMember('maternal_grand_father')
-        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')
-        const paternal_grand_father = family.findMember('paternal_grand_father')
-        const paternal_grand_mother = family.findMember('paternal_grand_mother')
-        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')
-        const father = family.findMember('father')
-        const mother = family.findMember('mother')
+        const maternal_grand_father = family.findMember('maternal_grand_father')!
+        const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
+        const paternal_grand_father = family.findMember('paternal_grand_father')!
+        const paternal_grand_mother = family.findMember('paternal_grand_mother')!
+        const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
+        const father = family.findMember('father')!
+        const mother = family.findMember('mother')!
 
         expect(mother.legalRights).toStrictEqual(0)
         expect(father.legalRights).toStrictEqual(0)

@@ -54,6 +54,7 @@ export class Member extends ValueObject<MemberProps> {
     public static create(member: MemberConstructor): Member {
         if (member.childs === undefined || member.childs === null) console.error(member)
         if (R.isNil(member)) console.error(member)
+        if (member.attributes.legalRights && member.attributes.legalRights > 1) throw new Error(`${member.member_id}'s legalRights are over 100%: ${member.attributes.legalRights}`)
             return new Member(
                 {
                     value: {
@@ -117,49 +118,72 @@ export class Member extends ValueObject<MemberProps> {
                 Object.assign({}, this.props.value.attributes, {attributes: {...this.props.value.attributes, ...attributesToUpdate}})));
     }
 
-    isReprésentéIn(family: Family): Representable {
+    public isReprésentéIn(family: Family): Representable {
         const parents = family.findParentsOf(family.deCujus.member_id)
   
         return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) &&
+                (family.deCujus.hasChildEligibleToInheritIn(family) || family.deCujus.hasSiblingEligibleToInheritIn(family))&&
                !this.isIn(parents) &&
                !this.isEligibleToInherit() && 
                 this.hasChildEligibleToInheritIn(family)
     }
 
-    belongsTo(ordre: Ordre): boolean {
+    public belongsTo(ordre: Ordre): boolean {
         return this.attributes.ordre === ordre
     }
 
-    isEligibleToInherit(): boolean {
+    public isEligibleToInherit(): boolean {
         return this.attributes.status === Status.Valid
     }
 
-    hasChildEligibleToInheritIn(family: Family): boolean {
+    private hasChildEligibleToInheritIn(family: Family): boolean {
         return family.members
-            .filter(member => 
-                this.childs.includes(member.member_id) && 
-                member.isEligibleToInherit())
-                .length !== 0
+            .filter(member => this.childs.includes(member.member_id))
+            .some(child => child.isEligibleToInherit())
     }
 
-    isReprésentantIn(family: Family): boolean {
-        return this.isDescendantOfARepresenté(family) && !this.member_id.startsWith('normal')//&& family.findParentsOf(this.member_id).every(parent => parent.member_id !== family.deCujus.member_id)
+    private hasSiblingEligibleToInheritIn(family: Family): boolean {
+        return family.members
+            .filter(member => member.attributes.ordre === 2 && member.attributes.degre === 2)
+            .some(sibling => sibling.isEligibleToInherit())
     }
 
-    isDescendantOfARepresenté(family: Family): boolean {
-        return family.findParentsOf(this.props.value.member_id)
-                .filter(member => member !== undefined ? member.isReprésenté : null)
-                .length !== 0
+    public isReprésentantIn(family: Family): boolean {
+        return this.isDescendantOfARepresenté(family) && //isNotParentOfDeCujus
+            this.isNotSiblingOfDeCujus(family) &&
+            this.member_id !== family.deCujus.member_id
     }
 
-    isIn (members: Member[]): boolean {
+    private isNotSiblingOfDeCujus(family: Family) {
+        const parents = family.findParentsOf(family.deCujus.member_id);
+        const siblingOfDeCujus = parents
+            .filter(parent => parent !== undefined)
+            .flatMap(parent => parent.childs).map(parent => family.findMember(parent)); //bug: includes deCujus
+        let isNotSiblingOfDecujus: boolean;
+        if (siblingOfDeCujus.every(member => typeof member !== undefined)) {
+            //@ts-ignore 
+            isNotSiblingOfDecujus = !this.isIn(siblingOfDeCujus); //TODO learn to narrow out undefined items in array
+        }
+        else {
+            isNotSiblingOfDecujus = false;
+        }
+        return isNotSiblingOfDecujus;
+    }
+
+    private isDescendantOfARepresenté(family: Family): boolean {
+        return family.findParentsOf(this.member_id)
+            .filter(parent => parent !== undefined)
+            .some(parent => parent.isReprésenté)
+    }
+
+    public isIn (members: Member[]): boolean {
         return members
                 .filter(member => member !== undefined)
                 .map(member => member.member_id)
                 .includes(this.member_id)
     }
     
-    isParentOfDeCujus(family: Family): boolean {
+    public isParentOfDeCujus(family: Family): boolean {
         const parents = family
             .findParentsOf(family.deCujus.member_id)
             .filter(parent => parent.isEligibleToInherit())

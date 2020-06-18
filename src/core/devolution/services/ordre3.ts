@@ -1,4 +1,4 @@
-import { Family, Devolution, Qualification } from '../entities'
+import { Family, Devolution, assignFenteAscendante, repartitionParTête } from '../entities'
 
 /**
  * - Si il existe un ascendant dans chaque ligne (mère, père ou autre), chaque ligne récupère la moitié de la succession.
@@ -13,25 +13,30 @@ export function ordreThreeStrategy(family: Family): Family {
       case 2: return twoParentsStrategy(family)
       default: return normalStrategy(family)
    }
-
 }
 
 function normalStrategy(family: Family) {
 
    const devolution = new Devolution(family)
-   const qualification = new Qualification(family).assignFenteAscendante(family)
+   const qualification = assignFenteAscendante(family)
 
    const maternals = qualification.getMaternals()
    const paternals = qualification.getPaternals()
 
    if (noMotherSideRemaining(devolution, maternals)) {
-      return devolution.repartitionParTête(paternals, family)
+      return repartitionParTête(paternals, family)
    } else if (noFatherSideRemaining(devolution, paternals)) {
-      return devolution.repartitionParTête(maternals, family)
+      return repartitionParTête(maternals, family)
    } else {
+      if (!family.findMember('mother') || !family.findMember('father')) throw new Error('No mother/father found')
       return Family.create(
-         devolution.repartitionParTête(paternals, paternals, 1 / 2).members.concat(
-         devolution.repartitionParTête(maternals, maternals, 1 / 2).members)
+         repartitionParTête(paternals, paternals, 1 / 2).members.concat(
+         repartitionParTête(maternals, maternals, 1 / 2).members.concat(
+            [
+               family.findMember('mother')!.copyWith({legalRights: 0}), 
+               family.findMember('father')!.copyWith({legalRights: 0})
+            ]
+         ))
       )
    }
 }
