@@ -1,6 +1,6 @@
 import React from 'react'
 import { getSolution } from '../../../../core/getSolution'
-import ResponseParser from './response-table'
+import ResponseParser from './Result-Modal'
 import Button from 'react-bootstrap/Button'
 import { Family, Member } from '../../../../core/devolution/entities'
 
@@ -20,7 +20,12 @@ const Result = ({ memberList, extractMemberList }: IResult) => {
       }, [displayResult]);
 
     if (displayResult) {
-        return <ResponseParser results= {results}/>
+        
+        return (
+            <>
+                <Button onClick = {() => {extractMemberList(); setDisplayResult(true)}}>Click me</Button>
+                <ResponseParser results= {results}/>
+            </>)
     }
     return (
         <Button onClick = {() => {extractMemberList(); setDisplayResult(true)}}>Click me</Button>

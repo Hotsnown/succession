@@ -4,7 +4,6 @@ import initialTreeValue from './initialTreeValue'
 import Container from 'react-bootstrap/Container'
 import Result from './Result/Result'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar } from 'reactstrap'
 
 export const App = () => {
@@ -34,15 +33,17 @@ export const App = () => {
     }
     return (
         <>
-            <Container fluid>
-                <Navbar>
-                    <Result extractMemberList={extractMemberList} memberList={memberList} />
-                </Navbar>
-                <Tree
-                    root= {root}
-                    datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
-                    ref={formRef} />
-            </Container>
+              <div className="content">
+                <Container fluid>
+                    <Navbar>
+                        <Result extractMemberList={extractMemberList} memberList={memberList} />
+                    </Navbar>
+                    <Tree
+                        root= {root}
+                        datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
+                        ref={formRef} />
+                </Container>
+            </div>
         </>
     )
 }
