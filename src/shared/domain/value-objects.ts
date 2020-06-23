@@ -1,5 +1,4 @@
 import { shallowEqual } from "shallow-equal-object";
-import Record from 'dataclass'
 
 interface ValueObjectProps {
   [index: string]: any;

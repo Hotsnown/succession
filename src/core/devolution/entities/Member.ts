@@ -63,7 +63,7 @@ export class Member extends ValueObject<MemberProps> {
                         attributes: { 
                             degre: member.attributes.degre,
                             ordre: member.attributes.ordre,
-                            status: member.attributes.status,
+                            status: member.attributes.status || Status.Valid,
                             spouse: member.attributes.spouse || '',
                             branch: member.attributes.branch || 'unqualified',
                             isReprésenté: member.attributes.isReprésenté === false || 

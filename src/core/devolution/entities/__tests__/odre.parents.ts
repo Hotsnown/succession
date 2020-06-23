@@ -147,3 +147,101 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
 
     expect(ordre2).toStrictEqual(2)
 })
+
+it('should test ordre on real data', () => {
+    const test = [
+        {
+          "childs": [],
+          "data": {},
+          "member_id": "unknown"
+        },
+        {
+          "childs": [],
+          "data": {},
+          "member_id": "mona"
+        },
+        {
+          "childs": [],
+          "data": {
+            "degre": 1,
+            "ordre": 1
+          },
+          "member_id": "herb"
+        },
+        {
+          "childs": [],
+          "data": {},
+          "member_id": "marge"
+        },
+        {
+          "childs": [],
+          "data": {
+            "degre": 2,
+            "ordre": 1
+          },
+          "member_id": "bart"
+        },
+        {
+          "childs": [],
+          "data": {},
+          "member_id": "millhouse"
+        },
+        {
+          "childs": [],
+          "data": {
+            "degre": 3,
+            "ordre": 1
+          },
+          "member_id": "millhouse_jr"
+        },
+        {
+          "childs": [
+            "millhouse_jr"
+          ],
+          "data": {
+            "degre": 2,
+            "ordre": 1
+          },
+          "member_id": "lisa"
+        },
+        {
+          "childs": [],
+          "data": {},
+          "member_id": "undefined"
+        },
+        {
+          "childs": [],
+          "data": {
+            "degre": 2,
+            "ordre": 1
+          },
+          "member_id": "maggie"
+        },
+        {
+          "childs": [
+            "bart",
+            "lisa",
+            "maggie"
+          ],
+          "data": {
+            "degre": 1,
+            "ordre": 1
+          },
+          "member_id": "homer"
+        },
+        {
+          "childs": [
+            "herb",
+            "homer"
+          ],
+          "data": {
+            "degre": 0,
+            "ordre": 0
+          },
+          "member_id": "abe"
+        }
+      ]
+      
+      const sut = Ordres.create(Family.create(newObject))
+      expect(sut).toBeTruthy()
+})

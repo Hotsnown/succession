@@ -1,4 +1,4 @@
-import { Family, Devolution, repartitionParTête, computeRepresentation, assignRepresentation } from '../entities'
+import { Family, Devolution, repartitionParTête, computeRepresentation, assignRepresentation, Ordres } from '../entities'
 
 /**
  * Conditions: 
@@ -11,11 +11,14 @@ export function ordreOneStrategy(family: Family): Family {
     2) Si 1 défunt dans le degré privilégié + le défunt a des enfants, les enfants 
        se partagent la part du défunt. Réitérer 1
     */
- 
+
    const qualification = assignRepresentation(family)
    const devolution = new Devolution(family)
 
-    return qualification.members.some(member => member.isReprésentant)
+   Family.create(Ordres.create(family).props.value[1]).debug()
+   return repartitionParTête(Family.create(Ordres.create(family).props.value[1]), family)
+
+   /*  return qualification.members.some(member => member.isReprésentant)
       ? computeRepresentation(qualification)
-      : repartitionParTête(devolution.excludeInheligible(devolution.getMostFavoredMembersByOrdre()), family)
+      : repartitionParTête(devolution.excludeInheligible(devolution.getMostFavoredMembersByOrdre()), family) */
  }

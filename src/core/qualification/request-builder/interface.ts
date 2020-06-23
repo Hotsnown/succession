@@ -1,11 +1,11 @@
 
-export interface Data {
+export interface Attributes {
 }
 
 export interface Family {
     member_id: string;
     childs: string[];
-    data: Data;
+    attributes: Attributes;
 }
 
 export interface Query {

@@ -8,15 +8,15 @@ export class Output {
     }
 
     appendFamily(member_id: string, childs: string[]) {
-        this.family.push({member_id: member_id, childs: childs, data: {}})
+        this.family.push({member_id: member_id, childs: childs, attributes: {}})
     }
 }
 
 interface Family {
     member_id: string;
     childs: string[];
-    data: Data;
+    attributes: Attributes;
 }
 
-interface Data {
+interface Attributes {
 }

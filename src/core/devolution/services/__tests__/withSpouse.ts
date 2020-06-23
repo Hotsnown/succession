@@ -28,9 +28,9 @@ it('find who is the spouse', () => {
 
     const family = Family.create(withSpouseControllerMembers.map(member => Member.create(member)))
 
-    const spouseOfDeCujus = family.findSpouseOf('deCujus')
+    const spouseOfDeCujus = family.findSpouseOf('deCujus')!
 
-    expect(spouseOfDeCujus?.member_id).toStrictEqual("spouse")
+    expect(spouseOfDeCujus.member_id).toStrictEqual("spouse")
 })
 
 it('gives 100% to the spouse without descendants', () => {
@@ -72,13 +72,13 @@ it('gives 100% to the spouse without descendants', () => {
     const family = Family.create(withSpouseControllerMembers.map(member => Member.create(member)))
     const solution = withSpouseController(family)
 
-    const spouse = solution.findMember('spouse')
-    const deCujus = solution.findMember('deCujus')
-    const grandParent = solution.findMember('grandParent')
+    const spouse = solution.findMember('spouse')!
+    const deCujus = solution.findMember('deCujus')!
+    const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse).toStrictEqual(1)
-    expect(deCujus).toStrictEqual(0)
-    expect(grandParent).toStrictEqual(0)
+    expect(spouse.legalRights).toStrictEqual(1)
+    expect(deCujus.legalRights).toStrictEqual(0)
+    expect(grandParent.legalRights).toStrictEqual(0)
 })
 
 it('gives 25% to the spouse with descendants', () => {
@@ -134,15 +134,15 @@ it('gives 25% to the spouse with descendants', () => {
 
     const solution = withSpouseController(family)
 
-    const spouse = solution.findMember('spouse')
-    const child = solution.findMember('child')
-    const deCujus = solution.findMember('deCujus')
-    const grandParent = solution.findMember('grandParent')
+    const spouse = solution.findMember('spouse')!
+    const child = solution.findMember('child')!
+    const deCujus = solution.findMember('deCujus')!
+    const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse).toStrictEqual(1/4)
-    expect(child).toStrictEqual(3/4)
-    expect(deCujus).toStrictEqual(0)
-    expect(grandParent).toStrictEqual(0)
+    expect(spouse.legalRights).toStrictEqual(1/4)
+    expect(child.legalRights).toStrictEqual(3/4)
+    expect(deCujus.legalRights).toStrictEqual(0)
+    expect(grandParent.legalRights).toStrictEqual(0)
 })
 
 it('gives equal shares to all descendants', () => {

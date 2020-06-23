@@ -1,4 +1,4 @@
-import { getSolution } from './services/withoutSpouseStrategy'
+import { getSolutionController } from './services/withoutSpouseStrategy'
 import { Family } from './entities'
 
 type IDevolution = {
@@ -7,7 +7,7 @@ type IDevolution = {
 
 export class DevolutionPresenter {
     devolutionEngine: IDevolution
-    constructor(devolutionEngine: IDevolution = {getDevolution: getSolution}) {
+    constructor(devolutionEngine: IDevolution = {getDevolution: getSolutionController}) {
         this.devolutionEngine = devolutionEngine
     }
 
