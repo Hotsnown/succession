@@ -19,6 +19,19 @@ export const App = () => {
         }
     };
 
+    const url = new URL(window.location.href);
+    var paramsString = url.search
+    var searchParams = new URLSearchParams(paramsString);
+    
+    const root = searchParams.get('root')
+    const family = searchParams.get('family')
+    
+    if (!root) {
+        throw new Error(`${root} is not a valid root`)
+    }
+    if (!family) {
+        throw new Error(`${family} is not a valid family`)
+    }
     return (
         <>
             <Container fluid>
@@ -26,8 +39,8 @@ export const App = () => {
                     <Result extractMemberList={extractMemberList} memberList={memberList} />
                 </Navbar>
                 <Tree
-                    root='abe'
-                    datalist={JSON.parse(JSON.stringify(initialTreeValue))}
+                    root= {root}
+                    datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
                     ref={formRef} />
             </Container>
         </>

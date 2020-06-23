@@ -1,6 +1,5 @@
 import React from 'react';
 
-// reactstrap components
 import {
   Card,
   CardHeader,
@@ -11,6 +10,11 @@ import {
   Col,
 } from 'reactstrap';
 
+import simpsonsTree from './examples/simpsons'
+import weasleyTree from './examples/weasley'
+import louisXIVTree from './examples/louisXIV'
+import { FamilyExample } from './examples/interface';
+
 const Tables = () => {
   return (
     <>
@@ -19,61 +23,26 @@ const Tables = () => {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Simple Table</CardTitle>
+                <CardTitle tag="h4">A collection of example</CardTitle>
               </CardHeader>
               <CardBody>
                 <Table responsive>
                   <thead className="text-primary">
                     <tr>
                       <th>Name</th>
-                      <th>Country</th>
-                      <th>City</th>
-                      <th className="text-right">Salary</th>
+                      <th>Description</th>
+                      <th>Number of nodes</th>
+                      <th className="text-right">Link</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td className="text-right">$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Minerva Hooper</td>
-                      <td>Curaçao</td>
-                      <td>Sinaai-Waas</td>
-                      <td className="text-right">$23,789</td>
-                    </tr>
-                    <tr>
-                      <td>Sage Rodriguez</td>
-                      <td>Netherlands</td>
-                      <td>Baileux</td>
-                      <td className="text-right">$56,142</td>
-                    </tr>
-                    <tr>
-                      <td>Philip Chaney</td>
-                      <td>Korea, South</td>
-                      <td>Overland Park</td>
-                      <td className="text-right">$38,735</td>
-                    </tr>
-                    <tr>
-                      <td>Doris Greene</td>
-                      <td>Malawi</td>
-                      <td>Feldkirchen in Kärnten</td>
-                      <td className="text-right">$63,542</td>
-                    </tr>
-                    <tr>
-                      <td>Mason Porter</td>
-                      <td>Chile</td>
-                      <td>Gloucester</td>
-                      <td className="text-right">$78,615</td>
-                    </tr>
-                    <tr>
-                      <td>Jon Porter</td>
-                      <td>Portugal</td>
-                      <td>Gloucester</td>
-                      <td className="text-right">$98,615</td>
-                    </tr>
+                    {examples.map(example => 
+                      <tr>
+                        <td>{example.name}</td>
+                        <td>{example.description}</td>
+                        <td>{example.numberOfNodes}</td>
+                        <td className="text-right"><a href={example.link}>Click me!</a></td>
+                      </tr>)}
                   </tbody>
                 </Table>
               </CardBody>
@@ -84,5 +53,36 @@ const Tables = () => {
     </>
   );
 };
+
+interface Example {
+  name: string;
+  description: string;
+  numberOfNodes: number;
+  link: string;
+}
+
+const encodeFamilyUrl = (family: FamilyExample, root: string) => 
+  `http://localhost:3000/admin/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
+
+const examples: Example[] = [
+  {
+    name: 'Simpsons Tree',
+    description: 'A simpson family',
+    numberOfNodes: 10,
+    link: encodeFamilyUrl(simpsonsTree, 'abe')
+  },
+  {
+    name: 'Weasley Tree',
+    description: 'A Weasley family',
+    numberOfNodes: 10,
+    link: encodeFamilyUrl(weasleyTree, 'arthur')
+  },
+  {
+    name: 'louis XIV Tree',
+    description: 'louisXIVTree',
+    numberOfNodes: 10,
+    link: encodeFamilyUrl(louisXIVTree, 'louisXIV')
+  }
+]
 
 export default Tables;
