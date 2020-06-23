@@ -3,13 +3,24 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import DemoNavbar from '../components/Navbars/DemoNavbar';
-import Footer from "../components/Footer/Footer.js";
-import Sidebar from "../components/Sidebar/Sidebar.js";
+import Footer from "../components/Footer/Footer";
+import Sidebar from "../components/Sidebar/Sidebar";
 
-import routes from "../routes";
+import routes from "../routes/routes";
 
-class Dashboard extends React.Component {
-  constructor(props) {
+interface DashboardProps {
+
+}
+
+interface DashboardState {
+  backgroundColor: string;
+  activeColor: string;
+}
+
+class Dashboard extends React.Component<DashboardProps, DashboardState> {
+  mainPanel: any
+
+  constructor(props: any) {
     super(props);
     this.state = {
       backgroundColor: "black",
@@ -17,16 +28,16 @@ class Dashboard extends React.Component {
     };
     this.mainPanel = React.createRef();
   }
-  componentDidUpdate(e) {
+  componentDidUpdate(e: any) {
     if (e.history.action === "PUSH") {
       this.mainPanel.current.scrollTop = 0;
-      document.scrollingElement.scrollTop = 0;
+      document.scrollingElement!.scrollTop = 0;
     }
   }
-  handleActiveClick = (color) => {
+  handleActiveClick = (color: string) => {
     this.setState({ activeColor: color });
   };
-  handleBgClick = (color) => {
+  handleBgClick = (color: string) => {
     this.setState({ backgroundColor: color });
   };
   render() {

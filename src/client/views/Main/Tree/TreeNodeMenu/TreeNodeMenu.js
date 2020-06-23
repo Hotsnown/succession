@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react';
 import styled from 'styled-components';
 
@@ -91,11 +92,17 @@ class TreeNodeMenu extends React.Component {
     this.handleAddPartner = this.handleAddPartner.bind(this);
     this.handleAddChild = this.handleAddChild.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
   handleToggleEditable(e) {
     e.preventDefault();
     this.props.onToggleEditable();
+  }
+
+  handleUpdateStatus(e) {
+    e.preventDefault();
+    return this.props.onUpdateStatus(this.props.id);
   }
 
   handleAddPartner(e) {
@@ -123,6 +130,7 @@ class TreeNodeMenu extends React.Component {
         <TreeNodeHeader>Edit</TreeNodeHeader>
         <ul>
           <li><a href="#" className="edit" onClick={this.handleToggleEditable}>Modifier</a></li>
+          <li><a href="#" className="updateStatus" onClick={this.handleUpdateStatus}>updateStatus</a></li>
           {!this.props.allowPartners || <li><a href="#" className="add_partner" onClick={this.handleAddPartner}>Ajouter un partenaire</a></li>}
           {this.props.partners.map(partner =>
             <li key={'addchild_' + partner.id}><a href="#{partner.id}" className="add_child" onClick={(e) => {this.handleAddChild(e, partner.id)}}>Ajouter un enfant avec {partner.name}</a></li>

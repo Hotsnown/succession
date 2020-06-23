@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { TreenodeWidth, TreenodeMargin } from '../TreeStylesShared';
 
 export function getLinkerProps(p, pindex, m) {

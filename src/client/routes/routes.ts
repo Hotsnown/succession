@@ -1,5 +1,5 @@
-import TableList from './views/Explore/Table';
-import Dashboard from './views/App.tsx';
+import TableList from '../views/Explore/Table';
+import Dashboard from '../views/Main/App';
 
 const routes = [
   {
@@ -11,7 +11,7 @@ const routes = [
   },
   {
     path: '/tables',
-    name: 'Table List',
+    name: 'Explore',
     icon: 'nc-icon nc-tile-56',
     component: TableList,
     layout: '/admin',

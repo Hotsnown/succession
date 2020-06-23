@@ -1,3 +1,4 @@
+/*eslint-disable*/
 class TreeParser {
 
   constructor(datalist, root) {

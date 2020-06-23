@@ -1,5 +1,5 @@
 import React from 'react'
-import { Family } from '../../../core/devolution/entities'
+import { Family } from '../../../../core/devolution/entities'
 
 interface IProps {
     results: Family

@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
@@ -22,6 +23,7 @@ class Tree extends React.Component {
     this.handleAddChild = this.handleAddChild.bind(this);
     this.handleMemberEdit = this.handleMemberEdit.bind(this);
     this.handleMemberDelete = this.handleMemberDelete.bind(this);
+    this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
   // SIMPLE GETTERS //
@@ -45,6 +47,14 @@ class Tree extends React.Component {
     this.setState(function (prev_state, props) {
       var memberlist = { ...prev_state.memberlist };
       memberlist[member_id].name = data.name;
+      return { 'memberlist': memberlist };
+    });
+  }
+
+  handleUpdateStatus(member_id) {
+    this.setState(function (prev_state, props) {
+      let memberlist = { ...prev_state.memberlist };
+      memberlist[member_id].status = !memberlist[member_id].status;
       return { 'memberlist': memberlist };
     });
   }
@@ -88,8 +98,6 @@ class Tree extends React.Component {
 
   render() {
 
-    console.log(this.state.memberlist)
-
     return (
       <div className="overflow-auto">
         <br></br>
@@ -98,6 +106,7 @@ class Tree extends React.Component {
           onAddPartner={this.handleAddPartner}
           onAddChild={this.handleAddChild}
           onEdit={this.handleMemberEdit}
+          onUpdateStatus={this.handleUpdateStatus}
           onDelete={this.handleMemberDelete}
           parentPosition={this.state.position}
         />

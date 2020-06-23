@@ -1,8 +1,8 @@
 import React from 'react'
-import { getSolution } from '../../../core/getSolution'
+import { getSolution } from '../../../../core/getSolution'
 import ResponseParser from './response-table'
 import Button from 'react-bootstrap/Button'
-import { Family, Member } from '../../../core/devolution/entities'
+import { Family, Member } from '../../../../core/devolution/entities'
 
 export interface IResult {
     memberList: Member[]

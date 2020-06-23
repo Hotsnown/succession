@@ -1,5 +1,4 @@
 /*eslint-disable*/
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -20,10 +19,18 @@ import {
   Input,
 } from 'reactstrap';
 
-import routes from '../../routes';
+import routes from '../../routes/routes';
 
-class Header extends React.Component {
-  constructor(props) {
+interface HeaderState {
+  isOpen: boolean
+  dropdownOpen: boolean
+  color: string
+}
+
+class Header extends React.Component <any, HeaderState>{
+  sidebarToggle: any
+
+  constructor(props: any) {
     super(props);
     this.state = {
       isOpen: false,
@@ -48,7 +55,7 @@ class Header extends React.Component {
       isOpen: !this.state.isOpen,
     });
   }
-  dropdownToggle(e) {
+  dropdownToggle(e: any) {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
     });
@@ -82,7 +89,7 @@ class Header extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateColor.bind(this));
   }
-  componentDidUpdate(e) {
+  componentDidUpdate(e: any) {
     if (
       window.innerWidth < 993 &&
       e.history.location.pathname !== e.location.pathname &&
@@ -157,7 +164,7 @@ class Header extends React.Component {
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
-                toggle={(e) => this.dropdownToggle(e)}
+                toggle={(e: any) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />

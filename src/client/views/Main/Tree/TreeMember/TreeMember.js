@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react';
 import styled from 'styled-components';
 import TreeListPartners from '../TreeListPartners/TreeListPartners';
@@ -55,6 +56,7 @@ class TreeMember extends React.Component {
     //this.handleAddChild = this.handleAddChild.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleToggleEditable = this.handleToggleEditable.bind(this);
+    this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
   // GETTERS //
@@ -89,6 +91,10 @@ class TreeMember extends React.Component {
     return this.props.onEdit(this.props.id, { [target.name]: value });
   }
 
+  handleUpdateStatus(e) {
+    return this.props.onUpdateStatus(this.props.id);
+  }
+
   // RENDERERS //
 
   renderField(name) {
@@ -102,6 +108,7 @@ class TreeMember extends React.Component {
       allowPartners={this.state.allowPartners}
       partners={this.props.partners}
       editable={this.state.editable}
+      onUpdateStatus={this.handleUpdateStatus}
       onToggleEditable={this.handleToggleEditable}
       onAddPartner={this.props.onAddPartner}
       onAddChild={this.props.onAddChild}
@@ -142,6 +149,9 @@ class TreeMember extends React.Component {
   }
 
   render() {
+
+    console.log(this.props)
+
     return (
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>
         <TreeNode>
