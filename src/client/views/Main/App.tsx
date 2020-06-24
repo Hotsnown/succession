@@ -11,7 +11,7 @@ export const App = () => {
     const [memberList, setMemberList] = React.useState<any>({})
     const formRef = React.createRef<Tree>();
 
-    const extractMemberList = () => {    
+    const extractMemberList = () => {
         const familyTree = formRef.current;
         if (familyTree) {
             setMemberList(familyTree.state.memberlist)
@@ -21,10 +21,10 @@ export const App = () => {
     const url = new URL(window.location.href);
     var paramsString = url.search
     var searchParams = new URLSearchParams(paramsString);
-    
+
     const root = searchParams.get('root')
     const family = searchParams.get('family')
-    
+
     if (!root) {
         throw new Error(`${root} is not a valid root`)
     }
@@ -33,13 +33,13 @@ export const App = () => {
     }
     return (
         <>
-              <div className="content">
+            <div className="content">
                 <Container fluid>
                     <Navbar>
                         <Result extractMemberList={extractMemberList} memberList={memberList} />
                     </Navbar>
                     <Tree
-                        root= {root}
+                        root={root}
                         datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
                         ref={formRef} />
                 </Container>

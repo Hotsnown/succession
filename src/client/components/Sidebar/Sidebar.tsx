@@ -3,34 +3,33 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Nav } from 'reactstrap';
-// javascript plugin used to create scrollbars on windows
+
+import { Route } from '../../routes'
 
 import logo from './logo.svg';
 
-let ps;
+interface SidebarProps {
+  bgColor: string
+  activeColor: string
+  routes: Route[]
+  location?: any
+}
 
-class Sidebar extends React.Component {
-  constructor(props) {
+interface SidebarState {
+
+}
+
+class Sidebar extends React.Component <SidebarProps, SidebarState> {
+  sidebar: any
+
+  constructor(props: SidebarProps) {
     super(props);
     this.activeRoute.bind(this);
     this.sidebar = React.createRef();
   }
   // verifies if routeName is the one active (in browser input)
-  activeRoute(routeName) {
+  activeRoute(routeName: any) {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
-  componentDidMount() {
-    if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(this.sidebar.current, {
-        suppressScrollX: true,
-        suppressScrollY: false,
-      });
-    }
-  }
-  componentWillUnmount() {
-    if (navigator.platform.indexOf("Win") > -1) {
-      ps.destroy();
-    }
   }
   render() {
     return (
@@ -60,10 +59,6 @@ class Sidebar extends React.Component {
             {this.props.routes.map((prop, key) => {
               return (
                 <li
-                  className={
-                    this.activeRoute(prop.path) +
-                    (prop.pro ? " active-pro" : "")
-                  }
                   key={key}
                 >
                   <NavLink

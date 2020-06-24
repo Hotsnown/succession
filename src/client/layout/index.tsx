@@ -6,7 +6,7 @@ import DemoNavbar from '../components/Navbars/DemoNavbar';
 import Footer from "../components/Footer/Footer";
 import Sidebar from "../components/Sidebar/Sidebar";
 
-import routes from "../routes/routes";
+import routes from "../routes";
 
 interface DashboardProps {
 

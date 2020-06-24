@@ -21,7 +21,7 @@ const Footer = (props: FooterProps) => (
         </nav>
         <div className="credits ml-auto">
           <div className="copyright">
-            &copy; {1900 + new Date().getFullYear()}, made with{" "}
+            &copy; {new Date().getFullYear()}, made with{" "}
             <i className="fa fa-heart heart" /> by Creative Tim
               </div>
         </div>

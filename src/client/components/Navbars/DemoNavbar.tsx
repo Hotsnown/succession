@@ -19,7 +19,7 @@ import {
   Input,
 } from 'reactstrap';
 
-import routes from '../../routes/routes';
+import routes from '../../routes';
 
 interface HeaderState {
   isOpen: boolean

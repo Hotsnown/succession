@@ -1,4 +1,6 @@
-export const simpsonsTree = {
+import { FamilyExample } from './interface'
+
+export const simpsonsTree: FamilyExample = {
     abe: {
         id: "abe",
         name: "Abraham J. (Grandpa) Simpson",

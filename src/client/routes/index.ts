@@ -1,6 +1,14 @@
 import TableList from '../views/Explore/Table';
 import Dashboard from '../views/Main/App';
 
+export interface Route {
+  path: string;
+  name: string;
+  icon: string;
+  component: () => JSX.Element;
+  layout: string;
+}
+
 const routes = [
   {
     path: '/dashboard',
