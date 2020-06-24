@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../shared/domain/value-objects'
+import { ValueObject } from '../../shared/domain/value-objects'
 import { Member, Family } from '.';
 import * as R from 'ramda'
 

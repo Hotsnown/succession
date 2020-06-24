@@ -1,5 +1,5 @@
 import { Degree, Ordre, Family } from ".";
-import { ValueObject } from '../../../shared/domain/value-objects'
+import { ValueObject } from '../../shared/domain/value-objects'
 import * as R from 'ramda'
 
 export enum Status {
