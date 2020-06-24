@@ -39,7 +39,15 @@ const PartnerList = styled(CommonStyles.TreeList)`
   }
 `;
 
-class TreeListPartners extends React.Component {
+interface TreeListPartnersProps {
+  members: any
+  onAddPartner: any
+  onAddChild: any
+  onEdit: any
+  onDelete: any
+}
+
+class TreeListPartners extends React.Component <TreeListPartnersProps> {
 
   render() {
     if (this.props.members.length === 0) return null;
@@ -47,7 +55,7 @@ class TreeListPartners extends React.Component {
       <TreePartnerSection>
         <VisuallyHiddenHeader>Partenaires</VisuallyHiddenHeader>
         <PartnerList>
-          {this.props.members.map(member =>
+          {this.props.members.map((member: any) =>
             <li key={'partner_' + member.id}>
               <TreeMember
                 onAddPartner={this.props.onAddPartner}

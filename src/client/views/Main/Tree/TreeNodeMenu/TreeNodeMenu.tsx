@@ -84,9 +84,25 @@ const TreeNodeActions = styled.section`
   }
 `;
 
-class TreeNodeMenu extends React.Component {
+interface TreeNodeMenuProps {
+  onToggleEditable: any
+  onUpdateStatus: any
+  onAddPartner: any
+  onAddChild: any
+  id: any
+  onDelete: any
+  editable: any
+  allowPartners: any
+  partners: any
+}
 
-  constructor(props) {
+interface TreeNodeState {
+
+}
+
+class TreeNodeMenu extends React.Component <TreeNodeMenuProps, TreeNodeState> {
+
+  constructor(props: TreeNodeMenuProps) {
     super(props);
     this.handleToggleEditable = this.handleToggleEditable.bind(this);
     this.handleAddPartner = this.handleAddPartner.bind(this);
@@ -95,27 +111,27 @@ class TreeNodeMenu extends React.Component {
     this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
-  handleToggleEditable(e) {
+  handleToggleEditable(e: React.MouseEvent) {
     e.preventDefault();
     this.props.onToggleEditable();
   }
 
-  handleUpdateStatus(e) {
+  handleUpdateStatus(e: React.MouseEvent) {
     e.preventDefault();
     return this.props.onUpdateStatus(this.props.id);
   }
 
-  handleAddPartner(e) {
+  handleAddPartner(e: React.MouseEvent) {
     e.preventDefault();
     return this.props.onAddPartner(this.props.id);
   }
 
-  handleAddChild(e, partner_id) {
+  handleAddChild(e: React.MouseEvent, partner_id: string) {
     e.preventDefault();
     return this.props.onAddChild(this.props.id, partner_id);
   }
 
-  handleDelete(e) {
+  handleDelete(e: React.MouseEvent) {
     e.preventDefault();
     return this.props.onDelete(this.props.id);
   }
@@ -132,7 +148,7 @@ class TreeNodeMenu extends React.Component {
           <li><a href="#" className="edit" onClick={this.handleToggleEditable}>Modifier</a></li>
           <li><a href="#" className="updateStatus" onClick={this.handleUpdateStatus}>updateStatus</a></li>
           {!this.props.allowPartners || <li><a href="#" className="add_partner" onClick={this.handleAddPartner}>Ajouter un partenaire</a></li>}
-          {this.props.partners.map(partner =>
+          {this.props.partners.map((partner: any) =>
             <li key={'addchild_' + partner.id}><a href="#{partner.id}" className="add_child" onClick={(e) => {this.handleAddChild(e, partner.id)}}>Ajouter un enfant avec {partner.name}</a></li>
           )}
           <li><a href="#" className="member_delete" onClick={this.handleDelete}>Supprimer</a></li>

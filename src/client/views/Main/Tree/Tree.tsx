@@ -3,9 +3,24 @@ import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
 
-class Tree extends React.Component {
+interface TreeProps {
+  root: any
+  datalist: any
+}
 
-  constructor(props) {
+interface TreeState {
+  memberlist: any
+  rootid: string
+  membercount: number
+  position?: any
+}
+
+class Tree extends React.Component <TreeProps, TreeState> {
+
+  memberlist: any[]
+  nextMemberId: number
+
+  constructor(props: TreeProps) {
     super(props);
 
     // normalize all possible tree representations into single nested data object
@@ -15,10 +30,9 @@ class Tree extends React.Component {
     this.state = {
       memberlist: this.memberlist,
       rootid: this.props.root,
-      membercount: parseInt(this.memberlist.length)
+      membercount: this.memberlist.length//parseInt(this.memberlist.length)
     }
 
-    // bind handlers
     this.handleAddPartner = this.handleAddPartner.bind(this);
     this.handleAddChild = this.handleAddChild.bind(this);
     this.handleMemberEdit = this.handleMemberEdit.bind(this);
@@ -28,8 +42,9 @@ class Tree extends React.Component {
 
   // SIMPLE GETTERS //
 
-  getNextMemberId(memberlist) {
+  getNextMemberId(memberlist: undefined | any[]) {
     if (memberlist === undefined) memberlist = this.state.memberlist;
+    //@ts-ignore
     let ids = Object.keys(memberlist);
     let append = 1;
     let prepend = 'new_member_';
@@ -37,13 +52,13 @@ class Tree extends React.Component {
     return prepend + append;
   }
 
-  getNewMember(name, id) {
+  getNewMember(name: string, id: string) {
     return { 'id': id, 'name': name, 'partners': [], 'children': [] }
   }
 
   // HANDLERS //
 
-  handleMemberEdit(member_id, data) {
+  handleMemberEdit(member_id: string, data: any) {
     this.setState(function (prev_state, props) {
       var memberlist = { ...prev_state.memberlist };
       memberlist[member_id].name = data.name;
@@ -51,7 +66,7 @@ class Tree extends React.Component {
     });
   }
 
-  handleUpdateStatus(member_id) {
+  handleUpdateStatus(member_id: string) {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
       memberlist[member_id].status = !memberlist[member_id].status;
@@ -59,7 +74,7 @@ class Tree extends React.Component {
     });
   }
 
-  handleMemberDelete(member_id) {
+  handleMemberDelete(member_id: string) {
     this.setState(function (prev_state, props) {
       var memberlist = { ...prev_state.memberlist };
       var member = memberlist[member_id];
@@ -68,10 +83,12 @@ class Tree extends React.Component {
     });
   }
 
-  handleAddPartner(root_id) {
+  handleAddPartner(root_id: string) {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
+      //@ts-ignore
       let new_id = this.getNextMemberId(memberlist);
+      //@ts-ignore
       let new_member = this.getNewMember('Nouveau partenaire', new_id);
       memberlist[new_member.id] = new_member;
       memberlist[root_id].partners.push(new_member);
@@ -80,10 +97,12 @@ class Tree extends React.Component {
     });
   }
 
-  handleAddChild(root_id, partner_id) {
+  handleAddChild(root_id: string, partner_id: string) {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
+      //@ts-ignore
       let new_id = this.getNextMemberId(memberlist);
+      //@ts-ignore
       let new_member = this.getNewMember('Nouvel enfant', new_id);
       memberlist[new_member.id] = new_member;
       if (!Array.isArray(memberlist[root_id].children[partner_id])) {

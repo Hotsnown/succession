@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import TreeMember from '../TreeMember/TreeMember';
 import * as CommonStyles from '../TreeStylesShared';
 
-const ChildList = styled(CommonStyles.TreeList)`
+interface ChildListProps {
+  firstNodeOffset: any
+}
+
+const ChildList = styled(CommonStyles.TreeList)<ChildListProps>`
   & > li {
     position: relative;
   }
@@ -57,7 +61,14 @@ const ChildList = styled(CommonStyles.TreeList)`
   }
 `;
 
-const ChildlistHeader = styled.h2`
+interface ChildlistHeaderProps {
+  setleft: any
+  setwidth: any
+  left_to_right: any
+  childbracketWidth: any
+}
+
+const ChildlistHeader = styled.h2<ChildlistHeaderProps>`
   ${CommonStyles.LinkProperties}
   font-size: 1em;
   top: -3em;
@@ -91,8 +102,25 @@ const ChildlistHeader = styled.h2`
   }
 `;
 
-class TreeListChildren extends React.Component {
-  constructor(props) {
+interface TreeListChildrenProps {
+  members: any[]
+  parent: any
+  linkprops: any
+  onAddPartner: any
+  onAddChild: any
+  onEdit: any
+  onDelete: any
+}
+
+interface TreeListChildrenState {
+
+}
+
+class TreeListChildren extends React.Component <TreeListChildrenProps, TreeListChildrenState> {
+  
+  listRef: any
+
+  constructor(props: TreeListChildrenProps) {
     super(props);
     this.listRef = React.createRef();
     this.state = {}

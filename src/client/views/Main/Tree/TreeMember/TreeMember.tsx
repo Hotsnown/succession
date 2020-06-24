@@ -11,7 +11,11 @@ import * as TreeDimensionCalc from './TreeDimensionCalc';
 const TreeHeader = CommonStyles.TreeHeader;
 const VisuallyHiddenHeader = CommonStyles.VisuallyHidden.withComponent('h1');
 
-const TreeTrunk = styled.article`
+interface TreeTrunkProps {
+  width: number
+}
+
+const TreeTrunk = styled.article<TreeTrunkProps>`
   display: inline-block;
   vertical-align: top;
   text-align: center;
@@ -42,9 +46,28 @@ const TreeChildrenSection = styled.section`
   z-index: 0;
 `;
 
-class TreeMember extends React.Component {
+interface TreeMemberProps {
+  allowPartners: boolean
+  editable: boolean
+  children: any
+  onEdit: any
+  id: any
+  onUpdateStatus: any
+  handleToggleEditable: any
+  onAddPartner: any
+  onAddChild: any
+  onDelete: any
+  partners: any
+}
 
-  constructor(props) {
+interface TreeMemberState {
+  allowPartners: boolean
+  editable: boolean
+}
+
+class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
+  id: any
+  constructor(props: TreeMemberProps) {
     super(props);
 
     this.state = {
@@ -72,7 +95,7 @@ class TreeMember extends React.Component {
 
   // position calculation
 
-  getLinkerProps(p, pindex) {
+  getLinkerProps(p: any, pindex: any) {
     return TreeDimensionCalc.getLinkerProps(p, pindex, this.props);
   }
 
@@ -85,20 +108,24 @@ class TreeMember extends React.Component {
     }));
   }
 
-  handleEdit(e) {
+  handleEdit(e: React.MouseEvent) {
     const target = e.target;
+    //@ts-ignore
     const value = target.type === 'checkbox' ? target.checked : target.value;
+    //@ts-ignore
     return this.props.onEdit(this.props.id, { [target.name]: value });
   }
 
-  handleUpdateStatus(e) {
+  handleUpdateStatus(e: React.MouseEvent) {
     return this.props.onUpdateStatus(this.props.id);
   }
 
   // RENDERERS //
 
-  renderField(name) {
+  renderField(name: string) {
+    //@ts-ignore
     if (!this.state.editable) return this.props[name];
+    //@ts-ignore
     return <input type="text" name={name} value={this.props[name]} onChange={this.handleEdit} />;
   }
 
@@ -132,7 +159,7 @@ class TreeMember extends React.Component {
     return (
       <TreeChildrenSection>
         <VisuallyHiddenHeader>Enfants</VisuallyHiddenHeader>
-        {this.props.partners.map((parent, i) =>
+        {this.props.partners.map((parent:any, i:number) =>
           <TreeListChildren
             key = {parent.id + '_children_' + i}
             members={this.props.children[parent.id]}
@@ -150,9 +177,8 @@ class TreeMember extends React.Component {
 
   render() {
 
-    console.log(this.props)
-
     return (
+      //@ts-ignore
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>
         <TreeNode>
           <form>
