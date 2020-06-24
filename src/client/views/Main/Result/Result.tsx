@@ -7,14 +7,15 @@ import { Family, Member } from '../../../../core/devolution/entities'
 export interface IResult {
     memberList: Member[]
     extractMemberList: () => void
+    deCujus: string
 }
 
-const Result = ({ memberList, extractMemberList }: IResult) => {
+const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
     const [results, setResults] = React.useState<Family>(Family.create([]))
     const [displayResult, setDisplayResult] = React.useState(false)
 
     React.useEffect(() => {
-        getSolution(memberList, 'abe')
+        getSolution(memberList, deCujus)
         .then(result => {setResults(result)})
         .catch(err => console.error(err))
       }, [displayResult]);
