@@ -2,10 +2,11 @@
 import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
+import { ITree } from './interface'
 
 interface TreeProps {
-  root: any
-  datalist: any
+  root: string
+  datalist: ITree
 }
 
 interface TreeState {

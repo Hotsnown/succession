@@ -124,7 +124,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
 
   renderField(name: string) {
     //@ts-ignore
-    if (!this.state.editable) return this.props[name];
+    if (!this.state.editable) return (this.props.status === false) ? this.props[name] : this.props[name] + " (deceased)";
     //@ts-ignore
     return <input type="text" name={name} value={this.props[name]} onChange={this.handleEdit} />;
   }
@@ -177,6 +177,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
 
   render() {
 
+    console.log(this.props)
     return (
       //@ts-ignore
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>
