@@ -1,5 +1,5 @@
 import TableList from '../views/Explore/Table';
-import Dashboard from '../views/Main/App';
+import Main from '../views/Main/App';
 
 export interface Route {
   path: string;
@@ -14,15 +14,15 @@ const routes = [
     path: '/dashboard',
     name: 'Tree',
     icon: 'nc-icon nc-bank',
-    component: Dashboard,
-    layout: '/admin',
+    component: Main,
+    layout: '/succession',
   },
   {
     path: '/tables',
     name: 'Explore',
     icon: 'nc-icon nc-tile-56',
     component: TableList,
-    layout: '/admin',
+    layout: '/succession',
   },
 ];
 export default routes;

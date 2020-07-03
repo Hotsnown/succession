@@ -8,16 +8,16 @@ import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
 
-interface DashboardProps {
+interface MainProps {
 
 }
 
-interface DashboardState {
+interface MainState {
   backgroundColor: string;
   activeColor: string;
 }
 
-class Dashboard extends React.Component<DashboardProps, DashboardState> {
+class Main extends React.Component<MainProps, MainState> {
   mainPanel: any
 
   constructor(props: any) {
@@ -69,4 +69,4 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
   }
 }
 
-export default Dashboard;
+export default Main;

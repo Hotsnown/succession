@@ -17,7 +17,7 @@ const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
     React.useEffect(() => {
         getSolution(memberList, deCujus)
         .then(result => {setResults(result)})
-        .catch(err => console.error(err))
+        .catch(err => alert(err))
       }, [displayResult]);
 
     if (displayResult) {

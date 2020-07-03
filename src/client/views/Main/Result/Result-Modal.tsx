@@ -16,11 +16,8 @@ const ResponseParser = ({ results }: IProps) => {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>Results</ModalHeader>
         <ModalBody>
-            <ul>{results.members.map((member) =>
-                <li key={Math.random()}>{member.member_id} degré: {member.attributes.degre}, ordre: {member.attributes.ordre}</li>)}
-            </ul>
             <ul>
                 {results.members
                     .filter(member => member.attributes.legalRights !== 'unqualified')
@@ -30,7 +27,7 @@ const ResponseParser = ({ results }: IProps) => {
             </ul>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+          <Button color="primary" onClick={toggle}>Explain me!</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>

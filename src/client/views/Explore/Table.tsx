@@ -62,7 +62,7 @@ interface Example {
 }
 
 const encodeFamilyUrl = (family: FamilyExample, root: string) => 
-  `http://localhost:3000/admin/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
+  `http://localhost:3000/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
 
 const examples: Example[] = [
   {
