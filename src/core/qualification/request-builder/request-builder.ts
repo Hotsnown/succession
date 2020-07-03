@@ -12,7 +12,8 @@ async function getQualificationFrom (query: Query) {
     const result  = await fetch("http://127.0.0.1:5000/todo/api/v1.0/tasks", requestOptions)
       .then((response: Response) => response.json())
       .then((result: string) => {return result})
-      .catch((error: Error) => console.log('error', error));
+      .catch(() => alert('Server has not been found. Please set it up with "npm run python".'))
+    ;
 
     return result
 }

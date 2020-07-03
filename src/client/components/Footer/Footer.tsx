@@ -19,12 +19,12 @@ const Footer = (props: FooterProps) => (
               <li><a href={footerItem.url} target="_blank">{footerItem.text}</a></li>)}
           </ul>
         </nav>
-        <div className="credits ml-auto">
+        {/* <div className="credits ml-auto">
           <div className="copyright">
             &copy; {new Date().getFullYear()}, made with{" "}
             <i className="fa fa-heart heart" /> by Creative Tim
               </div>
-        </div>
+        </div> */}
       </Row>
     </Container>
   </footer>
