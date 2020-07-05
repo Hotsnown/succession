@@ -15,7 +15,6 @@ export function ordreOneStrategy(family: Family): Family {
    const qualification = assignRepresentation(family)
    const devolution = new Devolution(family)
 
-   Family.create(Ordres.create(family).props.value[1]).debug()
    return repartitionParTête(Family.create(Ordres.create(family).props.value[1]), family)
 
    /*  return qualification.members.some(member => member.isReprésentant)

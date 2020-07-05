@@ -1,5 +1,5 @@
-import TableList from '../views/Explore/Table';
-import Main from '../views/Main/App';
+import TableList from '../features/Explore/Table';
+import Main from '../features/Main/App';
 
 export interface Route {
   path: string;

@@ -11,14 +11,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import './client/assets/css/paper-dashboard.css'
 import './client/assets/demo/demo.css'
 
-import AdminLayout from "./client/layout";
+import Shell from "./client/layout/shell";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/succession" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/succession" render={(props) => <Shell {...props} />} />
       <Redirect to="/succession/tables" />
     </Switch>
   </Router>,
