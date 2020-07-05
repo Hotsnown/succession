@@ -5,7 +5,6 @@ export function getLinkerProps(p, pindex, m) {
   let childrow_width = getChildRowWidth(p,m);
 
   let parentrow_width = getParentRowWidth(m);
-console.log('p',p);
   let childbracket = m.children[p].slice(0, -1);
   let childbracket_width = !childbracket
     ? 0

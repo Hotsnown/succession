@@ -177,7 +177,6 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
 
   render() {
 
-    console.log(this.props)
     return (
       //@ts-ignore
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>
