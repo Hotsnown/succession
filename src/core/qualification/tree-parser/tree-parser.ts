@@ -11,7 +11,6 @@ interface Tree {
 
 type Status = 'valid' | 'invalid'
 
-
 //TODO : change to traverse tree
 
 function treeParser(tree: Tree, deCujus: string): Output {
