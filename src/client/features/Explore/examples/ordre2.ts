@@ -1,6 +1,6 @@
 import { FamilyExample } from './interface'
 
-const ordre2AvecParentsSansReprésentation: FamilyExample = {
+const ordre2: FamilyExample = {
     deCujus: {
         id: "deCujus",
         name: "deCujus",
@@ -32,4 +32,4 @@ const ordre2AvecParentsSansReprésentation: FamilyExample = {
 
 }
 
-export default ordre2AvecParentsSansReprésentation
+export default ordre2

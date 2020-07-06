@@ -10,14 +10,13 @@ import {
   Col,
 } from 'reactstrap';
 
+import { FamilyExample } from './examples/interface';
 import simpsonsTree from './examples/simpsons'
 import weasleyTree from './examples/weasley'
 import louisXIVTree from './examples/louisXIV'
-import ordre1SansRepresentation from './examples/ordre1SansRepresentation'
-import { FamilyExample } from './examples/interface';
-import ordre1AvecRepresentation from './examples/ordre1AvecRepresentation';
-import ordre2AvecParentsSansReprésentation from './examples/ordre2AvecParentsAvecReprésentation';
-import ordre3AvecParents from './examples/ordre3AvecParents'
+import ordre1 from './examples/ordre1'
+import ordre2 from './examples/ordre2';
+import ordre3 from './examples/ordre3'
 
 const Tables = () => {
   return (
@@ -88,28 +87,22 @@ const examples: ExampleRow[] = [
     link: encodeFamilyUrl(louisXIVTree, 'louisXIV')
   },
   {
-    name: 'Ordre 1 sans Représentation',
+    name: 'Ordre 1',
     description: 'test',
     numberOfNodes: 10,
-    link: encodeFamilyUrl(ordre1SansRepresentation, 'deCujus')
+    link: encodeFamilyUrl(ordre1, 'deCujus')
   },
   {
-    name: 'Ordre 1 avec Représentantion',
+    name: 'Ordre 2',
     description: 'test',
     numberOfNodes: 10,
-    link: encodeFamilyUrl(ordre1AvecRepresentation, 'deCujus')
+    link: encodeFamilyUrl(ordre2, 'father')
   },
   {
-    name: 'Ordre 2 avec parents sans représentation',
+    name: 'Ordre 3',
     description: 'test',
     numberOfNodes: 10,
-    link: encodeFamilyUrl(ordre2AvecParentsSansReprésentation, 'father')
-  },
-  {
-    name: 'Ordre 3 avec parents',
-    description: 'test',
-    numberOfNodes: 10,
-    link: encodeFamilyUrl(ordre3AvecParents, 'maternal_grand_father')
+    link: encodeFamilyUrl(ordre3, 'maternal_grand_father')
   }
 ]
 

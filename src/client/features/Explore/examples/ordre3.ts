@@ -1,6 +1,6 @@
 import { FamilyExample } from './interface'
 
-const ordre3AvecParents: FamilyExample = {
+const ordre3: FamilyExample = {
     deCujus: {
         id: "deCujus",
         name: "deCujus",
@@ -39,4 +39,4 @@ const ordre3AvecParents: FamilyExample = {
     },
 }
 
-export default ordre3AvecParents
+export default ordre3
