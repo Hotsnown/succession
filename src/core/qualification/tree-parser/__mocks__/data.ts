@@ -3,43 +3,50 @@ const simpsonsTree = [
     "id": "unknown",
     "name": "???",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "mona",
     "name": "Mona Penelope Simpson (née Olsen)",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "herb",
     "name": "Herbert (Herb) Powell",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "marge",
     "name": "Marjorie (Marge) Simpson (née Bouvier)",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "bart",
     "name": "Bartholomew (Bart) JoJo Simpson",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "millhouse",
     "name": "Millhouse Van Houten",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "millhouse_jr",
     "name": "Millhouse Van Houten Jr.",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "lisa",
@@ -49,8 +56,9 @@ const simpsonsTree = [
         "id": "millhouse",
         "name": "Millhouse Van Houten",
         "partners": [],
-        "children": {}
-      }
+        "children": {},
+        "status": 'valid'
+      },
     ],
     "children": {
       "millhouse": [
@@ -58,16 +66,19 @@ const simpsonsTree = [
           "id": "millhouse_jr",
           "name": "Millhouse Van Houten Jr.",
           "partners": [],
-          "children": {}
+          "children": {},
+          "status": 'valid'
         }
       ]
-    }
+    },
+    "status": 'valid'
   },
   {
     "id": "maggie",
     "name": "Margaret (Maggie) Eve Simpson",
     "partners": [],
-    "children": {}
+    "children": {},
+    "status": 'valid'
   },
   {
     "id": "homer",
@@ -77,7 +88,8 @@ const simpsonsTree = [
         "id": "marge",
         "name": "Marjorie (Marge) Simpson (née Bouvier)",
         "partners": [],
-        "children": {}
+        "children": {},
+        "status": 'valid'
       }
     ],
     "children": {
@@ -86,7 +98,8 @@ const simpsonsTree = [
           "id": "bart",
           "name": "Bartholomew (Bart) JoJo Simpson",
           "partners": [],
-          "children": {}
+          "children": {},
+          "status": 'valid'
         },
         {
           "id": "lisa",
@@ -96,7 +109,8 @@ const simpsonsTree = [
               "id": "millhouse",
               "name": "Millhouse Van Houten",
               "partners": [],
-              "children": {}
+              "children": {},
+              "status": 'valid'
             }
           ],
           "children": {
@@ -105,7 +119,8 @@ const simpsonsTree = [
                 "id": "millhouse_jr",
                 "name": "Millhouse Van Houten Jr.",
                 "partners": [],
-                "children": {}
+                "children": {},
+                "status": 'valid'
               }
             ]
           }
@@ -114,26 +129,31 @@ const simpsonsTree = [
           "id": "maggie",
           "name": "Margaret (Maggie) Eve Simpson",
           "partners": [],
-          "children": {}
+          "children": {},
+          "status": 'valid'
         }
       ]
-    }
+    },
+    "status": 'valid'
   },
   {
     "id": "abe",
     "name": "Abraham J. (Grandpa) Simpson",
+    "status": 'valid',
     "partners": [
       {
         "id": "unknown",
         "name": "???",
         "partners": [],
-        "children": {}
+        "children": {},
+        "status": 'valid'
       },
       {
         "id": "mona",
         "name": "Mona Penelope Simpson (née Olsen)",
         "partners": [],
-        "children": {}
+        "children": {},
+        "status": 'valid'
       }
     ],
     "children": {
@@ -142,7 +162,8 @@ const simpsonsTree = [
           "id": "herb",
           "name": "Herbert (Herb) Powell",
           "partners": [],
-          "children": {}
+          "children": {},
+          "status": 'valid'
         }
       ],
       "mona": [
@@ -154,7 +175,8 @@ const simpsonsTree = [
               "id": "marge",
               "name": "Marjorie (Marge) Simpson (née Bouvier)",
               "partners": [],
-              "children": {}
+              "children": {},
+              "status": 'valid'
             }
           ],
           "children": {
@@ -163,7 +185,8 @@ const simpsonsTree = [
                 "id": "bart",
                 "name": "Bartholomew (Bart) JoJo Simpson",
                 "partners": [],
-                "children": {}
+                "children": {},
+                "status": 'valid'
               },
               {
                 "id": "lisa",
@@ -173,7 +196,8 @@ const simpsonsTree = [
                     "id": "millhouse",
                     "name": "Millhouse Van Houten",
                     "partners": [],
-                    "children": {}
+                    "children": {},
+                    "status": 'valid'
                   }
                 ],
                 "children": {
@@ -182,7 +206,8 @@ const simpsonsTree = [
                       "id": "millhouse_jr",
                       "name": "Millhouse Van Houten Jr.",
                       "partners": [],
-                      "children": {}
+                      "children": {},
+                      "status": 'valid'
                     }
                   ]
                 }
@@ -191,7 +216,8 @@ const simpsonsTree = [
                 "id": "maggie",
                 "name": "Margaret (Maggie) Eve Simpson",
                 "partners": [],
-                "children": {}
+                "children": {},
+                "status": 'valid'
               }
             ]
           }

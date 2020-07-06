@@ -1,9 +1,20 @@
-import { Tree, Node, HouseHold } from './interface'
+import { HouseHold } from './interface'
 import { Output } from './entities'
+
+interface Tree {
+    id: string;
+    name: string;
+    status: Status
+    partners: Tree;
+    children: Tree
+}
 
 type Status = 'valid' | 'invalid'
 
-function treeParser(tree: any, deCujus: string): Output {
+
+//TODO : change to traverse tree
+
+function treeParser(tree: Tree, deCujus: string): Output {
     let facts: Output = new Output(deCujus)
 
     Object.entries(tree)
