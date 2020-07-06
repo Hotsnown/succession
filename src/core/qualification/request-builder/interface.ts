@@ -1,11 +1,9 @@
-
-export interface Attributes {
-}
-
 export interface Family {
     member_id: string;
     childs: string[];
-    attributes: Attributes;
+    attributes: {
+        status: 'valid' | 'invalid'
+    };
 }
 
 export interface Query {

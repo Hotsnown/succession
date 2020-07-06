@@ -5,11 +5,13 @@ const ordre1: FamilyExample = {
         id: "deCujus",
         name: "deCujus",
         partners: ["deadSpouse"],
-        children: { deadSpouse: ["deadSon"]}
+        children: { deadSpouse: ["deadSon"]},
+        status: 'valid'
     },
     deadSpouse: {
         id: "deadSpouse",
         name: "deadSpouse",
+        status: 'valid'
     },
     deadSon: {
         id: "deadSon",
@@ -19,25 +21,35 @@ const ordre1: FamilyExample = {
             "grandchildren1",
             "grandchildren2",
             "grandchildren3",
-        ]}
+        ]},
+        status: 'valid'
     },
     grandchildren1: {
         id: "grandchildren1",
-        name: "grandchildren1"
+        name: "grandchildren1",
+        status: 'valid'
     },
     grandchildren2: {
         id: "grandchildren2",
         name: "grandchildren2",
         partners: ["grandchildren2Spouse"],
-        children: {grandchildren2Spouse: ["grandgrandchildren"]}
+        children: {grandchildren2Spouse: ["grandgrandchildren"]},
+        status: 'valid'
+    },
+    grandchildren2Spouse: {
+        id: "grandchildren2Spouse",
+        name: "grandchildren2Spouse",
+        status: 'valid'
     },
     grandgrandchildren: {
         id: "grandgrandchildren",
-        name: "grandgrandchildren"
+        name: "grandgrandchildren",
+        status: 'valid'
     },
     grandchildren3: {
         id: "grandchildren3",
-        name: "grandchildren3"
+        name: "grandchildren3",
+        status: 'valid'
     }
 }
 

@@ -110,6 +110,7 @@ interface TreeListChildrenProps {
   onAddChild: any
   onEdit: any
   onDelete: any
+  onUpdateStatus: any
 }
 
 interface TreeListChildrenState {
@@ -134,6 +135,7 @@ class TreeListChildren extends React.Component <TreeListChildrenProps, TreeListC
     ret.push(<ChildList key={'childlist_' + this.props.parent.id} {...this.props.linkprops} innerRef={this.listRef}>
       {this.props.members.map(member => <li key={member.id}>
         <TreeMember
+          onUpdateStatus={this.props.onUpdateStatus}
           onAddPartner={this.props.onAddPartner}
           onAddChild={this.props.onAddChild}
           onEdit={this.props.onEdit}

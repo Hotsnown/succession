@@ -143,7 +143,7 @@ class TreeNodeMenu extends React.Component <TreeNodeMenuProps, TreeNodeState> {
     return [
       //<a key="action_move" href="#" className="move">Move</a>,
       <TreeNodeActions key="action_list" className="tree_actions">
-        <TreeNodeHeader>Edit</TreeNodeHeader>
+        <TreeNodeHeader>Modifier</TreeNodeHeader>
         <ul>
           <li><a href="#" className="edit" onClick={this.handleToggleEditable}>Modifier</a></li>
           <li><a href="#" className="updateStatus" onClick={this.handleUpdateStatus}>updateStatus</a></li>

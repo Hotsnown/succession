@@ -1,7 +1,9 @@
 import { Tree, Node, HouseHold } from './interface'
 import { Output } from './entities'
 
-function treeParser(tree: any, deCujus: string) {
+type Status = 'valid' | 'invalid'
+
+function treeParser(tree: any, deCujus: string): Output {
     let facts: Output = new Output(deCujus)
 
     Object.entries(tree)
@@ -16,17 +18,18 @@ function parseNode(facts: Output) {
     return (node: any) => {
         let parent = node[0]
         let houseHold = node[1].children
+        console.log( )
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
             if (hasMultipleChildren(houseHold)) {
-                extractMultipleChildren(getChildrenString(houseHold), facts, parent)
+                extractMultipleChildren(getChildrenString(houseHold), facts, parent, node[1].status)
             }
             else {
                 getChildrenArray(houseHold)
-                    .map(extractSingleChildren(facts, parent))
+                    .map(extractSingleChildren(facts, parent, node[1].status))
             }
         }
         else {
-            facts.appendFamily(parent, [])
+            facts.appendFamily(parent, [], node[1].status)
         }
     }
 }
@@ -43,12 +46,12 @@ function hasMultipleChildren(houseHold: HouseHold) {
     return getChildrenArray(houseHold).length
 }
 
-function extractMultipleChildren(childrens: string[], facts: Output, parent: string) {
-    facts.appendFamily(parent, childrens)
+function extractMultipleChildren(childrens: string[], facts: Output, parent: string, status: Status) {
+    facts.appendFamily(parent, childrens, status)
 }
 
-function extractSingleChildren(facts: Output, parent: string) {
-    return (children: any) =>  facts.appendFamily(parent, children.id)
+function extractSingleChildren(facts: Output, parent: string, status: Status) {
+    return (children: any) =>  facts.appendFamily(parent, children.id, status)
 }
 
 function isEmpty(obj: Object) {

@@ -13,11 +13,13 @@ export interface IResult {
 const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
     const [results, setResults] = React.useState<Family>(Family.create([]))
     const [displayResult, setDisplayResult] = React.useState(false)
-
+    
     React.useEffect(() => {
-        getSolution(memberList, deCujus)
-        .then(result => {setResults(result)})
-        .catch(err => alert(err))
+        if(displayResult) {
+            getSolution(memberList, deCujus)
+                .then(result => {setResults(result)})
+                .catch(err => alert(err))
+        }
       }, [displayResult]);
 
     if (displayResult) {

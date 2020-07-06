@@ -7,8 +7,13 @@ export class Output {
         this.family = []
     }
 
-    appendFamily(member_id: string, childs: string[]) {
-        this.family.push({member_id: member_id, childs: childs, attributes: {}})
+    appendFamily(member_id: string, childs: string[], status: 'valid' | 'invalid') {
+        this.family.push({
+            member_id: member_id, 
+            childs: childs, 
+            attributes: {
+                status: status
+            }})
     }
 }
 
@@ -19,4 +24,5 @@ interface Family {
 }
 
 interface Attributes {
+    status: 'valid' | 'invalid'
 }

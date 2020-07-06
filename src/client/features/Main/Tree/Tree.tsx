@@ -41,8 +41,6 @@ class Tree extends React.Component <TreeProps, TreeState> {
     this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
-  // SIMPLE GETTERS //
-
   getNextMemberId(memberlist: undefined | any[]) {
     if (memberlist === undefined) memberlist = this.state.memberlist;
     //@ts-ignore
@@ -57,8 +55,6 @@ class Tree extends React.Component <TreeProps, TreeState> {
     return { 'id': id, 'name': name, 'partners': [], 'children': [] }
   }
 
-  // HANDLERS //
-
   handleMemberEdit(member_id: string, data: any) {
     this.setState(function (prev_state, props) {
       var memberlist = { ...prev_state.memberlist };
@@ -70,7 +66,7 @@ class Tree extends React.Component <TreeProps, TreeState> {
   handleUpdateStatus(member_id: string) {
     this.setState(function (prev_state, props) {
       let memberlist = { ...prev_state.memberlist };
-      memberlist[member_id].status = !memberlist[member_id].status;
+      memberlist[member_id].status = memberlist[member_id].status === 'valid' ? 'invalid' : 'valid'
       return { 'memberlist': memberlist };
     });
   }
@@ -113,8 +109,6 @@ class Tree extends React.Component <TreeProps, TreeState> {
       return { 'memberlist': memberlist };
     });
   }
-
-  // RENDERERS //
 
   render() {
 

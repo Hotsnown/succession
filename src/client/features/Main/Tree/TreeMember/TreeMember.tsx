@@ -58,6 +58,8 @@ interface TreeMemberProps {
   onAddChild: any
   onDelete: any
   partners: any
+  status: 'valid' | 'invalid'
+  name: string
 }
 
 interface TreeMemberState {
@@ -82,8 +84,6 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
     this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
-  // GETTERS //
-
   getChildCount() {
     let c = 0;
     for (var key in this.props.children) {
@@ -98,9 +98,6 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
   getLinkerProps(p: any, pindex: any) {
     return TreeDimensionCalc.getLinkerProps(p, pindex, this.props);
   }
-
-
-  // HANDLERS //
 
   handleToggleEditable() {
     this.setState(prevState => ({
@@ -120,11 +117,8 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
     return this.props.onUpdateStatus(this.props.id);
   }
 
-  // RENDERERS //
-
   renderField(name: string) {
-    //@ts-ignore
-    if (!this.state.editable) return (this.props.status === false) ? this.props[name] : this.props[name] + " (deceased)";
+    if (!this.state.editable) return this.props.status === 'valid' ? this.props.name : this.props.name + " (deceased)";
     //@ts-ignore
     return <input type="text" name={name} value={this.props[name]} onChange={this.handleEdit} />;
   }
@@ -150,6 +144,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
       onAddChild={this.props.onAddChild}
       onEdit={this.props.onEdit}
       onDelete={this.props.onDelete}
+      onUpdateStatus={this.props.onUpdateStatus}
     />
   }
 
@@ -169,6 +164,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
             onEdit={this.props.onEdit}
             onDelete={this.props.onDelete}
             linkprops={this.getLinkerProps(parent.id, i)}
+            onUpdateStatus={this.props.onUpdateStatus}
             />
         )}
       </TreeChildrenSection>
@@ -176,7 +172,6 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
   }
 
   render() {
-
     return (
       //@ts-ignore
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>

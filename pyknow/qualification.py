@@ -6,12 +6,16 @@ from mocks import family_members
 Input = [ {
     "member_id": 0
     "childs" : ["member_id"]
+    "attributes" : {
+        status: 'valid' | 'invalid'
+    }
     } ]
 Ouput = [
     {
     "member_id" : 0,
     "childs" : ["member_id"],
-    "attributes" : { 
+    "attributes" : {
+        status: 'valid' | 'invalid'
         "ordre" : 0 , 
         "degre" : 0
         }

@@ -7,6 +7,7 @@ interface Member {
     name: string;
     partners?: string[];
     children?: HouseHold;
+    status?: 'valid' | 'invalid';
 }
 
 interface HouseHold {
