@@ -13,7 +13,7 @@ export interface IResult {
 
 const Result = ({ memberList, extractMemberList }: IResult) => {
     const [results, setResults] = React.useState<Family>(Family.create([]))
-    const [deCujus, setDecujus] = React.useState<string>('')
+    const [deCujus, setDecujus] = React.useState<string>('deCujus')
     const [displayResult, setDisplayResult] = React.useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>, value: string) => {
@@ -32,7 +32,7 @@ const Result = ({ memberList, extractMemberList }: IResult) => {
                 .then(result => {setResults(result)})
                 .catch(err => alert(err))
         }
-        
+
       }, [displayResult]);
 
     if (displayResult) {
@@ -46,7 +46,7 @@ const Result = ({ memberList, extractMemberList }: IResult) => {
     return (
         <>
             <DeCujusForm handleSubmit={handleSubmit} />
-            {deCujus && <h5>Current De Cujus : {deCujus}</h5>}
+            <h5>Current De Cujus : {deCujus}</h5>
             <Button onClick = {() => {extractMemberList(); setDisplayResult(true)}}>Click me</Button>
         </>
     )

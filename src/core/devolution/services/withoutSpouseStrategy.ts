@@ -8,10 +8,10 @@ export function getSolutionController(family: Family): Family {
 
    try {
 
-      //const strategy = Ordres.create(family).getFirstAppliableOrdreNumber(family)
-      const strategy = 1
+      const strategy = Ordres.create(family).getFirstAppliableOrdreNumber(family)
       
       switch (strategy) {
+         //@ts-ignore
          case 1: return ordreOneStrategy(family)
          //@ts-ignore
          case 2: return OrdreTwoStrategy(family)

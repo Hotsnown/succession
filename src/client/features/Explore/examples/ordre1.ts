@@ -6,12 +6,12 @@ const ordre1: FamilyExample = {
         name: "deCujus",
         partners: ["deadSpouse"],
         children: { deadSpouse: ["deadSon"]},
-        status: 'valid'
+        status: 'invalid'
     },
     deadSpouse: {
         id: "deadSpouse",
         name: "deadSpouse",
-        status: 'valid'
+        status: 'invalid'
     },
     deadSon: {
         id: "deadSon",
@@ -22,7 +22,7 @@ const ordre1: FamilyExample = {
             "grandchildren2",
             "grandchildren3",
         ]},
-        status: 'valid'
+        status: 'invalid'
     },
     grandchildren1: {
         id: "grandchildren1",

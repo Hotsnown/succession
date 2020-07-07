@@ -17,6 +17,7 @@ import louisXIVTree from './examples/louisXIV'
 import ordre1 from './examples/ordre1'
 import ordre2 from './examples/ordre2';
 import ordre3 from './examples/ordre3'
+import ordre4 from './examples/ordre4'
 
 const Tables = () => {
   return (
@@ -103,6 +104,12 @@ const examples: ExampleRow[] = [
     description: 'test',
     numberOfNodes: 10,
     link: encodeFamilyUrl(ordre3, 'maternal_grand_father')
+  },
+  {
+    name: 'Ordre 4',
+    description: 'test',
+    numberOfNodes: 10,
+    link: encodeFamilyUrl(ordre4, 'paternal_grand_father')
   }
 ]
 

@@ -11,8 +11,10 @@ export function OrdreTwoStrategy(family: Family): Family {
     //    si parent survivant = 2 : 25% + 25% + 50% / nombre de collatéraux (ne pas oublier la représentation)
     //    si parent survivant = 0
     //
+    console.log(family)
     const parents = family
         .findParentsOf(family.deCujus.member_id)
+        .filter(member => member !== undefined)
         .filter(parent => parent.isEligibleToInherit())
 
     switch (parents.length) {

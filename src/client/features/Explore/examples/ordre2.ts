@@ -25,6 +25,11 @@ const ordre2: FamilyExample = {
         children: { sibling1Spouse : ["nephew"]},
         status: 'valid'
     },
+    sibling1Spouse: {
+        id: "sibling1Spouse",
+        name: "sibling1Spouse",
+        status: 'valid',
+    },
     nephew: {
         id: "nephew",
         name: "nephew",
@@ -35,7 +40,6 @@ const ordre2: FamilyExample = {
         name: "sibling2",
         status: 'valid'
     }
-
 }
 
 export default ordre2

@@ -54,7 +54,7 @@ export class Member extends ValueObject<MemberProps> {
     public static create(member: MemberConstructor): Member {
         if (member.childs === undefined || member.childs === null) console.error(member)
         if (R.isNil(member)) console.error(member)
-        if (!member.attributes.status) console.error(`Error: ${member.member_id}'s status is ${member.attributes.status} wherehas it should be 'valid' | 'invalid'`)
+        if (member.attributes.status === undefined) console.error(`Error: ${member.member_id}'s status is ${member.attributes.status} wherehas it should be 'valid' | 'invalid'`)
         if (member.attributes.legalRights && member.attributes.legalRights > 1) throw new Error(`${member.member_id}'s legalRights are over 100%: ${member.attributes.legalRights}`)    
         return new Member(
                 {
@@ -84,8 +84,6 @@ export class Member extends ValueObject<MemberProps> {
                     }
                 })
     }
-
-
 
     set legalRights (value: LegalRights) {
         this.props.value.attributes.legalRights = value
