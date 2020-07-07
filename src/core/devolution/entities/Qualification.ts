@@ -106,7 +106,7 @@ export function assignRepresentation(family: Family): Family {
                 member.copyWith({ isReprésentant: member.isReprésentantIn(family) })))
 
     return R.pipe(
-        assignReprésentant,
         assignReprésenté,
+        assignReprésentant,
     )(family)
 }

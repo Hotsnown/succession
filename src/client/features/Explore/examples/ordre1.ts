@@ -5,13 +5,18 @@ const ordre1: FamilyExample = {
         id: "deCujus",
         name: "deCujus",
         partners: ["deadSpouse"],
-        children: { deadSpouse: ["deadSon"]},
+        children: { deadSpouse: ["deadSon", "son"]},
         status: 'invalid'
     },
     deadSpouse: {
         id: "deadSpouse",
         name: "deadSpouse",
         status: 'invalid'
+    },
+    son: {
+        id: "son",
+        name: "son",
+        status: "valid"
     },
     deadSon: {
         id: "deadSon",

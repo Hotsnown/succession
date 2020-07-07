@@ -34,6 +34,7 @@ function updateFamily(family: Family, membersOfCurrentDegres: Family): Family {
 const updateMember = (member: Member, rootOfsouche: Member) => {
     //WARNINF, you may need to use family.findMember(rootOfSourche) 
     //when rootOfSouche is updated before membersOfSouche to prevent race conditions
+    //TODO: it should not give legalRights to a dead représentant
     if (member.member_id === 'SUT') {
         return member.copyWith({ legalRights: 1/6})
     }

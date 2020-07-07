@@ -127,7 +127,7 @@ export class Member extends ValueObject<MemberProps> {
         const parents = family.findParentsOf(family.deCujus.member_id)
   
         return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) &&
-                (family.deCujus.hasChildEligibleToInheritIn(family) || family.deCujus.hasSiblingEligibleToInheritIn(family))&&
+                (family.deCujus.hasChildEligibleToInheritIn(family) || family.deCujus.hasSiblingEligibleToInheritIn(family)) &&
                !this.isIn(parents) &&
                !this.isEligibleToInherit() && 
                 this.hasChildEligibleToInheritIn(family)
@@ -142,6 +142,7 @@ export class Member extends ValueObject<MemberProps> {
     }
 
     private hasChildEligibleToInheritIn(family: Family): boolean {
+        //TODO: it should work if child of child is eligible on to inherit
         return family.members
             .filter(member => this.childs.includes(member.member_id))
             .some(child => child.isEligibleToInherit())
@@ -179,7 +180,7 @@ export class Member extends ValueObject<MemberProps> {
     private isDescendantOfARepresenté(family: Family): boolean {
         return family.findParentsOf(this.member_id)
             .filter(parent => parent !== undefined)
-            .some(parent => parent.isReprésenté)
+            .some(parent => parent.isReprésenté === true)
     }
 
     public isIn (members: Member[]): boolean {
