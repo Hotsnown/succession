@@ -2,11 +2,10 @@
 import React from 'react';
 import TreeMember from './TreeMember/TreeMember';
 import TreeParser from './TreeParser';
-import { ITree } from './interface'
 
 interface TreeProps {
   root: string
-  datalist: ITree
+  datalist: any
 }
 
 interface TreeState {
@@ -18,7 +17,7 @@ interface TreeState {
 
 class Tree extends React.Component <TreeProps, TreeState> {
 
-  memberlist: any[]
+  memberlist: Tree[]
   nextMemberId: number
 
   constructor(props: TreeProps) {

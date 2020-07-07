@@ -17,7 +17,7 @@ interface MemberProps {
             degre: Degree;
             ordre: Ordre;
             status: Status;
-            isReprésenté: Representable
+            isReprésenté: Représenté
             isReprésentant: Representant
             legalRights: LegalRights
             spouse: string
@@ -40,7 +40,7 @@ interface MemberAttributes {
         spouse?: string
         legalRights?: LegalRights
         branch?: Branch
-        isReprésenté?: Representable
+        isReprésenté?: Représenté
         isReprésentant?: Representant
 }
 
@@ -103,7 +103,7 @@ export class Member extends ValueObject<MemberProps> {
         return this.props.value.attributes
     }
 
-    get isReprésenté(): Representable {
+    get isReprésenté(): Représenté {
         return this.props.value.attributes.isReprésenté
     }
 
@@ -125,7 +125,7 @@ export class Member extends ValueObject<MemberProps> {
                 Object.assign({}, this.props.value.attributes, {attributes: {...this.props.value.attributes, ...attributesToUpdate}})));
     }
 
-    public isReprésentéIn(family: Family): Representable {
+    public isReprésentéIn(family: Family): Représenté {
         const parents = family.findParentsOf(family.deCujus.member_id)
   
         return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) &&
@@ -165,7 +165,8 @@ export class Member extends ValueObject<MemberProps> {
         const parents = family.findParentsOf(family.deCujus.member_id);
         const siblingOfDeCujus = parents
             .filter(parent => parent !== undefined)
-            .flatMap(parent => parent.childs).map(parent => family.findMember(parent)); //bug: includes deCujus
+            .flatMap(parent => parent.childs)
+            .map(parent => family.findMember(parent)); //bug: includes deCujus
         let isNotSiblingOfDecujus: boolean;
         if (siblingOfDeCujus.every(member => typeof member !== undefined)) {
             //@ts-ignore 
@@ -202,6 +203,6 @@ export class Member extends ValueObject<MemberProps> {
 }
 
 export type Branch = 'paternelle' | 'maternelle' | 'unqualified';
-export type Representable = boolean | 'unqualified';
+export type Représenté = boolean | 'unqualified';
 export type Representant = boolean | 'unqualified';
 export type LegalRights = number | 'unqualified';

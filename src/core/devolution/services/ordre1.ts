@@ -12,10 +12,12 @@ export function ordreOneStrategy(family: Family): Family {
        se partagent la part du défunt. Réitérer 1
     */
 
-   const qualification = assignRepresentation(family)
-   const devolution = new Devolution(family)
+    const ordre1 = Family.create(Ordres.create(family).props.value[1].concat(family.deCujus))
 
-   return repartitionParTête(Family.create(Ordres.create(family).props.value[1]), family)
+   const qualification = assignRepresentation(ordre1).debug()
+   const devolution = new Devolution(ordre1)
+
+   return repartitionParTête(ordre1, family)
 
    /*  return qualification.members.some(member => member.isReprésentant)
       ? computeRepresentation(qualification)

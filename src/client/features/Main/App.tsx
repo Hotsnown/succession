@@ -36,7 +36,7 @@ export const App = () => {
             <div className="content">
                 <Container fluid>
                     <Navbar>
-                        <Result extractMemberList={extractMemberList} memberList={memberList} deCujus={root}/>
+                        <Result extractMemberList={extractMemberList} memberList={memberList}/>
                     </Navbar>
                     <Tree
                         root={root}

@@ -1,8 +1,9 @@
 import { DevolutionPresenter } from './devolution/devolutionPresenter'
 import { getQualification } from './qualification/index'
-import { Family, Member } from './devolution/entities'
+import { Family } from './devolution/entities'
+import { RawTree } from '../client/features/Main/Interface'
 
-export async function getSolution (memberList: Member[], deCujusId: string) {
+export async function getSolution (memberList: RawTree, deCujusId: string) {
     
     const devolution = new DevolutionPresenter()
     const qualification = await getQualification(memberList, deCujusId)
