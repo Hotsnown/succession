@@ -1,21 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Family } from '../../../../core/devolution/entities'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 var Fraction = require('fractional').Fraction
 
 interface IProps {
     results: Family
+    isModalOpen: boolean
+    toggle: () => void
 }
 
-const ResponseParser = ({ results }: IProps) => {
-
-  const [modal, setModal] = useState(true);
-
-  const toggle = () => setModal(!modal);
-
+const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle}>
+      <Modal isOpen={isModalOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>Results</ModalHeader>
         <ModalBody>
             <ul>
@@ -35,4 +32,4 @@ const ResponseParser = ({ results }: IProps) => {
   );
 }
 
-export default ResponseParser
+export default ResultModal

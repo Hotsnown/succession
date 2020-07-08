@@ -4,8 +4,6 @@ import initialTreeValue from './initialTreeValue'
 import Container from 'react-bootstrap/Container'
 import Result from './Result/Result'
 
-import { Navbar } from 'reactstrap'
-
 export const App = () => {
 
     const [memberList, setMemberList] = React.useState<any>({})
@@ -35,9 +33,7 @@ export const App = () => {
         <>
             <div className="content">
                 <Container fluid>
-                    <Navbar>
-                        <Result extractMemberList={extractMemberList} memberList={memberList}/>
-                    </Navbar>
+                    <Result extractMemberList={extractMemberList} memberList={memberList}/>
                     <Tree
                         root={root}
                         datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
