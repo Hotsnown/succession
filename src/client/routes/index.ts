@@ -1,4 +1,4 @@
-import TableList from '../features/Explore/Table';
+import TableList from '../features/Explore/Illustrations';
 import Main from '../features/Main/App';
 
 export interface Route {

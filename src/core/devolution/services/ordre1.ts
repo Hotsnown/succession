@@ -14,9 +14,7 @@ export function ordreOneStrategy(family: Family): Family {
 
    const ordre1 = Family.create(Ordres.create(family).props.value[1].concat(family.deCujus))
 
-   const qualification = assignRepresentation(ordre1).debug()
-
-   console.log(qualification.members.filter(member => member.attributes.isReprésenté).map(member => member.member_id))
+   const qualification = assignRepresentation(ordre1)
    
    return qualification.members.some(member => member.isReprésentant)
       ? computeRepresentation(qualification)

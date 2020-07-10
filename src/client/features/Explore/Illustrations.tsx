@@ -14,6 +14,7 @@ import { FamilyExample } from './examples/interface';
 import simpsonsTree from './examples/simpsons'
 import weasleyTree from './examples/weasley'
 import louisXIVTree from './examples/louisXIV'
+import conjointSurvivant from './examples/conjointSurvivant'
 import ordre1 from './examples/ordre1'
 import ordre2 from './examples/ordre2';
 import ordre3 from './examples/ordre3'
@@ -35,17 +36,17 @@ const Tables = () => {
                     <tr>
                       <th>Name</th>
                       <th>Description</th>
-                      <th>Number of nodes</th>
-                      <th className="text-right">Link</th>
+                      <th>Complexity</th>
+                      <th>Link</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {examples.map(example => 
+                    {illustrations.map(illustration => 
                       <tr>
-                        <td>{example.name}</td>
-                        <td>{example.description}</td>
-                        <td>{example.numberOfNodes}</td>
-                        <td className="text-right"><a href={example.link}>Click me!</a></td>
+                        <td>{illustration.name}</td>
+                          <td>{illustration.tags.map(tag => <span className="badge badge-primary">{tag}</span>)}</td>
+                        <td>{illustration.numberOfNodes}</td>
+                        <td><a href={illustration.link}>Click me!</a></td>
                       </tr>)}
                   </tbody>
                 </Table>
@@ -58,59 +59,71 @@ const Tables = () => {
   );
 };
 
-interface ExampleRow {
+interface Illustration {
   name: string;
-  description: string;
+  tags: string[];
   numberOfNodes: number;
   link: string;
 }
 
-const encodeFamilyUrl = (family: FamilyExample, root: string) => 
-  `http://localhost:3000/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
-
-const examples: ExampleRow[] = [
+const illustrations: Illustration[] = [
   {
     name: 'Simpsons Tree',
-    description: 'A simpson family',
-    numberOfNodes: 10,
+    tags: ['Fiction'],
+    numberOfNodes: countMembers(simpsonsTree),
     link: encodeFamilyUrl(simpsonsTree, 'abe')
   },
   {
     name: 'Weasley Tree',
-    description: 'A Weasley family',
-    numberOfNodes: 10,
+    tags: ['Fiction'],
+    numberOfNodes: countMembers(weasleyTree),
     link: encodeFamilyUrl(weasleyTree, 'arthur')
   },
   {
     name: 'louis XIV Tree',
-    description: 'louisXIVTree',
-    numberOfNodes: 10,
+    tags: ['Historic'],
+    numberOfNodes: countMembers(louisXIVTree),
     link: encodeFamilyUrl(louisXIVTree, 'louisXIV')
   },
   {
+    name: 'Avec Conjoint Survivant Tree',
+    tags: ['Conjoint'],
+    numberOfNodes: countMembers(conjointSurvivant),
+    link: encodeFamilyUrl(conjointSurvivant, 'deCujus')
+  },
+  {
     name: 'Ordre 1',
-    description: 'test',
-    numberOfNodes: 10,
+    tags: ['Représentation'],
+    numberOfNodes: countMembers(ordre1),
     link: encodeFamilyUrl(ordre1, 'deCujus')
   },
   {
     name: 'Ordre 2',
-    description: 'test',
-    numberOfNodes: 10,
+    tags: ['Représentation', 'Collatéraux Privilégiés'],
+    numberOfNodes: countMembers(ordre2),
     link: encodeFamilyUrl(ordre2, 'father')
   },
   {
     name: 'Ordre 3',
-    description: 'test',
-    numberOfNodes: 10,
+    tags: ['Fente (ascendants)', 'Collatéraux Privilégiés'],
+    numberOfNodes: countMembers(ordre3),
     link: encodeFamilyUrl(ordre3, 'maternal_grand_father')
   },
   {
     name: 'Ordre 4',
-    description: 'test',
-    numberOfNodes: 10,
+    tags: ['Fente (collatéraux)'],
+    numberOfNodes: countMembers(ordre4),
     link: encodeFamilyUrl(ordre4, 'paternal_grand_father')
   }
 ]
+
+function countMembers (family: FamilyExample): number {
+  return Object.keys(family).length
+}
+
+function encodeFamilyUrl (family: FamilyExample, root: string) {
+  return `http://localhost:3000/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
+}
+
 
 export default Tables;

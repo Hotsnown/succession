@@ -28,7 +28,6 @@ function parseNode(facts: Output) {
     return (node: any) => {
         let parent = node[0]
         let houseHold = node[1].children
-        console.log( )
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
             if (hasMultipleChildren(houseHold)) {
                 extractMultipleChildren(getChildrenString(houseHold), facts, parent, node[1].status)

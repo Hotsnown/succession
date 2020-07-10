@@ -1,54 +1,42 @@
-import { Family } from "../entities";
+import { Family, Member } from "../entities";
 
-export function withSpouseController(family: Family): Family {
-
-    try {
-        withSpouse(family)
-    } catch(e) {
-        console.error(e)
-        family.debug()
-        return family
+export function withSpouseController(family: Family, spouse: Member): Family {
+    const deCujus = family.deCujus
+    
+    const withoutDescendants = (family: Family): Family => {
+        return Family.create(family.members
+            .filter(member => member !== undefined)
+            .map(member => member.member_id === spouse.member_id 
+                ? member.copyWith({legalRights: 1}) 
+                : member.copyWith({legalRights: 0})
+            ))
     }
 
-    return withSpouse(family)
-
-    function withSpouse(family: Family): Family {
-        const deCujus = family.deCujus
-        const spouse = family.findSpouseOf(deCujus.member_id)!
-        
-        /**
-         * the deceased died with no descendants, the deceased’s ½ interest goes to 
-         * the surviving spouse. Thus the surviving spouse owns the entire property 
-         * outright as separate property. There is no usufruct in this situation. 
-         * This is the main difference between the devolution of community and separate property.
-         */
-        const withoutDescendants = (family: Family): Family => {
-            spouse.legalRights = 1
-            return family
-        }
-    
-        /**
-         * Si le défunt laisse des enfants issus d'une précédente union, 
-         * l'époux survivant hérite du quart de la succession en pleine propriété. 
-         * Dans ce cas, les enfants héritent des 3/4 de la succession, 
-         * réparti à parts égales, sous réserve de la représentation 
-         * TODO : option du Conjoint
-         * TODO : qualification du conjoint survivant
-         * TODO : enfants avec plusieurs partenaires
-         * TODO : représentation
-         * TODO : exclure les enfants incapable d'hériter
-         */
-        const withDescendants = (family: Family): Family => {
-            deCujus.childs.forEach(
-                child => family.findMember(child)!.legalRights = 3 / deCujus.childs.length / 4
-            )
-            spouse.legalRights = 1/4
-            return family
-        }
-    
-        return deCujus.childs.length 
-            ? withDescendants(family) 
-            : withoutDescendants(family)
+    /**
+     * Si le défunt laisse des enfants issus d'une précédente union, 
+     * l'époux survivant hérite du quart de la succession en pleine propriété. 
+     * Dans ce cas, les enfants héritent des 3/4 de la succession, 
+     * réparti à parts égales, sous réserve de la représentation 
+     */
+    const withDescendants = (family: Family): Family => {
+        //TODO : qualification du conjoint survivant
+        //TODO : enfants avec plusieurs partenaires
+        //TODO : représentation
+        //TODO : exclure les enfants incapable d'hériter
+        return Family.create(family.members
+            .filter(member => member !== undefined)
+            .map(member =>
+                family.deCujus.childs.includes(member.member_id)
+                    ? member.copyWith({legalRights: 3 / deCujus.childs.length / 4}) 
+                    : member.member_id === spouse.member_id 
+                        ? member.copyWith({legalRights: 1/4})
+                        : member.copyWith({legalRights: 0})))
     }
+
+    return doDescendantExist(deCujus) ? withDescendants(family) : withoutDescendants(family)
+}
+
+function doDescendantExist(deCujus: Member): boolean {
+    return deCujus.childs.length > 0;
 }
     

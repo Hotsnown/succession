@@ -148,72 +148,85 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
     expect(ordre2).toStrictEqual(2)
 })
 
-it('should test ordre on real data', () => {
+it('should test ordre on real attributes', () => {
     const test = [
         {
           "childs": [],
-          "data": {},
-          "member_id": "unknown"
+          "attributes": {
+            "status": Status.Deceased
+          },
+          "member_id": "unknown",
         },
         {
           "childs": [],
-          "data": {},
-          "member_id": "mona"
+          "attributes": {
+          "status": Status.Valid
+          },
+          "member_id": "mona",
         },
         {
           "childs": [],
-          "data": {
+          "attributes": {
             "degre": 1,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
           "member_id": "herb"
         },
         {
           "childs": [],
-          "data": {},
-          "member_id": "marge"
+          "attributes": {
+            "status": Status.Valid
+          },
+          "member_id": "marge",
+          "status": Status.Valid
         },
         {
           "childs": [],
-          "data": {
+          "attributes": {
             "degre": 2,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
           "member_id": "bart"
         },
         {
           "childs": [],
-          "data": {},
-          "member_id": "millhouse"
+          "attributes": {},
+          "member_id": "millhouse",
         },
         {
           "childs": [],
-          "data": {
+          "attributes": {
             "degre": 3,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
-          "member_id": "millhouse_jr"
+          "member_id": "millhouse_jr",
         },
         {
           "childs": [
             "millhouse_jr"
           ],
-          "data": {
+          "attributes": {
             "degre": 2,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
-          "member_id": "lisa"
+          "member_id": "lisa",
+          "status": Status.Valid
         },
         {
           "childs": [],
-          "data": {},
+          "attributes": {},
           "member_id": "undefined"
         },
         {
           "childs": [],
-          "data": {
+          "attributes": {
             "degre": 2,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
           "member_id": "maggie"
         },
@@ -223,9 +236,10 @@ it('should test ordre on real data', () => {
             "lisa",
             "maggie"
           ],
-          "data": {
+          "attributes": {
             "degre": 1,
-            "ordre": 1
+            "ordre": 1,
+            "status": Status.Valid
           },
           "member_id": "homer"
         },
@@ -234,14 +248,15 @@ it('should test ordre on real data', () => {
             "herb",
             "homer"
           ],
-          "data": {
+          "attributes": {
             "degre": 0,
-            "ordre": 0
+            "ordre": 0,
+            "status": Status.Valid
           },
-          "member_id": "abe"
+          "member_id": "abe",
         }
       ]
       
-      const sut = Ordres.create(Family.create(newObject))
+      const sut = Ordres.create(Family.create(test))
       expect(sut).toBeTruthy()
 })

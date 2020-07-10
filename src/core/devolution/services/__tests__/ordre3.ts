@@ -1,5 +1,5 @@
 import { Status, Family } from '../../entities'
-import { getSolutionController } from '..'
+import { withoutSpouseStrategy } from '..'
 
 describe('test parents', () => {
     it('should give equal shares to two valid parents', () => {
@@ -59,7 +59,7 @@ describe('test parents', () => {
             }
         ]
 
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -130,7 +130,7 @@ describe('test parents', () => {
             }
         ]
 
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -226,7 +226,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -318,7 +318,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -428,7 +428,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
 
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -533,7 +533,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
     
-        const family = getSolutionController(Family.create(existingFente))
+        const family = withoutSpouseStrategy(Family.create(existingFente))
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -644,7 +644,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = getSolutionController(Family.create(onlyPaternalBranchRemaining))
+        const family = withoutSpouseStrategy(Family.create(onlyPaternalBranchRemaining))
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -753,7 +753,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = getSolutionController(Family.create(onlyPaternalBranchRemaining))
+        const family = withoutSpouseStrategy(Family.create(onlyPaternalBranchRemaining))
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!

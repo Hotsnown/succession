@@ -1,38 +1,6 @@
 import { Status, Family, Member } from '../../entities'
 import { withSpouseController } from '../withSpouse'
 
-it('find who is the spouse', () => {
-
-    const withSpouseControllerMembers = [
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse"
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus"
-            },
-            "member_id": "spouse"
-        }
-    ]
-
-    const family = Family.create(withSpouseControllerMembers.map(member => Member.create(member)))
-
-    const spouseOfDeCujus = family.findSpouseOf('deCujus')!
-
-    expect(spouseOfDeCujus.member_id).toStrictEqual("spouse")
-})
-
 it('gives 100% to the spouse without descendants', () => {
 
     const withSpouseControllerMembers = [
@@ -69,8 +37,8 @@ it('gives 100% to the spouse without descendants', () => {
         }
     ]
 
-    const family = Family.create(withSpouseControllerMembers.map(member => Member.create(member)))
-    const solution = withSpouseController(family)
+    const family = Family.create(withSpouseControllerMembers)
+    const solution = withSpouseController(family, family.findMember("spouse") as Member)
 
     const spouse = solution.findMember('spouse')!
     const deCujus = solution.findMember('deCujus')!
@@ -130,9 +98,9 @@ it('gives 25% to the spouse with descendants', () => {
         }
     ]
 
-    const family = Family.create(withDescendantsMembers.map(member => Member.create(member)))
+    const family = Family.create(withDescendantsMembers)
 
-    const solution = withSpouseController(family)
+    const solution = withSpouseController(family, family.findMember("spouse") as Member)
 
     const spouse = solution.findMember('spouse')!
     const child = solution.findMember('child')!
@@ -205,9 +173,9 @@ it('gives equal shares to all descendants', () => {
         }
     ]
 
-    const family = Family.create(withDescendantsMembers.map(member => Member.create(member)))
+    const family = Family.create(withDescendantsMembers)
 
-    const solution = withSpouseController(family)
+    const solution = withSpouseController(family, family.findMember("spouse") as Member)
 
     const childOne = solution.findMember("child1")!
     const spouse = solution.findMember("spouse")!
