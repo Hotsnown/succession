@@ -1,3 +1,5 @@
+import { OrdreData, DegréData, DroitData } from './interface'
+
 export function renderOrdres(ordre: OrdreData) {
 
     const { descendants, ascendantsPrivilégiés, collatérauxPrivilégiés, ascendants, collatéraux } = ordre

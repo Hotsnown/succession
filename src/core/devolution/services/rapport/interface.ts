@@ -1,11 +1,11 @@
 export type RapportData = SansConjointData | AvecConjointData
 
-interface SansConjointData {
+export interface SansConjointData {
     ordres: OrdreData
     aptitude: Aptitude[]
 }
 
-interface AvecConjointData {
+export interface AvecConjointData {
     ordres: OrdreData
     degrés: DegréData[]
     aptitude: Aptitude[]
@@ -13,7 +13,7 @@ interface AvecConjointData {
     droits: DroitData[]
 }
 
-interface OrdreData {
+export interface OrdreData {
     descendants: string[];
     ascendantsPrivilégiés: string[];
     collatérauxPrivilégiés: string[];
@@ -21,20 +21,20 @@ interface OrdreData {
     collatéraux: string[];
 }
 
-interface DegréData {
+export interface DegréData {
     name: string;
     degré: number;
 }
 
-interface CorrectifData {
+export interface CorrectifData {
 
 }
 
-interface Aptitude {
+export interface Aptitude {
 
 }
 
-interface DroitData {
+export interface DroitData {
     name: string;
     droit: number;
 }
