@@ -1,5 +1,5 @@
-import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '../devolution'
+import { Status, Family } from '../../../entities'
+import { main } from '../main'
 
 describe('test parents', () => {
     it('should give equal shares to two valid parents', () => {
@@ -59,7 +59,7 @@ describe('test parents', () => {
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -130,7 +130,7 @@ describe('test parents', () => {
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -226,7 +226,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -318,7 +318,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -428,7 +428,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -533,7 +533,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
     
-        const family = withoutSpouseStrategy(Family.create(existingFente))
+        const family = main(Family.create(existingFente), 'deCujus')
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -644,7 +644,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = withoutSpouseStrategy(Family.create(onlyPaternalBranchRemaining))
+        const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -753,7 +753,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = withoutSpouseStrategy(Family.create(onlyPaternalBranchRemaining))
+        const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!

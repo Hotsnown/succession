@@ -1,5 +1,5 @@
-import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '../devolution'
+import { Status, Family } from '../../../entities'
+import { main } from '../main'
 
 describe("Inheligible wise", () => {
     it('should not give legalRights when there is no heirs', () => {
@@ -16,7 +16,7 @@ describe("Inheligible wise", () => {
         ]
     
         const family = Family.create(noMember)
-        const deCujus = withoutSpouseStrategy(family).findMember('deCujus')!
+        const deCujus = main(family, 'deCujus').findMember('deCujus')!
     
         expect(deCujus.legalRights).toBe('unqualified')
     })
@@ -52,7 +52,7 @@ describe("Inheligible wise", () => {
             }
         ]
 
-        const solution = withoutSpouseStrategy(Family.create(oneDeadInSameDegree))
+        const solution = main(Family.create(oneDeadInSameDegree), 'deCujus')
         const validSon = solution.findMember('validSon')!
         const deadSon = solution.findMember('deadSon')!
         expect(validSon.legalRights).toBe(1)
@@ -99,7 +99,7 @@ describe("Inheligible wise", () => {
             }
         ]
 
-        const solution = withoutSpouseStrategy(Family.create(oneDeadInSameDegreeTwo))
+        const solution = main(Family.create(oneDeadInSameDegreeTwo), 'deCujus')
         const deadGrandSon = solution.findMember('deadGrandSon')!
         const validGrandSon = solution.findMember('validGrandSon')!
 
@@ -161,7 +161,7 @@ describe('Degree wise', () => {
             },
         ]
     
-        const solution = withoutSpouseStrategy(Family.create(firstDegreeMember))
+        const solution = main(Family.create(firstDegreeMember), 'deCujus')
         const child1 = solution.findMember('child1')!
         const child2 = solution.findMember('child2')!
         const child3 = solution.findMember('child3')!
@@ -237,7 +237,7 @@ describe('Degree wise', () => {
                 "member_id": "grandchildren3"
             },
         ]
-        const solution = withoutSpouseStrategy(Family.create(secondDegreesMembers))
+        const solution = main(Family.create(secondDegreesMembers), 'deCujus')
         const deCujus = solution.findMember('deCujus')!
         const deadSon = solution.findMember('deadSon')!
         const grandchildren1 = solution.findMember('grandchildren1')!
@@ -295,7 +295,7 @@ describe('Degree wise', () => {
             }
         ]
     
-        const solution = withoutSpouseStrategy(Family.create(thirdDegreesMembers))
+        const solution = main(Family.create(thirdDegreesMembers), 'deCujus')
         const grandGrandchild1 = solution.findMember('grandGrandchild1')!
         const grandGrandchild2 = solution.findMember('grandGrandchild2')!
         const deadSon = solution.findMember('deadSon')!
@@ -356,7 +356,7 @@ describe('Degree wise', () => {
             }
         ]
     
-        const solution = withoutSpouseStrategy(Family.create(fourthDegreesMembers))
+        const solution = main(Family.create(fourthDegreesMembers), 'deCujus')
         const deadGrandchild2 = solution.findMember('deadGrandchild')!
         const grandGrandGrandchild1 = solution.findMember('grandGrandGrandchild')!
     
@@ -424,7 +424,7 @@ describe('Degree wise', () => {
             }
         ]
 
-        const solution = withoutSpouseStrategy(Family.create(fifthDegreesMembers))
+        const solution = main(Family.create(fifthDegreesMembers), 'deCujus')
         const grandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandchild')!
     
         expect(grandGrandGrandGrandchild.legalRights).toStrictEqual(1)
@@ -500,7 +500,7 @@ describe('Degree wise', () => {
 
         ]
 
-        const solution = withoutSpouseStrategy(Family.create(sixthDegree))
+        const solution = main(Family.create(sixthDegree), 'deCujus')
         const grandGrandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandGrandchild')!
     
         expect(grandGrandGrandGrandGrandchild.legalRights).toStrictEqual(1)
@@ -564,7 +564,7 @@ describe('Représentation wise', () => {
             }
         ]
     
-        const solution = withoutSpouseStrategy(Family.create(oneRepresentant))
+        const solution = main(Family.create(oneRepresentant), 'deCujus')
 
         const normalHeir = solution.findMember('normalHeir')!
         const représentant1 = solution.findMember('représentant1')!
@@ -653,7 +653,7 @@ describe('Représentation wise', () => {
             }
         ]
     
-        const solution = withoutSpouseStrategy(Family.create(oneRepresentéTwoNormalHeirsThreeRepresentants))
+        const solution = main(Family.create(oneRepresentéTwoNormalHeirsThreeRepresentants), 'deCujus')
 
         const normalHeir1 = solution.findMember('normalHeir1')!
         const normalHeir2 = solution.findMember('normalHeir2')!
@@ -747,7 +747,7 @@ describe('Représentation wise', () => {
             }
         ]
         const family = Family.create(recursiveReprésentation)
-        const solution = withoutSpouseStrategy(family)
+        const solution = main(family, 'deCujus')
 
         const normalHeir = solution.findMember('normalHeir')!
         const représentant1 = solution.findMember('représentant1')!
@@ -849,7 +849,7 @@ describe('Représentation wise', () => {
             }
         ]
         const family = Family.create(recursiveReprésentation)
-        const solution = withoutSpouseStrategy(family)
+        const solution = main(family, 'deCujus')
 
         const normalHeir = solution.findMember('normalHeir')!
         const représentant1 = solution.findMember('représentant1')!

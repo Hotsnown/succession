@@ -1,5 +1,5 @@
-import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '../withoutSpouse'
+import { Status, Family } from '../../../entities'
+import { main } from '../main'
 
 //TODO : qualification fente
 //TODO : legalRights fente
@@ -94,7 +94,7 @@ describe('Degree wise', () => {
             },
         ]
         const family = Family.create(simpleOrdre4)
-        const solution = withoutSpouseStrategy(family)
+        const solution = main(family, 'deCujus')
 
         const deCujus = solution.findMember('deCujus')!
         const mother = solution.findMember('mother')!

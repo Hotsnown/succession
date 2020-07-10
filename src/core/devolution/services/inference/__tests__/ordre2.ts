@@ -1,5 +1,5 @@
-import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '../devolution'
+import { Status, Family } from '../../../entities'
+import { main } from '../main'
 
 describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (ne pas oublier la représentation)', () =>  {
     it('should give 50% to the remaining parent', () => {
@@ -48,7 +48,7 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                 }
             ]
     
-            const family = withoutSpouseStrategy(Family.create(onlyOneParent))
+            const family = main(Family.create(onlyOneParent), 'deCujus')
             
             const deCujus = family.findMember('deCujus')!
             const father = family.findMember('father')!
@@ -131,7 +131,7 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(secondOrdreMembers))
+        const family = main(Family.create(secondOrdreMembers), 'deCujus')
         
         const deCujus = family.findMember('deCujus')!
         const father = family.findMember('father')!
@@ -216,7 +216,7 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(secondOrdreMembers))
+        const family = main(Family.create(secondOrdreMembers), 'deCujus')
         
         const deCujus = family.findMember('deCujus')!
         const father = family.findMember('father')!
@@ -303,7 +303,7 @@ describe('si parent survivant = 0', () => {
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(noParents))
+        const family = main(Family.create(noParents), 'deCujus')
         
         const deCujus = family.findMember('deCujus')!
         const father = family.findMember('father')!
@@ -387,7 +387,7 @@ describe('si parent survivant = 0', () => {
             }
         ]
 
-        const family = withoutSpouseStrategy(Family.create(noParents))
+        const family = main(Family.create(noParents), 'deCujus')
         
         const deCujus = family.findMember('deCujus')!
         const father = family.findMember('father')!
