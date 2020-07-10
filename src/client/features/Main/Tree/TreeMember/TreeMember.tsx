@@ -60,6 +60,7 @@ interface TreeMemberProps {
   partners: any
   status: 'valid' | 'invalid'
   name: string
+  onUpdateDeCujus: (value: string) => void
 }
 
 interface TreeMemberState {
@@ -82,6 +83,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
     this.handleEdit = this.handleEdit.bind(this);
     this.handleToggleEditable = this.handleToggleEditable.bind(this);
     this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
+    this.onUpdateDeCujus = this.onUpdateDeCujus.bind(this)
   }
 
   getChildCount() {
@@ -117,6 +119,10 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
     return this.props.onUpdateStatus(this.props.id);
   }
 
+  onUpdateDeCujus(value: string) {
+    return this.props.onUpdateDeCujus(value)
+  }
+
   renderField(name: string) {
     if (!this.state.editable) return this.props.status === 'valid' ? this.props.name : `${this.props.name}\n(deceased)`;
     //@ts-ignore
@@ -145,6 +151,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
       onEdit={this.props.onEdit}
       onDelete={this.props.onDelete}
       onUpdateStatus={this.props.onUpdateStatus}
+      onUpdateDeCujus={this.props.onUpdateDeCujus}
     />
   }
 
@@ -163,6 +170,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
             onAddChild={this.props.onAddChild}
             onEdit={this.props.onEdit}
             onDelete={this.props.onDelete}
+            onUpdateDeCujus={this.props.onUpdateDeCujus}
             linkprops={this.getLinkerProps(parent.id, i)}
             onUpdateStatus={this.props.onUpdateStatus}
             />
@@ -175,7 +183,9 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
     return (
       //@ts-ignore
       <TreeTrunk id={this.id} width={TreeDimensionCalc.getMemberWidth(this.props)}>
-        <TreeNode>
+        <TreeNode
+          onClick={() => this.onUpdateDeCujus(this.props.id)}
+        >
           <form>
             <TreeHeader>{this.renderField("name")}</TreeHeader>
             {this.renderActions()}

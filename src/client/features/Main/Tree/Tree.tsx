@@ -6,6 +6,7 @@ import TreeParser from './TreeParser';
 interface TreeProps {
   root: string
   datalist: any
+  onUpdateDeCujus: (value: string) => void
 }
 
 interface TreeState {
@@ -120,6 +121,7 @@ class Tree extends React.Component <TreeProps, TreeState> {
           onAddChild={this.handleAddChild}
           onEdit={this.handleMemberEdit}
           onUpdateStatus={this.handleUpdateStatus}
+          onUpdateDeCujus={this.props.onUpdateDeCujus}
           onDelete={this.handleMemberDelete}
           parentPosition={this.state.position}
         />

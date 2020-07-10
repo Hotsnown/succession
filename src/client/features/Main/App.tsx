@@ -7,6 +7,8 @@ import Result from './Result/Result'
 export const App = () => {
 
     const [memberList, setMemberList] = React.useState<any>({})
+    const [deCujus, setDeCujus] = React.useState<string>('deCujus')
+
     const formRef = React.createRef<Tree>();
 
     const extractMemberList = () => {
@@ -29,14 +31,21 @@ export const App = () => {
     if (!family) {
         throw new Error(`${family} is not a valid family`)
     }
+
+    const handleUpdateDeCujus = (value: string) => setDeCujus(value)
+
     return (
         <>
             <div className="content">
                 <Container fluid>
-                    <Result extractMemberList={extractMemberList} memberList={memberList}/>
+                    <Result 
+                        extractMemberList={extractMemberList} 
+                        memberList={memberList}
+                        deCujus={deCujus}/>
                     <Tree
                         root={root}
                         datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
+                        onUpdateDeCujus={handleUpdateDeCujus}
                         ref={formRef} />
                 </Container>
             </div>

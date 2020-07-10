@@ -46,6 +46,7 @@ interface TreeListPartnersProps {
   onEdit: any
   onDelete: any
   onUpdateStatus: any
+  onUpdateDeCujus: any
 }
 
 class TreeListPartners extends React.Component <TreeListPartnersProps> {
@@ -59,6 +60,7 @@ class TreeListPartners extends React.Component <TreeListPartnersProps> {
           {this.props.members.map((member: any) =>
             <li key={'partner_' + member.id}>
               <TreeMember
+                onUpdateDeCujus={this.props.onUpdateDeCujus}
                 onUpdateStatus={this.props.onUpdateStatus}
                 onAddPartner={this.props.onAddPartner}
                 onAddChild={this.props.onAddChild}
