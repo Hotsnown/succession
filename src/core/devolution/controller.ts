@@ -1,5 +1,5 @@
 import { Family, MemberConstructor } from './entities'
-import { main } from './services/main'
+import { main } from './services/inference/main'
 
 export class Controller {
 

@@ -41,7 +41,7 @@ export const App = () => {
                     <Result 
                         extractMemberList={extractMemberList} 
                         memberList={memberList}
-                        deCujus={deCujus}/>
+                        deCujus={deCujus} />
                     <Tree
                         root={root}
                         datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}

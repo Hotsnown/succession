@@ -1,4 +1,4 @@
-import { Family, Member } from "../entities";
+import { Family, Member } from "../../entities";
 
  /**
  * Si le défunt laisse des enfants issus d'une précédente union, 

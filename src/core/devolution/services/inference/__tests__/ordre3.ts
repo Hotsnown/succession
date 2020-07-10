@@ -1,5 +1,5 @@
 import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '..'
+import { withoutSpouseStrategy } from '../devolution'
 
 describe('test parents', () => {
     it('should give equal shares to two valid parents', () => {

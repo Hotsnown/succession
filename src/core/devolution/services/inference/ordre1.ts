@@ -1,4 +1,4 @@
-import { Family, repartitionParTête, computeRepresentation, assignRepresentation, Ordres } from '../entities'
+import { Family, repartitionParTête, computeRepresentation, assignRepresentation, Ordres } from '../../entities'
 
 /**
  * Conditions: 

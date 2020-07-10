@@ -1,5 +1,5 @@
 import { Status, Family } from '../../entities'
-import { withoutSpouseStrategy } from '..'
+import { withoutSpouseStrategy } from '../devolution'
 
 describe("Inheligible wise", () => {
     it('should not give legalRights when there is no heirs', () => {
