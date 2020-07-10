@@ -118,7 +118,7 @@ class TreeMember extends React.Component <TreeMemberProps, TreeMemberState>{
   }
 
   renderField(name: string) {
-    if (!this.state.editable) return this.props.status === 'valid' ? this.props.name : this.props.name + " (deceased)";
+    if (!this.state.editable) return this.props.status === 'valid' ? this.props.name : `${this.props.name}\n(deceased)`;
     //@ts-ignore
     return <input type="text" name={name} value={this.props[name]} onChange={this.handleEdit} />;
   }

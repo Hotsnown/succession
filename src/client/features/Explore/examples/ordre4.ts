@@ -34,7 +34,7 @@ const ordre4: FamilyExample = {
         id: "uncle",
         name: "uncle",
         partners: ["uncleSpouse"],
-        children: { uncleSpouse: ["cousin"]},
+        children: { uncleSpouse: ["cousin1", "cousin2"]},
         status: "valid"
     },
     uncleSpouse: {
@@ -42,16 +42,21 @@ const ordre4: FamilyExample = {
         name: "uncleSpouse",
         status: "valid"
     },
-    cousin: {
-        id: "cousin",
-        name: "cousin",
-        partners: ["cousinSpouse"],
-        children: { cousinSpouse: ["grandCousin"]},
+    cousin2: {
+        id: "cousin2",
+        name: "cousin2",
+        status: 'valid'
+    },
+    cousin1: {
+        id: "cousin1",
+        name: "cousin1",
+        partners: ["cousin1Spouse"],
+        children: { cousin1Spouse: ["grandCousin"]},
         status: "valid"
     },
-    cousinSpouse: {
-        id: "cousinSpouse",
-        name: "cousinSpouse",
+    cousin1Spouse: {
+        id: "cousin1Spouse",
+        name: "cousin1Spouse",
         status: "valid"
     },
     grandCousin: {
