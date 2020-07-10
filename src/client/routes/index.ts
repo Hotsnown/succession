@@ -9,7 +9,7 @@ export interface Route {
   layout: string;
 }
 
-const routes = [
+const routes: Route[] = [
   {
     path: '/dashboard',
     name: 'Tree',
@@ -25,4 +25,5 @@ const routes = [
     layout: '/succession',
   },
 ];
+
 export default routes;
