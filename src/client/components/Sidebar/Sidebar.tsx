@@ -6,7 +6,7 @@ import { Nav } from 'reactstrap';
 
 import { Route } from '../../routes'
 
-import logo from './logo.svg';
+import logo from './image.png';
 
 interface SidebarProps {
   bgColor: string
