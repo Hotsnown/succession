@@ -2,7 +2,7 @@ import { Family, Member, repartitionParTête, computeRepresentation, assignRepre
 
 //TODO potential bug when there is only one parent in input
 
-export function OrdreTwoStrategy(family: Family): Family {
+export function ordreTwoStrategy(family: Family): Family {
     // 1/ qualifiedFamily
     //    Nombre de collatéraux = nombre de membres du degrés le plus proche + nombre de souche
     //    Nombre de parent survivant

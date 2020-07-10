@@ -1,4 +1,3 @@
-export * from './withoutSpouse'
 export * from './withSpouse'
 export * from './ordre1'
 export * from './ordre2'

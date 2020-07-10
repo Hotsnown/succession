@@ -1,5 +1,5 @@
 import { Status, Family, Member } from '../../entities'
-import { withSpouseController } from '../withSpouse'
+import { main } from '../main'
 
 it('gives 100% to the spouse without descendants', () => {
 
@@ -38,7 +38,7 @@ it('gives 100% to the spouse without descendants', () => {
     ]
 
     const family = Family.create(withSpouseControllerMembers)
-    const solution = withSpouseController(family, family.findMember("spouse") as Member)
+    const solution = main(family, 'deCujus')
 
     const spouse = solution.findMember('spouse')!
     const deCujus = solution.findMember('deCujus')!
@@ -100,7 +100,7 @@ it('gives 25% to the spouse with descendants', () => {
 
     const family = Family.create(withDescendantsMembers)
 
-    const solution = withSpouseController(family, family.findMember("spouse") as Member)
+    const solution = main(family, 'deCujus')
 
     const spouse = solution.findMember('spouse')!
     const child = solution.findMember('child')!
@@ -175,7 +175,7 @@ it('gives equal shares to all descendants', () => {
 
     const family = Family.create(withDescendantsMembers)
 
-    const solution = withSpouseController(family, family.findMember("spouse") as Member)
+    const solution = main(family, 'deCujus')
 
     const childOne = solution.findMember("child1")!
     const spouse = solution.findMember("spouse")!
