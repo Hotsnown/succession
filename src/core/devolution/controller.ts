@@ -5,8 +5,6 @@ export class Controller {
 
     getDevolution(pythonOutput: MemberConstructor[], deCujusId: string): Family {
         
-        if (!isValidPythonOutput(pythonOutput)) throw new Error()
-
         const family = Family.create(
             Family.create(pythonOutput).members.filter(member => member !== undefined)
             )

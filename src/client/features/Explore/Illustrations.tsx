@@ -13,6 +13,8 @@ import {
 import { FamilyExample } from './examples/interface';
 import simpsonsTree from './examples/simpsons'
 import weasleyTree from './examples/weasley'
+import starkTree from './examples/stark'
+import greekgods from './examples/greekgods'
 import louisXIVTree from './examples/louisXIV'
 import conjointSurvivant from './examples/conjointSurvivant'
 import ordre1 from './examples/ordre1'
@@ -78,6 +80,18 @@ const illustrations: Illustration[] = [
     tags: ['Fiction'],
     numberOfNodes: countMembers(weasleyTree),
     link: encodeFamilyUrl(weasleyTree, 'arthur')
+  },
+  {
+    name: 'Stark Tree',
+    tags: ['Fiction', 'Deaths'],
+    numberOfNodes: countMembers(starkTree),
+    link: encodeFamilyUrl(starkTree, 'rickard')
+  },
+  {
+    name: 'Greek Gods',
+    tags: ['Fiction'],
+    numberOfNodes: countMembers(greekgods),
+    link: encodeFamilyUrl(greekgods, 'chaos')
   },
   {
     name: 'louis XIV Tree',

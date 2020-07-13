@@ -27,7 +27,6 @@ const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
         getSolution(memberList, deCujus)
             .then(result => {setResults(result)})
             .then(() => setIsModalOpen(true))
-            .catch(err => alert(err))
       }
     
     return (
