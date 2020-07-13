@@ -8,6 +8,7 @@ import {
   Table,
   Row,
   Col,
+  Badge,
 } from 'reactstrap';
 
 import { FamilyExample } from './examples/interface';
@@ -46,7 +47,7 @@ const Tables = () => {
                     {illustrations.map(illustration => 
                       <tr>
                         <td>{illustration.name}</td>
-                          <td>{illustration.tags.map(tag => <span className="badge badge-primary">{tag}</span>)}</td>
+                          <td>{illustration.tags.map(tag => <Badge color="primary" style={{marginRight: '5px'}}>{tag}</Badge>)}</td>
                         <td>{illustration.numberOfNodes}</td>
                         <td><a href={illustration.link}>Click me!</a></td>
                       </tr>)}
