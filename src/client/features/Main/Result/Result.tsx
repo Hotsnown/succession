@@ -2,6 +2,7 @@ import React from 'react'
 import { getSolution } from '../../../../core/getSolution'
 import ResultModal from './ResultModal'
 import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { Family } from '../../../../core/devolution/entities'
 import { RawTree } from '../Interface'
 import { Navbar } from 'reactstrap'
@@ -33,7 +34,10 @@ const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
         <>
             <Navbar>
                 <h5>Current De Cujus : {deCujus}</h5>
-                <Button onClick = {fetchSolution}>Click me</Button>
+                <ButtonGroup aria-label="Expert System Controller">
+                    <Button onClick = {fetchSolution}>Update De Cujus</Button>
+                    <Button onClick = {fetchSolution}>Click me</Button>
+                </ButtonGroup>
                 <ResultModal results={results} isModalOpen={isModalOpen} toggle ={handleToggle}/>
             </Navbar>
         </>
