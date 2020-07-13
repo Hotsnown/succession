@@ -1,5 +1,6 @@
 import TableList from '../features/Explore/Illustrations';
-import Main from '../features/Main/App';
+import ExpertSystem from '../features/ExpertSystem/ExpertSystem';
+import { Intro } from '../features/Intro/intro';
 
 export interface Route {
   path: string;
@@ -14,7 +15,7 @@ const routes: Route[] = [
     path: '/dashboard',
     name: 'Tree',
     icon: 'nc-icon nc-bank',
-    component: Main,
+    component: ExpertSystem,
     layout: '/succession',
   },
   {
@@ -24,6 +25,13 @@ const routes: Route[] = [
     component: TableList,
     layout: '/succession',
   },
+  {
+    path: '/intro',
+    name: 'Intro',
+    icon: 'nc-icon nc-tile-56',
+    component: Intro,
+    layout: '/succession',
+  }
 ];
 
 export default routes;

@@ -1,6 +1,6 @@
 import { Controller } from './devolution/controller'
 import { getQualification } from './qualification/index'
-import { RawTree } from '../client/features/Main/Interface'
+import { RawTree } from '../client/features/ExpertSystem/Interface'
 
 export async function getSolution (memberList: RawTree, deCujusId: string) {
     

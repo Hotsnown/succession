@@ -18,8 +18,7 @@ const hist = createBrowserHistory();
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/succession" render={(props) => <Shell {...props} />} />
-      <Redirect to="/succession/tables" />
+      <Route path="/" render={(props) => <Shell {...props} />} />
     </Switch>
   </Router>,
   document.getElementById("root")
