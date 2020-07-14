@@ -5,7 +5,7 @@ export interface Member {
     attributes: {
         status: 'valid' | 'invalid'
         ordre: 0 | 1 | 2 | 3 | 4 | 'unassigned'
-        degre: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 'unassigned'
+        degre: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 100| 'unassigned'
     }
 }
 
