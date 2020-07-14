@@ -37,7 +37,7 @@ export class Degré {
             case 4: {nodeToQualify.attributes.degre = 4; return nodeToQualify}
             case 5: {nodeToQualify.attributes.degre = 5; return nodeToQualify}
             case 6: {nodeToQualify.attributes.degre = 6; return nodeToQualify}
-            case 100: {nodeToQualify.attributes.degre = 100;  return nodeToQualify}
+            case 100: {nodeToQualify.attributes.degre = 'outsider';  return nodeToQualify}
             default: {console.error(`Error: ${nodeToQualify.member_id} => ${min_num_of_edges} minimum number of edges`); return nodeToQualify}
         }
     }

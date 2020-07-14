@@ -28,9 +28,8 @@ export class Ordre
       if (LCA.member_id === nodeToQualify.member_id) {nodeToQualify.attributes.ordre = 3; return nodeToQualify}
       if (LCA.member_id === grandParent.member_id && nodeToQualify.member_id !== grandParent.member_id) {nodeToQualify.attributes.ordre = 4; return nodeToQualify}
       
+      nodeToQualify.attributes.ordre = 'outsider'
       return nodeToQualify
-      //throw new Error('Should not be reachable')
-
     }
 
     private LCAutil(a: Member, b: Member, root: Member): Member {

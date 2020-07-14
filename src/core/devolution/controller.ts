@@ -3,10 +3,12 @@ import { main } from './services/inference/main'
 
 export class Controller {
 
-    getDevolution(pythonOutput: MemberConstructor[], deCujusId: string): Family {
+    getDevolution(rawMemberList: MemberConstructor[], deCujusId: string): Family {
         
+        if (!isValidMemberList(rawMemberList)) console.error(`Invalid input: ${rawMemberList.filter(member => !isValidMember(member))}`)
+
         const family = Family.create(
-            Family.create(pythonOutput).members.filter(member => member !== undefined)
+            Family.create(rawMemberList).members.filter(member => member !== undefined)
             )
 
         try {
@@ -19,11 +21,11 @@ export class Controller {
     }
 }
 
-function isValidPythonOutput(pythonOutput: MemberConstructor[]): boolean {
-    return pythonOutput.every(o => isMemberConstructor(o))
+function isValidMemberList(rawMemberList: MemberConstructor[]): boolean {
+    return rawMemberList.every(o => isValidMember(o))
 }
 
-function isMemberConstructor(pythonMember: any): pythonMember is MemberConstructor {
+function isValidMember(pythonMember: any): pythonMember is MemberConstructor {
     return pythonMember.childs !== undefined &&
            pythonMember.member_id !== undefined &&
            pythonMember.attributes.degre !== undefined &&
