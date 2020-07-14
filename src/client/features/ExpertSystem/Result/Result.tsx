@@ -11,9 +11,11 @@ export interface IResult {
     deCujus: string
     memberList: RawTree
     extractMemberList: () => void
+    rootId: string
 }
 
-const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
+const Result = ({ memberList, extractMemberList, deCujus, rootId }: IResult) => {
+    
     const [results, setResults] = React.useState<Family>(Family.create([]))
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -25,9 +27,8 @@ const Result = ({ memberList, extractMemberList, deCujus }: IResult) => {
         if (!isValidMemberList(memberList)) throw new Error()
         if (!isValidDeCujus(deCujus)) throw new Error()
 
-        getSolution(memberList, deCujus)
-            .then(result => {setResults(result)})
-            .then(() => setIsModalOpen(true))
+        setResults(getSolution(memberList, deCujus, rootId))
+        setIsModalOpen(true)
       }
     
     return (

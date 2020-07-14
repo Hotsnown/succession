@@ -72,7 +72,8 @@ export class Degrees extends ValueObject<DegreesProps> {
 
 const byDegre = R.groupBy(function (member: Member) {
     const degre = member.attributes.degre
-    return degre === 0 ? 'deCujus' :
+    return degre === 'unassigned' ? 'unassigned' :
+           degre === 0 ? 'deCujus' :
            degre === 1 ? '1' :
            degre === 2 ? '2' :
            degre === 3 ? '3' :

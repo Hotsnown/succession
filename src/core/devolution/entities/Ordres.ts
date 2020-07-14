@@ -86,7 +86,8 @@ export class Ordres extends ValueObject<OrdreProps> {
 const byOrdre = R.groupBy(
     (member: Member) => {
         const ordre = member.attributes.ordre
-        return  ordre === 1 ? '1' :
+        return  ordre === 'unassigned' ? 'unassigned' :
+                ordre === 1 ? '1' :
                 ordre === 2 ? '2' :
                 ordre === 3 ? '3' :
                 ordre === 4 ? '4' : 'unknown'

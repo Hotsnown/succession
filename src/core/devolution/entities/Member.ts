@@ -14,8 +14,8 @@ interface MemberProps {
         childs: string[];
         member_id: string; //TODO uplift to entity id
         attributes: {
-            degre: Degree;
-            ordre: Ordre;
+            degre: Degree | 'unassigned';
+            ordre: Ordre | 'unassigned';
             status: Status;
             isReprésenté: Représenté
             isReprésentant: Representant
@@ -34,8 +34,8 @@ export interface MemberConstructor {
 }
 
 interface MemberAttributes {
-        degre: Degree;
-        ordre: Ordre;
+        degre: Degree | 'unassigned';
+        ordre: Ordre | 'unassigned';
         status: Status;
         spouse?: string
         legalRights?: LegalRights

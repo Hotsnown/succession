@@ -9,6 +9,5 @@ it('should print a rapport of ordre', () => {
         collatéraux: ['collatéral'],
     }
 
-    console.log(renderOrdres(data))
     expect(true).toBeTruthy()
 })

@@ -10,7 +10,7 @@ export class Output {
     appendFamily(member_id: string, childs: string[], status: 'valid' | 'invalid') {
         this.family.push({
             member_id: member_id, 
-            childs: childs, 
+            childs: childs,
             attributes: {
                 status: status
             }})
@@ -21,6 +21,7 @@ interface Family {
     member_id: string;
     childs: string[];
     attributes: Attributes;
+    index?: number
 }
 
 interface Attributes {
