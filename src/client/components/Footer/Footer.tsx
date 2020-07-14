@@ -16,7 +16,7 @@ const Footer = (props: FooterProps) => (
         <nav className="footer-nav">
           <ul>
             {footerItems.map(footerItem =>
-              <li><a href={footerItem.url} target="_blank">{footerItem.text}</a></li>)}
+              <li key={Math.random()}><a href={footerItem.url} target="_blank">{footerItem.text}</a></li>)}
           </ul>
         </nav>
         {/* <div className="credits ml-auto">
