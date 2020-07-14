@@ -1,4 +1,4 @@
-import { renderOrdres } from '../rapport'
+import { renderOrdres } from '../Rapport'
 
 it('should print a rapport of ordre', () => {
     const data = {

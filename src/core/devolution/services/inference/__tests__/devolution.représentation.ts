@@ -1,4 +1,4 @@
-import { Status, Family, computeRepresentation, assignRepresentation } from '..'
+import { Status, Family, computeRepresentation, assignRepresentation } from '../../../entities'
 
 it('should give to the représentant the same right as the other members', () => {
     const oneRepresentantOneValid = [

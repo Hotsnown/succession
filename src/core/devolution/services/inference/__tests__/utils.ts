@@ -1,4 +1,4 @@
-import { Status, Family } from '..'
+import { Status, Family } from '../../../entities'
 
 it('should find the parents of a member', () => {
     const secondOrdreMembers = [

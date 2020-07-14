@@ -1,4 +1,4 @@
-import { Status, Family, assignRepresentation } from '..'
+import { Status, Family, assignRepresentation } from '../../../entities'
 
 it('should not be appliable when members doesnt belong do Ordre 1', () => {
     const secondOrdreMembers = [

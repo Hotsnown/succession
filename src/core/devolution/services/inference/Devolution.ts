@@ -1,5 +1,5 @@
-import { Family, Degrees, Ordres, Member } from '../entities'
-
+import { Family, Member } from '../../entities'
+import { Degrees, Ordres } from '.'
 export class Devolution {
     private family: Family
 

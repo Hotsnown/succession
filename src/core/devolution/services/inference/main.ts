@@ -1,4 +1,5 @@
-import { Family, Member, Ordres } from '../../entities'
+import { Family, Member } from '../../entities'
+import { Ordres } from '.'
 import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants } from '.'
 
 export function main(family: Family, deCujusId: string): Family {

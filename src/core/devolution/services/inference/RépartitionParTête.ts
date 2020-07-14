@@ -1,4 +1,5 @@
-import { Family, Degrees, Member } from '../entities'
+import { Family, Member } from '../../entities'
+import { Degrees } from '.'
 
 /** 
  * Each heir who comes to the succession of their chief 

@@ -1,4 +1,5 @@
-import { Degree, Ordre, Family } from ".";
+import { Family } from ".";
+import { Degree, Ordre } from '../services/inference'
 import { ValueObject } from '../../shared/domain/value-objects'
 import * as R from 'ramda'
 

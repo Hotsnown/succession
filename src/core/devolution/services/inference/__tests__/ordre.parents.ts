@@ -1,5 +1,5 @@
-import { Status } from '../index'
-import { Family } from '../Family'
+import { Status } from '../../../entities/index'
+import { Family } from '../../../entities/Family'
 import { Ordres } from '../Ordres'
 
 it('should return ordre 3 when there is no priviledged collateral', () => {
@@ -153,14 +153,16 @@ it('should test ordre on real attributes', () => {
         {
           "childs": [],
           "attributes": {
-            "status": Status.Deceased
+            "status": Status.Deceased,
+            'degre': 'unassigned'
           },
           "member_id": "unknown",
         },
         {
           "childs": [],
           "attributes": {
-          "status": Status.Valid
+            "status": Status.Valid,
+            'degre': 'unassigned'
           },
           "member_id": "mona",
         },
@@ -176,10 +178,10 @@ it('should test ordre on real attributes', () => {
         {
           "childs": [],
           "attributes": {
+            'degre': 'unassigned',
             "status": Status.Valid
           },
           "member_id": "marge",
-          "status": Status.Valid
         },
         {
           "childs": [],
@@ -192,7 +194,10 @@ it('should test ordre on real attributes', () => {
         },
         {
           "childs": [],
-          "attributes": {},
+          "attributes": {
+            "degre": 'unassigned',
+            "status": Status.Valid
+          },
           "member_id": "millhouse",
         },
         {
@@ -214,11 +219,13 @@ it('should test ordre on real attributes', () => {
             "status": Status.Valid
           },
           "member_id": "lisa",
-          "status": Status.Valid
         },
         {
           "childs": [],
-          "attributes": {},
+          "attributes": {
+            "degre": 'unassigned',
+            "status": Status.Deceased
+          },
           "member_id": "undefined"
         },
         {
@@ -257,6 +264,7 @@ it('should test ordre on real attributes', () => {
         }
       ]
       
+      //@ts-ignore
       const sut = Ordres.create(Family.create(test))
       expect(sut).toBeTruthy()
 })

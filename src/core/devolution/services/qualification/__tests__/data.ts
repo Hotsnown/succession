@@ -1,8 +1,6 @@
 import { Query } from '../Interface'
-import { Degré } from '../Degré'
-import { Ordre, a, findParent, findGrandParent } from '../Ordre'
 
-const data: Query = {
+export const data: Query = {
     "de_cujus":"Pierre",
     "family":[
         {"member_id":"Pierre","childs":[],"attributes":{"degre": "unassigned", "ordre": "unassigned","status": 'valid'},"index": 0},
@@ -20,52 +18,4 @@ const data: Query = {
     ]
 }
 
-it('should test degrés', () => {
-
-    const graph = new Degré(data.family.length)
-
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
-            }
-        }
-    })
-
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignDegré(a(data, data.de_cujus), member)
-        }
-    })
-
-    expect(a(data, 'Fred').attributes.degre).toStrictEqual(1)
-    expect(a(data, 'Marie').attributes.degre).toStrictEqual(2)
-    expect(a(data, 'Bernard').attributes.degre).toStrictEqual(2)
-    expect(a(data, 'Bea').attributes.degre).toStrictEqual(3)
-    expect(a(data, 'Armand').attributes.degre).toStrictEqual(4)
-})
-
-it('should test ordre', () => {
-
-    const graph = new Ordre(data.family.length)
-
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
-            }
-        }
-    })
-
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
-        }
-    })
-
-    expect(a(data, 'Marie').attributes.ordre).toStrictEqual(2)
-    expect(a(data, 'Fred').attributes.ordre).toStrictEqual(3)
-    expect(a(data, 'Bernard').attributes.ordre).toStrictEqual(3)
-    expect(a(data, 'Bea').attributes.ordre).toStrictEqual(4)
-    expect(a(data, 'Armand').attributes.ordre).toStrictEqual(4)
-})
+it('', () => {expect(true).toBeTruthy()})

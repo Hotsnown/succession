@@ -1,4 +1,6 @@
-import { Family, Member, repartitionParTête, computeRepresentation, assignRepresentation } from '../../entities'
+import { Family, Member } from '../../entities'
+import { assignRepresentation} from '../qualification/Représentation'
+import { repartitionParTête, computeRepresentation } from '.'
 
 //TODO potential bug when there is only one parent in input
 

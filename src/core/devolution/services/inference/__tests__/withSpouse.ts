@@ -1,5 +1,5 @@
-import { Status, Family, Member } from '../../entities'
-import { main } from '../devolution/main'
+import { Status, Family, Member } from '../../../entities'
+import { main } from '../main'
 
 it('gives 100% to the spouse without descendants', () => {
 

@@ -1,5 +1,5 @@
-import { ValueObject } from '../../shared/domain/value-objects'
-import { Member, Family } from '.';
+import { ValueObject } from '../../../shared/domain/value-objects'
+import { Member, Family } from '../../entities';
 import * as R from 'ramda'
 
 interface OrdreProps {

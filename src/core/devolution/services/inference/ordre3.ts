@@ -1,4 +1,6 @@
-import { Family, Devolution, assignFenteAscendante, repartitionParTête } from '../../entities'
+import { Family } from '../../entities'
+import { Devolution, repartitionParTête } from '.'
+import { assignFenteAscendante } from '../qualification/Fente'
 
 /**
  * - Si il existe un ascendant dans chaque ligne (mère, père ou autre), chaque ligne récupère la moitié de la succession.

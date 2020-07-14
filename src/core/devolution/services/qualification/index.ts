@@ -1,6 +1,6 @@
-import treeParser from './tree-parser/tree-parser'
-import { main } from './request-builder/main'
-import { RawTree } from '../../client/features/ExpertSystem/Interface'
+import treeParser from '../tree-parser/tree-parser'
+import { main } from './main'
+import { RawTree } from '../../../../client/features/ExpertSystem/Interface'
 
 export function getQualification(data: RawTree, deCujus: string, rootId: string) {
 

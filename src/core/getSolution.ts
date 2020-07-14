@@ -1,5 +1,5 @@
 import { Controller } from './devolution/controller'
-import { getQualification } from './qualification/index'
+import { getQualification } from './devolution/services/qualification/index'
 import { RawTree } from '../client/features/ExpertSystem/Interface'
 
 export function getSolution (memberList: RawTree, deCujusId: string, rootId: string) {

@@ -1,5 +1,5 @@
-import { Family, Degrees, Member, repartitionParTête } from '.'
-
+import { Family, Member } from '../../entities'
+import { Degrees, repartitionParTête } from '.'
 /**
  *  The representatives of the successor predeceased, 
  *  not coming from their leader, are not counted per head, 

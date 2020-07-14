@@ -1,7 +1,7 @@
-import { ValueObject } from '../../shared/domain/value-objects'
-import { Member } from '.'
+import { ValueObject } from '../../../shared/domain/value-objects'
+import { Member } from '../../entities'
 import * as R from 'ramda'
-import { Family } from './Family'
+import { Family } from '../../entities/Family'
 
 interface DegreesProps {
     value: Record<string, Member[]>
