@@ -1,4 +1,5 @@
-import { Status, Family, assignFenteAscendante } from '../../../entities'
+import { Status, Family } from '../../../entities'
+import { assignFenteAscendante } from '../Fente'
 
 it('should find both fente', () => {
     const existingFente = [
@@ -7,7 +8,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 0,
                 "ordre": 0,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "de_cujus"
         },
@@ -18,7 +24,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "father"
         },
@@ -29,7 +40,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "mother"
         },
@@ -40,7 +56,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_father"
         },
@@ -51,7 +72,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_mother"
         },
@@ -62,7 +88,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 3,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_grand_mother1"
         },
@@ -73,7 +104,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 3,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_grand_father1"
         },
@@ -84,7 +120,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 3,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_grand_father2"
         },
@@ -95,7 +136,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 3,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_grand_mother2"
         },
@@ -106,7 +152,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 4,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_grand_grand_father"
         },
@@ -117,7 +168,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "maternal_grand_father"
         },
@@ -128,7 +184,12 @@ it('should find both fente', () => {
             "attributes": {
                 "degre": 3,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "maternal_grand_grand_father"
         }

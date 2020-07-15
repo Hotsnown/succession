@@ -1,7 +1,6 @@
 import { Member, Query } from './Interface'
 
-export class Ordre 
-{ 
+export class Ordre { 
     V: number
     adj: Member[][]
     
@@ -20,13 +19,13 @@ export class Ordre
     assignOrdre(deCujus: Member, nodeToQualify: Member, root: Member, parent: Member, grandParent: Member): Member {
       
       const LCA = this.LCAutil(deCujus, nodeToQualify, root)
-            
+
       deCujus.attributes.ordre = 0
 
-      if (LCA.member_id === deCujus.member_id) {nodeToQualify.attributes.ordre = 1; return nodeToQualify}
-      if (LCA.member_id === parent.member_id && nodeToQualify.member_id !== parent.member_id) {nodeToQualify.attributes.ordre = 2; return nodeToQualify}
-      if (LCA.member_id === nodeToQualify.member_id) {nodeToQualify.attributes.ordre = 3; return nodeToQualify}
-      if (LCA.member_id === grandParent.member_id && nodeToQualify.member_id !== grandParent.member_id) {nodeToQualify.attributes.ordre = 4; return nodeToQualify}
+      if (isDescendant(LCA, deCujus)) {nodeToQualify.attributes.ordre = 1; return nodeToQualify}
+      if (isPriviledgedCollateral(LCA, parent, nodeToQualify)) {nodeToQualify.attributes.ordre = 2; return nodeToQualify}
+      if (isAscendant(LCA, nodeToQualify)) {nodeToQualify.attributes.ordre = 3; return nodeToQualify}
+      if (isCollateral(LCA, grandParent, nodeToQualify)) {nodeToQualify.attributes.ordre = 4; return nodeToQualify}
       
       nodeToQualify.attributes.ordre = 'outsider'
       return nodeToQualify
@@ -53,11 +52,28 @@ export class Ordre
     }
 }
 
-export const a = (data: Query, memberId: string): Member => data.family.find(member => member.member_id === memberId)! || console.error(`${memberId} has not been found`)
-export const b = (data: Query, index: number): Member => data.family.find(member => member.index === index)! || console.error(`${index} has not been found`)
+export const findByName = (data: Query, memberId: string): Member => data.family.find(member => member.member_id === memberId)! || console.error(`${memberId} has not been found`)
+export const findById = (data: Query, index: number): Member => data.family.find(member => member.index === index)! || console.error(`${index} has not been found`)
 
 export const findParent = (data: Query, graph: {adj: Member[][]}, nodeId: string) => Object.entries(graph.adj)
-  .filter(([_, childs]: [string, Member[]]) => childs.includes(a(data, nodeId)))
-  .map(([parent, _]: [string, Member[]]) => b(data, parseInt(parent)))
+  .filter(([_, childs]: [string, Member[]]) => childs.includes(findByName(data, nodeId)))
+  .map(([parent, _]: [string, Member[]]) => findById(data, parseInt(parent)))
 
 export const findGrandParent = (data: Query, graph: {adj: Member[][]},nodeId: string) => findParent(data, graph, nodeId).map(m => findParent(data, graph, m.member_id))
+
+
+function isDescendant(LCA: Member, deCujus: Member): boolean {
+  return LCA.member_id === deCujus.member_id;
+}
+
+function isPriviledgedCollateral(LCA: Member, parent: Member, nodeToQualify: Member): boolean {
+  return LCA.member_id === parent.member_id && nodeToQualify.member_id !== parent.member_id;
+}
+
+function isAscendant(LCA: Member, nodeToQualify: Member): boolean {
+  return LCA.member_id === nodeToQualify.member_id;
+}
+
+function isCollateral(LCA: Member, grandParent: Member, nodeToQualify: Member): boolean {
+  return LCA.member_id === grandParent.member_id && nodeToQualify.member_id !== grandParent.member_id;
+}

@@ -1,5 +1,5 @@
 import { Degré } from '../Degré'
-import { Ordre, a, findParent, findGrandParent } from '../Ordre'
+import { Ordre, findByName, findParent, findGrandParent } from '../Ordre'
 import { data } from './data'
 import { Member, Query } from '../Interface'
 
@@ -10,22 +10,22 @@ it('should test ordre', () => {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
 
     data.family.forEach(member => {
         if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
+            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
         }
     })
 
-    expect(a(data, 'Marie').attributes.ordre).toStrictEqual(2)
-    expect(a(data, 'Fred').attributes.ordre).toStrictEqual(3)
-    expect(a(data, 'Bernard').attributes.ordre).toStrictEqual(3)
-    expect(a(data, 'Bea').attributes.ordre).toStrictEqual(4)
-    expect(a(data, 'Armand').attributes.ordre).toStrictEqual(4)
+    expect(findByName(data, 'Marie').attributes.ordre).toStrictEqual(2)
+    expect(findByName(data, 'Fred').attributes.ordre).toStrictEqual(3)
+    expect(findByName(data, 'Bernard').attributes.ordre).toStrictEqual(3)
+    expect(findByName(data, 'Bea').attributes.ordre).toStrictEqual(4)
+    expect(findByName(data, 'Armand').attributes.ordre).toStrictEqual(4)
 })
 
 it('should test ordre 1', () => {
@@ -47,14 +47,14 @@ it('should test ordre 1', () => {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
 
     data.family.forEach(member => {
         if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
+            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
         }
     })
 
@@ -92,14 +92,14 @@ it('should test ordre 2', () => {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
 
     data.family.forEach(member => {
         if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Fred'), findParent(data, graph, data.de_cujus)[0], findGrandParent(data, graph, data.de_cujus)[0][0])
+            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Fred'), findParent(data, graph, data.de_cujus)[0], findGrandParent(data, graph, data.de_cujus)[0][0])
         }
     })
 
@@ -135,14 +135,19 @@ it('should test ordre 3', () => {
         data.family.forEach(member => {
             if (member.childs) {
                 for (let child of member.childs) {
-                    graph.addEdge(member, a(data, child))
+                    graph.addEdge(member, findByName(data, child))
                 }
             }
         })
     
         data.family.forEach(member => {
             if (member.member_id !== data.de_cujus) {
-                graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Bernard'), findParent(data, graph, data.de_cujus)[0], findGrandParent(data, graph, data.de_cujus)[0][0])
+                graph.assignOrdre(
+                    findByName(data, data.de_cujus), member, 
+                    findByName(data, 'Etienne'), 
+                    findParent(data, graph, data.de_cujus)[0], 
+                    findGrandParent(data, graph, data.de_cujus)[0][0]
+                    )
             }
         })
 
@@ -169,6 +174,7 @@ it('should test ordre 4', () => {
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 2},
         {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 3},
         {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 4},
+        {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned'}, "index": 4},
         ]}
 
 
@@ -177,23 +183,24 @@ it('should test ordre 4', () => {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
 
     data.family.forEach(member => {
         if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(a(data, data.de_cujus), member, a(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
+            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Claude'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
         }
     })
 
     const target = [
         {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 0}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 2}, "index": 1},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 3}, "index": 1},
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 3}, "index": 2},
         {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 3}, "index": 3},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 4}, "index": 4},
+        {"member_id": "Cody", "childs":["Vincent"], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 4}, "index": 4},
+        {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 4}, "index": 4},
         ]
 
     expect(data.family).toStrictEqual(target)

@@ -108,7 +108,7 @@ function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]):
         return false
     } else {
         return members.every(
-            member => member.attributes.legalRights !== 'unqualified') &&
+            member => member.attributes.legalRights !== 'unassigned') &&
             members.map(member => member.attributes.legalRights)
                 .reduce((a, b) => (a as number) + (b as number), 0)! > 1
     }

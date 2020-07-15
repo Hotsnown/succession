@@ -9,7 +9,12 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                     "attributes": {
                         "degre": 0,
                         "ordre": 0,
-                        "status": Status.Deceased
+                        "status": Status.Deceased,
+                        "spouse": "",
+                        "legalRights": "unassigned" as 'unassigned',
+                        "branch": "unassigned" as 'unassigned',
+                        "isReprésentant": "unassigned" as 'unassigned',
+                        "isReprésenté": "unassigned" as 'unassigned',
                     },
                     "member_id": "deCujus"
                 },
@@ -21,7 +26,12 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                     "attributes": {
                         "degre": 1,
                         "ordre": 2,
-                        "status": Status.Deceased
+                        "status": Status.Deceased,
+                        "spouse": "",
+                        "legalRights": "unassigned" as 'unassigned',
+                        "branch": "unassigned" as 'unassigned',
+                        "isReprésentant": "unassigned" as 'unassigned',
+                        "isReprésenté": "unassigned" as 'unassigned',
                     },
                     "member_id": "father"
                 },
@@ -33,7 +43,12 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                     "attributes": {
                         "degre": 1,
                         "ordre": 2,
-                        "status": Status.Valid
+                        "status": Status.Valid,
+                        "spouse": "",
+                        "legalRights": "unassigned" as 'unassigned',
+                        "branch": "unassigned" as 'unassigned',
+                        "isReprésentant": "unassigned" as 'unassigned',
+                        "isReprésenté": "unassigned" as 'unassigned',
                     },
                     "member_id": "mother"
                 },
@@ -42,7 +57,12 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                     "attributes": {
                         "degre": 2,
                         "ordre": 2,
-                        "status": Status.Valid
+                        "status": Status.Valid,
+                        "spouse": "",
+                        "legalRights": "unassigned" as 'unassigned',
+                        "branch": "unassigned" as 'unassigned',
+                        "isReprésentant": "unassigned" as 'unassigned',
+                        "isReprésenté": "unassigned" as 'unassigned',
                     },
                     "member_id": "sibling1"
                 }
@@ -70,7 +90,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -83,7 +108,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -96,7 +126,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -107,7 +142,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling1"
             },
@@ -116,7 +156,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 3,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "nephew"
             },
@@ -125,7 +170,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling2"
             }
@@ -155,7 +205,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -168,7 +223,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -181,7 +241,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -190,7 +255,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalSibling"
             },
@@ -199,7 +269,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 3,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentantNephew"
             },
@@ -210,7 +285,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentéSibling"
             }
@@ -242,7 +322,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -255,7 +340,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -268,7 +358,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -279,7 +374,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling1"
             },
@@ -288,7 +388,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "nephew"
             },
@@ -297,7 +402,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling2"
             }
@@ -326,7 +436,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -339,7 +454,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -352,7 +472,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -361,7 +486,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling1"
             },
@@ -370,7 +500,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "nephew"
             },
@@ -381,7 +516,12 @@ describe('si parent survivant = 0', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sibling2"
             }

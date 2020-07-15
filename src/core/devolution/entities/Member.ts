@@ -18,11 +18,11 @@ interface MemberProps {
             degre: Degree | 'unassigned';
             ordre: Ordre | 'unassigned';
             status: Status;
-            isReprésenté: Représenté
-            isReprésentant: Representant
-            legalRights: LegalRights
+            isReprésenté: Représenté | 'unassigned';
+            isReprésentant: Representant | 'unassigned';
+            legalRights: LegalRights | 'unassigned';
             spouse: string
-            branch: Branch
+            branch: Branch | 'unassigned';
             //TODO add name
         }
     }
@@ -37,13 +37,18 @@ export interface MemberConstructor {
 interface MemberAttributes {
         degre: Degree | 'unassigned';
         ordre: Ordre | 'unassigned';
-        status: Status;
-        spouse?: string
-        legalRights?: LegalRights
-        branch?: Branch
-        isReprésenté?: Représenté
-        isReprésentant?: Representant
+        status: Status | 'valid' | 'invalid';
+        spouse: string
+        legalRights: LegalRights | 'unassigned'
+        branch: Branch | 'unassigned'
+        isReprésenté: Représenté | 'unassigned'
+        isReprésentant: Representant | 'unassigned'
 }
+
+export type Branch = 'paternelle' | 'maternelle';
+export type Représenté = boolean;
+export type Representant = boolean;
+export type LegalRights = number;
 
 //TODO refactor with immer.js
 
@@ -68,25 +73,24 @@ export class Member extends ValueObject<MemberProps> {
                             //@ts-ignore
                             status: (member.attributes.status === Status.Valid || Status.Deceased) 
                                 ? member.attributes.status
-                                //@ts-ignore
                                 : (member.attributes.status === 'valid') 
                                     ? Status.Valid
                                     : Status.Deceased,
                             spouse: member.attributes.spouse || '',
-                            branch: member.attributes.branch || 'unqualified',
+                            branch: member.attributes.branch || 'unassigned',
                             isReprésenté: member.attributes.isReprésenté === false || 
-                                          member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unqualified',
+                                          member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
                             isReprésentant: member.attributes.isReprésentant === false || 
-                                            member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unqualified',
+                                            member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
                             legalRights: member.attributes.legalRights === 0 || 
-                                         member.attributes.legalRights ? member.attributes.legalRights : 'unqualified' 
+                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' 
                                          //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
                         },
                     }
                 })
     }
 
-    set legalRights (value: LegalRights) {
+    set legalRights (value: LegalRights | 'unassigned') {
         this.props.value.attributes.legalRights = value
     }
 
@@ -102,15 +106,15 @@ export class Member extends ValueObject<MemberProps> {
         return this.props.value.attributes
     }
 
-    get isReprésenté(): Représenté {
+    get isReprésenté(): Représenté | 'unassigned' {
         return this.props.value.attributes.isReprésenté
     }
 
-    get isReprésentant(): Representant {
+    get isReprésentant(): Representant | 'unassigned' {
         return this.props.value.attributes.isReprésentant
     }
 
-    get legalRights(): LegalRights {
+    get legalRights(): LegalRights | 'unassigned' {
         return this.props.value.attributes.legalRights
     }
 
@@ -143,7 +147,7 @@ export class Member extends ValueObject<MemberProps> {
     }
 
     private hasChildEligibleToInheritIn(family: Family): boolean {
-        //TODO: it should work if child of child is eligible on to inherit
+        //TODO: it should work if child of child is eligible to inherit
         return family.members
             .filter(member => this.childs.includes(member.member_id))
             .some(child => child.isEligibleToInherit())
@@ -201,8 +205,3 @@ export class Member extends ValueObject<MemberProps> {
            .includes(this.member_id)
      }
 }
-
-export type Branch = 'paternelle' | 'maternelle' | 'unqualified';
-export type Représenté = boolean | 'unqualified';
-export type Representant = boolean | 'unqualified';
-export type LegalRights = number | 'unqualified';

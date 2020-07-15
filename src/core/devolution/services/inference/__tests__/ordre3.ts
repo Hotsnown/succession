@@ -9,7 +9,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -20,7 +25,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -31,7 +41,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -42,7 +57,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -53,7 +73,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             }
@@ -80,7 +105,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -91,7 +121,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -102,7 +137,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -113,7 +153,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_mother"
             },
@@ -124,7 +169,12 @@ describe('test parents', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             }
@@ -154,7 +204,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -165,7 +220,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -176,7 +236,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -187,7 +252,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -198,7 +268,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -209,7 +284,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -220,7 +300,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }
@@ -246,7 +331,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -257,7 +347,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -268,7 +363,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -279,7 +379,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -290,7 +395,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -301,7 +411,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -312,7 +427,12 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }
@@ -345,7 +465,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -356,7 +481,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -367,7 +497,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -378,7 +513,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -389,7 +529,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_mother"
             },
@@ -400,7 +545,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -411,7 +561,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -422,7 +577,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }
@@ -450,7 +610,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -461,7 +626,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -472,7 +642,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -483,7 +658,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -494,7 +674,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_mother"
             },
@@ -505,7 +690,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -516,7 +706,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -527,7 +722,12 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }
@@ -561,7 +761,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -572,7 +777,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -583,7 +793,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -594,7 +809,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -605,7 +825,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_mother"
             },
@@ -616,7 +841,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -627,7 +857,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -638,7 +873,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }
@@ -670,7 +910,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "de_cujus"
             },
@@ -681,7 +926,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "father"
             },
@@ -692,7 +942,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "mother"
             },
@@ -703,7 +958,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_father"
             },
@@ -714,7 +974,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "paternal_grand_mother"
             },
@@ -725,7 +990,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 2,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_father"
             },
@@ -736,7 +1006,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 3,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_father"
             },
@@ -747,7 +1022,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 "attributes": {
                     "degre": 4,
                     "ordre": 3,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maternal_grand_grand_grand_father"
             }

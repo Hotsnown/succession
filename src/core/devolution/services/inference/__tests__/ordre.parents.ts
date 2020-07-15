@@ -9,7 +9,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 0,
                 "ordre": 0,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "de_cujus"
         },
@@ -21,7 +26,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "father"
         },
@@ -30,7 +40,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 2,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "siblingOfDecujus"
         },
@@ -41,7 +56,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "mother"
         },
@@ -52,7 +72,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_mother"
         },
@@ -63,7 +88,12 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_father"
         }
@@ -82,7 +112,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 0,
                 "ordre": 0,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "de_cujus"
         },
@@ -94,7 +129,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Deceased
+                "status": Status.Deceased,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "father"
         },
@@ -103,7 +143,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 2,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "siblingOfDecujus"
         },
@@ -114,7 +159,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "mother"
         },
@@ -125,7 +175,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_mother"
         },
@@ -136,7 +191,12 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             "attributes": {
                 "degre": 2,
                 "ordre": 3,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "paternal_grand_father"
         }
@@ -154,7 +214,12 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "status": Status.Deceased,
-            'degre': 'unassigned'
+            'degre': 'unassigned',
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "unknown",
         },
@@ -162,7 +227,12 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "status": Status.Valid,
-            'degre': 'unassigned'
+            'degre': 'unassigned',
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "mona",
         },
@@ -171,7 +241,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 1,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "herb"
         },
@@ -179,7 +254,12 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             'degre': 'unassigned',
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "marge",
         },
@@ -188,7 +268,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 2,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "bart"
         },
@@ -196,7 +281,12 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "degre": 'unassigned',
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "millhouse",
         },
@@ -205,7 +295,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 3,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "millhouse_jr",
         },
@@ -216,7 +311,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 2,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "lisa",
         },
@@ -224,7 +324,12 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "degre": 'unassigned',
-            "status": Status.Deceased
+            "status": Status.Deceased,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "undefined"
         },
@@ -233,7 +338,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 2,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "maggie"
         },
@@ -246,7 +356,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 1,
             "ordre": 1,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "homer"
         },
@@ -258,7 +373,12 @@ it('should test ordre on real attributes', () => {
           "attributes": {
             "degre": 0,
             "ordre": 0,
-            "status": Status.Valid
+            "status": Status.Valid,
+            "spouse": "",
+            "legalRights": "unassigned" as 'unassigned',
+            "branch": "unassigned" as 'unassigned',
+            "isReprésentant": "unassigned" as 'unassigned',
+            "isReprésenté": "unassigned" as 'unassigned',
           },
           "member_id": "abe",
         }

@@ -64,7 +64,7 @@ export function assignFenteAscendante(family: Family) {
                        .map(member => family.findMember(member))
                        .forEach(member =>
                            member
-                               ? member.attributes.branch === 'unqualified'
+                               ? member.attributes.branch === 'unassigned'
                                    ? member.attributes.branch = targetBranch
                                    : null
                                : null))

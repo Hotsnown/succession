@@ -9,7 +9,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             }
@@ -18,7 +23,7 @@ describe("Inheligible wise", () => {
         const family = Family.create(noMember)
         const deCujus = main(family, 'deCujus').findMember('deCujus')!
     
-        expect(deCujus.legalRights).toBe('unqualified')
+        expect(deCujus.legalRights).toBe('unassigned')
     })
 
     it('should not not give legalRights to deceased members in Degre1', () => {
@@ -28,7 +33,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maggie"
             },
@@ -37,7 +47,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -46,7 +61,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "validSon"
             }
@@ -66,7 +86,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "maggie"
             },
@@ -75,7 +100,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -84,7 +114,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandSon"
             },
@@ -93,7 +128,12 @@ describe("Inheligible wise", () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "validGrandSon"
             }
@@ -117,7 +157,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "abe"
             },
@@ -126,7 +171,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "child1"
             },
@@ -137,7 +187,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "child2"
             },
@@ -146,7 +201,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "child3"
             },
@@ -155,7 +215,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandchild"
             },
@@ -179,7 +244,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -192,7 +262,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 2,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -201,7 +276,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandchildren1"
             },
@@ -212,7 +292,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandchildren2"
             },
@@ -221,7 +306,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandgrandchildren"
             },
@@ -232,7 +322,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandchildren3"
             },
@@ -260,7 +355,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -269,7 +369,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -280,7 +385,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandGrandchild1"
             },
@@ -289,7 +399,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandGrandchild2"
             }
@@ -312,7 +427,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -321,7 +441,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -332,7 +457,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandchild"
             },
@@ -341,7 +471,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandchild"
             },
@@ -350,7 +485,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 4,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandGrandGrandchild"
             }
@@ -371,7 +511,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -380,7 +525,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -391,7 +541,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandchild"
             },
@@ -400,7 +555,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandchild"
             },
@@ -409,7 +569,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 4,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandGrandchild"
             },
@@ -418,7 +583,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 5,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandGrandGrandGrandchild"
             }
@@ -437,7 +607,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -446,7 +621,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadSon"
             },
@@ -457,7 +637,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandchild"
             },
@@ -466,7 +651,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandchild"
             },
@@ -475,7 +665,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 4,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandGrandchild"
             },
@@ -484,7 +679,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 5,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadGrandGrandGrandGrandchild"
             },
@@ -493,7 +693,12 @@ describe('Degree wise', () => {
                 "attributes": {
                     "degre": 6,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "grandGrandGrandGrandGrandchild"
             }
@@ -519,7 +724,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -528,7 +738,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalHeir"
             },
@@ -540,7 +755,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représenté"
             },
@@ -549,7 +769,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant1"
             },
@@ -558,7 +783,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant2"
             }
@@ -589,7 +819,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -598,7 +833,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalHeir1"
             },
@@ -607,7 +847,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalHeir2"
             },
@@ -620,7 +865,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représenté"
             },
@@ -629,7 +879,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant1"
             },
@@ -638,7 +893,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant2"
             },
@@ -647,7 +907,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant3"
             }
@@ -681,7 +946,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -690,7 +960,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalHeir"
             },
@@ -703,7 +978,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représenté"
             },
@@ -712,7 +992,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant1"
             },
@@ -721,7 +1006,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant2"
             },
@@ -732,7 +1022,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadReprésentant"
             },
@@ -741,7 +1036,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "recursiveReprésentanté"
             }
@@ -774,7 +1074,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 0,
                     "ordre": 0,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deCujus"
             },
@@ -783,7 +1088,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "normalHeir"
             },
@@ -796,7 +1106,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 1,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représenté"
             },
@@ -805,7 +1120,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant1"
             },
@@ -814,7 +1134,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "représentant2"
             },
@@ -825,7 +1150,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 2,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "deadReprésentant1"
             },
@@ -834,7 +1164,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 3,
                     "ordre": 1,
-                    "status": Status.Deceased
+                    "status": Status.Deceased,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "sonOfdeadReprésentant"
             },
@@ -843,7 +1178,12 @@ describe('Représentation wise', () => {
                 "attributes": {
                     "degre": 4,
                     "ordre": 1,
-                    "status": Status.Valid
+                    "status": Status.Valid,
+                    "spouse": "",
+                    "legalRights": "unassigned" as 'unassigned',
+                    "branch": "unassigned" as 'unassigned',
+                    "isReprésentant": "unassigned" as 'unassigned',
+                    "isReprésenté": "unassigned" as 'unassigned',
                 },
                 "member_id": "SUT"
             }

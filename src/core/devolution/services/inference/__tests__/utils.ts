@@ -7,7 +7,12 @@ it('should find the parents of a member', () => {
             "attributes": {
                 "degre": 0,
                 "ordre": 0,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "maggie"
         },
@@ -20,7 +25,12 @@ it('should find the parents of a member', () => {
             "attributes": {
                 "degre": 1,
                 "ordre": 2,
-                "status": Status.Valid
+                "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "homer"
         }

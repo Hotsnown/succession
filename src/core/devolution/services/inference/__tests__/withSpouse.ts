@@ -10,7 +10,11 @@ it('gives 100% to the spouse without descendants', () => {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Deceased,
-                "spouse":"spouse"
+                "spouse":"spouse",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "deCujus"
         },
@@ -22,6 +26,11 @@ it('gives 100% to the spouse without descendants', () => {
                 "degre": 2,
                 "ordre": 3,
                 "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "grandParent"
         },
@@ -31,7 +40,11 @@ it('gives 100% to the spouse without descendants', () => {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Valid,
-                "spouse": "deCujus"
+                "spouse": "deCujus",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "spouse"
         }
@@ -60,7 +73,11 @@ it('gives 25% to the spouse with descendants', () => {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Deceased,
-                "spouse":"spouse"
+                "spouse":"spouse",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "deCujus"
         },
@@ -72,6 +89,11 @@ it('gives 25% to the spouse with descendants', () => {
                 "degre": 2,
                 "ordre": 3,
                 "status": Status.Valid,
+                "spouse": '',
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "grandParent"
         },
@@ -81,6 +103,11 @@ it('gives 25% to the spouse with descendants', () => {
                 "degre": 1,
                 "ordre": 1,
                 "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "child"
         },
@@ -92,7 +119,11 @@ it('gives 25% to the spouse with descendants', () => {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Valid,
-                "spouse": "deCujus"
+                "spouse": "deCujus",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "spouse"
         }
@@ -125,7 +156,11 @@ it('gives equal shares to all descendants', () => {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Deceased,
-                "spouse":"spouse"
+                "spouse":"spouse",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "deCujus"
         },
@@ -137,6 +172,11 @@ it('gives equal shares to all descendants', () => {
                 "degre": 2,
                 "ordre": 3,
                 "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "grandParent"
         },
@@ -146,6 +186,11 @@ it('gives equal shares to all descendants', () => {
                 "degre": 1,
                 "ordre": 1,
                 "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "child1"
         },
@@ -155,6 +200,11 @@ it('gives equal shares to all descendants', () => {
                 "degre": 1,
                 "ordre": 1,
                 "status": Status.Valid,
+                "spouse": "",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "child2"
         },
@@ -167,7 +217,11 @@ it('gives equal shares to all descendants', () => {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Valid,
-                "spouse": "deCujus"
+                "spouse": "deCujus",
+                "legalRights": "unassigned" as 'unassigned',
+                "branch": "unassigned" as 'unassigned',
+                "isReprésentant": "unassigned" as 'unassigned',
+                "isReprésenté": "unassigned" as 'unassigned',
             },
             "member_id": "spouse"
         }

@@ -17,7 +17,7 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
         <ModalBody>
             <ul>
                 {results.members
-                    .filter(member => member.attributes.legalRights !== 'unqualified')
+                    .filter(member => member.attributes.legalRights !== 'unassigned')
                     .filter(member => member.attributes.legalRights !== 0)
                     .map((member, index) =>
                     <li key={index}>{member.member_id} : { (new Fraction(member.legalRights)).numerator + '/' + (new Fraction(member.legalRights)).denominator}</li>)}

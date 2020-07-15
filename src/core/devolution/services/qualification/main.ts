@@ -1,6 +1,6 @@
 import { Query } from "./Interface";
 import { Degré } from './Degré'
-import { Ordre, a, findParent, findGrandParent } from './Ordre'
+import { Ordre, findByName, findParent, findGrandParent } from './Ordre'
 import { Member } from "./Interface";
 
 export function main (data: Query, rootId: string): Query {
@@ -16,14 +16,14 @@ function assignDegré (data: Query, rootId: string) {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
 
     data.family.forEach(member => {
         if (member.member_id !== data.de_cujus) {
-            graph.assignDegré(a(data, data.de_cujus), member)
+            graph.assignDegré(findByName(data, data.de_cujus), member)
         }
     })
 }
@@ -35,7 +35,7 @@ function assignOrdre (data: Query, rootId: string) {
     data.family.forEach(member => {
         if (member.childs) {
             for (let child of member.childs) {
-                graph.addEdge(member, a(data, child))
+                graph.addEdge(member, findByName(data, child))
             }
         }
     })
@@ -52,9 +52,9 @@ function assignOrdre (data: Query, rootId: string) {
                 grandParent = findGrandParent(data, graph, data.de_cujus)[0][0]
             }
             graph.assignOrdre(
-                a(data, data.de_cujus), 
+                findByName(data, data.de_cujus), 
                 member, 
-                a(data, rootId), 
+                findByName(data, rootId), 
                 parent,
                 grandParent
                 )
