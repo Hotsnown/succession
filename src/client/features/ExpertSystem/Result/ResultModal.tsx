@@ -19,8 +19,8 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
                 {results.members
                     .filter(member => member.attributes.legalRights !== 'unqualified')
                     .filter(member => member.attributes.legalRights !== 0)
-                    .map(member =>
-                    <li key={Math.random()}>{member.member_id} : { (new Fraction(member.legalRights)).numerator + '/' + (new Fraction(member.legalRights)).denominator}</li>)}
+                    .map((member, index) =>
+                    <li key={index}>{member.member_id} : { (new Fraction(member.legalRights)).numerator + '/' + (new Fraction(member.legalRights)).denominator}</li>)}
             </ul>
         </ModalBody>
         <ModalFooter>

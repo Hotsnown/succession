@@ -2,11 +2,6 @@ import { Family } from '../../entities'
 import { repartitionParTête, computeRepresentation, Ordres } from '.'
 import { assignRepresentation } from '../qualification/Représentation'
 
-/**
- * Conditions: 
- * Existence de descendants de X en ligne directe vivants ?(enfants, petits-
- * enfants, arrière-petits-enfants...)
- */
 export function ordreOneStrategy(family: Family): Family {
     /*
     1) les personnes du même degré ont la même part.

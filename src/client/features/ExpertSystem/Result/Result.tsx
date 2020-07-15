@@ -21,7 +21,7 @@ const Result = ({ memberList, extractMemberList, deCujus, rootId }: IResult) => 
 
     const handleToggle = () => setIsModalOpen(!isModalOpen);
 
-    const fetchSolution = (): void => {
+    const processSolution = (): void => {
         extractMemberList()
 
         if (!isValidMemberList(memberList)) throw new Error()
@@ -36,8 +36,8 @@ const Result = ({ memberList, extractMemberList, deCujus, rootId }: IResult) => 
             <Navbar>
                 <h5>Current De Cujus : {deCujus}</h5>
                 <ButtonGroup aria-label="Expert System Controller">
-                    <Button onClick = {fetchSolution}>Update De Cujus</Button>
-                    <Button onClick = {fetchSolution}>Click me</Button>
+                    <Button onClick = {processSolution}>Update De Cujus</Button>
+                    <Button onClick = {processSolution}>Click me</Button>
                 </ButtonGroup>
                 <ResultModal results={results} isModalOpen={isModalOpen} toggle ={handleToggle}/>
             </Navbar>
@@ -48,4 +48,4 @@ const Result = ({ memberList, extractMemberList, deCujus, rootId }: IResult) => 
 export default Result
 
 const isValidDeCujus = (deCujusId: string): boolean => deCujusId !== ''
-const isValidMemberList = (memberList: RawTree): boolean => true
+const isValidMemberList = (memberList: RawTree): boolean => true // TODO : already validated by the controller

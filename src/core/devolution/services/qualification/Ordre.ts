@@ -23,7 +23,7 @@ export class Ordre
             
       deCujus.attributes.ordre = 0
 
-      //if (LCA.member_id === deCujus.member_id) {nodeToQualify.attributes.ordre = 1; return nodeToQualify}
+      if (LCA.member_id === deCujus.member_id) {nodeToQualify.attributes.ordre = 1; return nodeToQualify}
       if (LCA.member_id === parent.member_id && nodeToQualify.member_id !== parent.member_id) {nodeToQualify.attributes.ordre = 2; return nodeToQualify}
       if (LCA.member_id === nodeToQualify.member_id) {nodeToQualify.attributes.ordre = 3; return nodeToQualify}
       if (LCA.member_id === grandParent.member_id && nodeToQualify.member_id !== grandParent.member_id) {nodeToQualify.attributes.ordre = 4; return nodeToQualify}

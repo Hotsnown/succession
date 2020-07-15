@@ -5,10 +5,10 @@ export class Controller {
 
     getDevolution(rawMemberList: MemberConstructor[], deCujusId: string): Family {
 
-        if (!isValidMemberList(rawMemberList)) {
+/*         if (!isValidMemberList(rawMemberList)) {
             const err = rawMemberList.filter(member => !isValidMember(member)).map(member => member.member_id); 
             throw console.error(`Invalid input: ${err}`)
-        }
+        } */
 
         const family = Family.create(
             Family.create(rawMemberList).members.filter(member => member !== undefined)
