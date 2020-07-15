@@ -137,7 +137,7 @@ function countMembers (family: FamilyExample): number {
 }
 
 function encodeFamilyUrl (family: FamilyExample, root: string) {
-  return `http://localhost:3000/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
+  return `http://${process.env.NODE_ENV === 'production' ? window.location.hostname : 'localhost:3000'}/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
 }
 
 
