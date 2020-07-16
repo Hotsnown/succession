@@ -1,20 +1,10 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Member } from '../../entities'
+import { Member, Degree, Family } from '../../entities'
 import * as R from 'ramda'
-import { Family } from '../../entities/Family'
 
 interface DegreesProps {
     value: Record<string, Member[]>
     degrees: Degree[]
-}
-
-export enum Degree {
-    Degree1 = 1,
-    Degree2 = 2,
-    Degree3 = 3,
-    Degree4 = 4,
-    Degree5 = 5,
-    Degree6 = 6
 }
 
 /**
@@ -70,9 +60,10 @@ export class Degrees extends ValueObject<DegreesProps> {
     }
 }
 
-const byDegre = R.groupBy(function (member: Member) {
+const byDegre = R.groupBy((member: Member) => {
     const degre = member.attributes.degre
     return degre === 'unassigned' ? 'unassigned' :
+           degre === 'outsider' ? 'outsider' :
            degre === 0 ? 'deCujus' :
            degre === 1 ? '1' :
            degre === 2 ? '2' :

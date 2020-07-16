@@ -1,17 +1,10 @@
 import { ValueObject } from '../../../shared/domain/value-objects'
-import { Member, Family } from '../../entities';
+import { Member, Family, Ordre } from '../../entities';
 import * as R from 'ramda'
 
 interface OrdreProps {
     value: Record<string, Member[]>
     ordres: Ordre[]
-}
-
-export enum Ordre {
-    Ordre1 = 1, 
-    Ordre2,
-    Ordre3,
-    Ordre4
 }
 
 /**
@@ -87,6 +80,8 @@ const byOrdre = R.groupBy(
     (member: Member) => {
         const ordre = member.attributes.ordre
         return  ordre === 'unassigned' ? 'unassigned' :
+                ordre === 'outsider' ? 'outsider' :
+                ordre === 0 ? '0' :
                 ordre === 1 ? '1' :
                 ordre === 2 ? '2' :
                 ordre === 3 ? '3' :

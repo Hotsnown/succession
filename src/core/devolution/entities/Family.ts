@@ -1,7 +1,7 @@
-import { ValueObject } from '../../shared/domain/value-objects'
 import { Member, MemberConstructor, LegalRight } from '.'
 import * as R from 'ramda'
 import { Status } from './Member'
+import { Entity } from '../../shared/domain/entities'
 
 interface FamilyProps {
     value: {
@@ -15,7 +15,7 @@ interface FamilyProps {
 /**
  * An Immutable Dataclass holding the state of all members
  */
-export class Family extends ValueObject<FamilyProps> {
+export class Family extends Entity<FamilyProps> {
 
     public static create(members: MemberConstructor[]): Family {
         if (R.isNil(members)) console.error('Validation Error : Family members can not be Nil.')

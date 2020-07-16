@@ -1,5 +1,5 @@
 import { Member, Family } from '../../entities'
-import { Degree, Ordre } from '.'
+import { Degree, Ordre } from '../../entities'
 
 //TODO : refactor to use degrees / ordre
 

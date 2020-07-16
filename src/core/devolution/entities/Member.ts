@@ -1,6 +1,5 @@
-import { Family, LegalRight } from ".";
-import { Degree, Ordre } from '../services/inference'
-import { ValueObject } from '../../shared/domain/value-objects'
+import { Family, LegalRight, Ordre, ExtendedOrdre, ExtendedDegree } from ".";
+import { Entity } from "../../shared/domain/entities";
 
 import * as R from 'ramda'
 
@@ -12,21 +11,7 @@ export enum Status {
 }
 
 interface MemberProps {
-    value: {
-        childs: string[];
-        member_id: string; //TODO uplift to entity id
-        attributes: {
-            degre: Degree | 'unassigned';
-            ordre: Ordre | 'unassigned';
-            status: Status;
-            isReprésenté: Représenté | 'unassigned';
-            isReprésentant: Representant | 'unassigned';
-            legalRights: LegalRight | 'unassigned';
-            spouse: string
-            branch: Branch | 'unassigned';
-            //TODO add name
-        }
-    }
+    value: MemberConstructor
 }
 
 export interface MemberConstructor {
@@ -36,8 +21,8 @@ export interface MemberConstructor {
 }
 
 interface MemberAttributes {
-        degre: Degree | 'unassigned';
-        ordre: Ordre | 'unassigned';
+        degre: ExtendedDegree | 'unassigned';
+        ordre: ExtendedOrdre | 'unassigned';
         status: Status | 'valid' | 'invalid';
         spouse: string
         legalRights: LegalRight | 'unassigned'
@@ -55,7 +40,7 @@ export type Representant = boolean;
 /**
  * An immutable data class holding a family member's informations
  */
-export class Member extends ValueObject<MemberProps> {
+export class Member extends Entity<MemberProps> {
 
     public static create(member: MemberConstructor): Member {
         if (member.childs === undefined || member.childs === null) console.error(member)

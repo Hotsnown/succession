@@ -1,7 +1,7 @@
 import { Query } from "./Interface";
 import { Degré } from './Degré'
 import { Ordre, findByName, findParent, findGrandParent } from './Ordre'
-import { Member } from "./Interface";
+import { MemberWithIndex as Member } from './Interface'
 
 export function main (data: Query, rootId: string): Query {
     assignDegré(data, rootId)

@@ -1,4 +1,4 @@
-import { Member } from './Interface'
+import { MemberWithIndex as Member } from './Interface'
 
 let min_num_of_edges: number
 let edge_count: number

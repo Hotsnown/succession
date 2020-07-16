@@ -1,4 +1,4 @@
-import { Member, Query } from './Interface'
+import { Query, MemberWithIndex as Member } from './Interface'
 
 export class Ordre { 
     V: number
