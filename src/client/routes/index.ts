@@ -2,6 +2,7 @@ import TableList from '../features/Explore/Illustrations';
 import ExpertSystem from '../features/ExpertSystem/ExpertSystem';
 import { Intro } from '../features/Intro/intro';
 import { AboutUs } from '../features/AboutUs/aboutUs';
+import { Contact } from '../features/Contact/index'
 
 export interface Route {
   path: string;
@@ -38,6 +39,13 @@ const routes: Route[] = [
     name: 'A propos',
     icon: 'nc-icon nc-tile-56',
     component: AboutUs,
+    layout: '/succession',
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    icon: 'nc-icon nc-tile-56',
+    component: Contact,
     layout: '/succession',
   }
 ];
