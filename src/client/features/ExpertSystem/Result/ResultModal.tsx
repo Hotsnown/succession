@@ -16,6 +16,7 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
         <ModalBody>
             <ul>
                 {results.members
+                    .filter((member) => member !== undefined)
                     .filter((member) => member.attributes.legalRights !== 'unassigned')
                     //@ts-ignore
                     .filter((member) => member.attributes.legalRights.isNotZero())

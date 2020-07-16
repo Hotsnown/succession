@@ -95,7 +95,9 @@ function memberHasLegalRights(member: MemberConstructor): boolean {
     if (member.attributes.legalRights === 'unassigned') {
         return false
     }
-    else {
+    else if (member.attributes.legalRights === undefined) {
+        return false
+    } else {
         return member.attributes.legalRights.isNotZero()
     }
 }
