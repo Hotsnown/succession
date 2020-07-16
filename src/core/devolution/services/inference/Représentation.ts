@@ -1,4 +1,4 @@
-import { Family, Member } from '../../entities'
+import { Family, Member, LegalRight } from '../../entities'
 import { Degrees, repartitionParTête } from '.'
 /**
  *  The representatives of the successor predeceased, 
@@ -36,23 +36,23 @@ const updateMember = (member: Member, rootOfsouche: Member) => {
     //when rootOfSouche is updated before membersOfSouche to prevent race conditions
     //TODO: it should not give legalRights to a dead représentant
     if (member.member_id === 'SUT') {
-        return member.copyWith({ legalRights: 1/6})
+        return member.copyWith({ legalRights: LegalRight.create(1, 6)})
     }
     if (memberIsPartOfSouche(rootOfsouche, member)) {
         if (member.member_id.startsWith('deadReprésentant1')) {
-            return member.copyWith({ legalRights: 0 })
+            return member.copyWith({ legalRights: LegalRight.create(0, 1)})
         } else {
             return member.copyWith({ legalRights: distributeSharesOf(rootOfsouche) })   
         }
     } else if (memberIsRootOfSouche(member, rootOfsouche)) {
-        return member.copyWith({ legalRights: 0 })
+        return member.copyWith({ legalRights: LegalRight.create(0, 1)})
     } else {
         return member
     }
 }
 
-const distributeSharesOf = (rootOfsouche: Member): number =>
-    (rootOfsouche.legalRights as number) / rootOfsouche.childs.length
+const distributeSharesOf = (rootOfsouche: Member): LegalRight =>
+    LegalRight.create((rootOfsouche.legalRights.valueOf() as number), rootOfsouche.childs.length)
 
 const memberIsRootOfSouche = (member: Member, rootOfsouche: Member) =>
     member.member_id === rootOfsouche.member_id

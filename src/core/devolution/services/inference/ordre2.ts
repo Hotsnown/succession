@@ -1,4 +1,4 @@
-import { Family, Member } from '../../entities'
+import { Family, Member, LegalRight } from '../../entities'
 import { assignRepresentation} from '../qualification/Représentation'
 import { repartitionParTête, computeRepresentation } from '.'
 
@@ -45,7 +45,7 @@ function oneParentStrategy(family: Family, parents: Member[]): Family {
 
     return family.copyWith(family.members
         .map(member => member.isIn(parents)
-            ? member.copyWith({ legalRights: 1 / 2 })
+            ? member.copyWith({ legalRights: LegalRight.create(1, 2)})
             : member.copyWith({ legalRights: priviledgedMembers.findMember(member.member_id)!.legalRights })))
 }
 
@@ -65,17 +65,17 @@ function twoParentsStrategy(family: Family, parents: Member[]): Family {
         return family.copyWith(family.members
             .map(member => member.copyWith({
                 legalRights: member.isIn(parents)
-                    ? 1 / 4
+                    ? LegalRight.create(1, 4)
                     : priviledgedMemberswithReprésentantion.findMember(member.member_id)!.legalRights
             })))
     } else {
         return family.copyWith(family.members
             .map(member => member.copyWith({
                 legalRights: member.isIn(parents)
-                    ? 1 / 4
+                    ? LegalRight.create(1, 4)
                     : priviledgedMembers.findMember(member.member_id) !== undefined
                         ? priviledgedMembers.findMember(member.member_id)!.legalRights
-                        : 999
+                        : LegalRight.create(1, 999)
             })))
     }
 

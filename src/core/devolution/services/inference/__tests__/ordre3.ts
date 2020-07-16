@@ -91,11 +91,11 @@ describe('test parents', () => {
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
 
-        expect(de_cujus.legalRights).toStrictEqual(0)
-        expect(mother.legalRights).toStrictEqual(1 / 2)
-        expect(father.legalRights).toStrictEqual(1 / 2)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(paternal_grand_father.legalRights).toStrictEqual(0)
+        expect(de_cujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(1 / 2)
+        expect(father.legalRights.valueOf()).toStrictEqual(1 / 2)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
     })
 
     it('should give 50% to a valid parent', () => {
@@ -187,11 +187,11 @@ describe('test parents', () => {
         const paternal_grand_mother = family.findMember('paternal_grand_mother')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
 
-        expect(de_cujus.legalRights).toStrictEqual(0)
-        expect(mother.legalRights).toStrictEqual(1 / 2)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(paternal_grand_mother.legalRights).toStrictEqual(1/4)
-        expect(paternal_grand_father.legalRights).toStrictEqual(1/4)
+        expect(de_cujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(1 / 2)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(1/4)
     })
 })
 
@@ -318,10 +318,10 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
         const paternal_grand_father = family.findMember('paternal_grand_father')!
         const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
-        expect(paternal_grand_father.legalRights).toStrictEqual(1/2)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(1/2)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(0)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
     })
 
     it('should pass to degre 3 when there is no degre 2', () => {
@@ -445,10 +445,10 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
         const paternal_grand_father = family.findMember('paternal_grand_father')!
         const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
-        expect(paternal_grand_father.legalRights).toStrictEqual(1/2)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(1/2)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
     })
 
 })
@@ -596,11 +596,11 @@ describe('The ascendants of the same degree divide the succession by head', () =
         const paternal_grand_mother = family.findMember('paternal_grand_mother')!
         const maternal_grand_grand_grand_father = family.findMember('maternal_grand_grand_grand_father')!
         
-        expect(paternal_grand_father.legalRights).toStrictEqual(1/4)
-        expect(paternal_grand_mother.legalRights).toStrictEqual(1/4)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(1/2)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
     })
 
     it('should not give legal rights to deads members, even if they are in the priviledged degree', () => {
@@ -743,13 +743,13 @@ describe('The ascendants of the same degree divide the succession by head', () =
         const father = family.findMember('father')!
         const mother = family.findMember('mother')!
         
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(1/2)
-        expect(paternal_grand_mother.legalRights).toStrictEqual(1/2)
-        expect(paternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
     })
 })
 
@@ -894,13 +894,13 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
         const father = family.findMember('father')!
         const mother = family.findMember('mother')!
 
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(0)
-        expect(paternal_grand_mother.legalRights).toStrictEqual(1)
-        expect(paternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(1)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
     })
 
     it('should give all estate to the maternal side when all members of the father side deceased', () => {
@@ -1043,12 +1043,12 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
         const father = family.findMember('father')!
         const mother = family.findMember('mother')!
 
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_grand_grand_father.legalRights).toStrictEqual(0)
-        expect(paternal_grand_mother.legalRights).toStrictEqual(0)
-        expect(paternal_grand_father.legalRights).toStrictEqual(0)
-        expect(maternal_grand_father.legalRights).toStrictEqual(1)
-        expect(maternal_grand_grand_father.legalRights).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(1)
+        expect(maternal_grand_grand_father.legalRights.valueOf()).toStrictEqual(0)
     })
 })

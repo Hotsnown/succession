@@ -1,5 +1,5 @@
 import { ValueObject } from '../../shared/domain/value-objects'
-import { Member, MemberConstructor } from '.'
+import { Member, MemberConstructor, LegalRight } from '.'
 import * as R from 'ramda'
 import { Status } from './Member'
 
@@ -92,7 +92,12 @@ function MemberIsInvalid(member: MemberConstructor): boolean {
 }
 
 function memberHasLegalRights(member: MemberConstructor): boolean {
-    return member.attributes.legalRights ? member.attributes.legalRights > 0 : false
+    if (member.attributes.legalRights === 'unassigned') {
+        return false
+    }
+    else {
+        return member.attributes.legalRights.isNotZero()
+    }
 }
 
 function invalidHeir(members: MemberConstructor[]): boolean {
@@ -109,8 +114,8 @@ function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]):
     } else {
         return members.every(
             member => member.attributes.legalRights !== 'unassigned') &&
-            members.map(member => member.attributes.legalRights)
-                .reduce((a, b) => (a as number) + (b as number), 0)! > 1
+            members.map(member => member.attributes.legalRights as LegalRight)
+                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.create(0, 1))! > LegalRight.create(1, 1)
     }
 }
 

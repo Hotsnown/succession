@@ -74,6 +74,6 @@ it('should not give to the représentant the same right as the other members whe
     const alphonse = solution.findMember('alphonse')!
     const validDescendant = solution.findMember('validDescendant')!
 
-    expect(alphonse.legalRights).toStrictEqual(0)
-    expect(validDescendant.legalRights).toStrictEqual(1)
+    expect(alphonse.legalRights.valueOf()).toStrictEqual(0)
+    expect(validDescendant.legalRights.valueOf()).toStrictEqual(1)
 })

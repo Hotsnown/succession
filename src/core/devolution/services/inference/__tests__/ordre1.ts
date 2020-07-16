@@ -23,7 +23,7 @@ describe("Inheligible wise", () => {
         const family = Family.create(noMember)
         const deCujus = main(family, 'deCujus').findMember('deCujus')!
     
-        expect(deCujus.legalRights).toBe('unassigned')
+        expect(deCujus.legalRights.valueOf()).toBe('unassigned')
     })
 
     it('should not not give legalRights to deceased members in Degre1', () => {
@@ -75,8 +75,8 @@ describe("Inheligible wise", () => {
         const solution = main(Family.create(oneDeadInSameDegree), 'deCujus')
         const validSon = solution.findMember('validSon')!
         const deadSon = solution.findMember('deadSon')!
-        expect(validSon.legalRights).toBe(1)
-        expect(deadSon.legalRights).toBe(0)
+        expect(validSon.legalRights.valueOf()).toBe(1)
+        expect(deadSon.legalRights.valueOf()).toBe(0)
     })
 
     it('should not give legalRights to deceased members in Degre2', () => {
@@ -143,8 +143,8 @@ describe("Inheligible wise", () => {
         const deadGrandSon = solution.findMember('deadGrandSon')!
         const validGrandSon = solution.findMember('validGrandSon')!
 
-        expect(deadGrandSon.legalRights).toBe(0)
-        expect(validGrandSon.legalRights).toBe(1)
+        expect(deadGrandSon.legalRights.valueOf()).toBe(0)
+        expect(validGrandSon.legalRights.valueOf()).toBe(1)
 
     })
 })
@@ -232,10 +232,10 @@ describe('Degree wise', () => {
         const child3 = solution.findMember('child3')!
         const grandchild = solution.findMember('grandchild')!
     
-        expect(child1.legalRights).toStrictEqual(1/3)
-        expect(child2.legalRights).toStrictEqual(1/3)
-        expect(child3.legalRights).toStrictEqual(1/3)
-        expect(grandchild.legalRights).toStrictEqual(0)
+        expect(child1.legalRights.valueOf()).toStrictEqual(1/3)
+        expect(child2.legalRights.valueOf()).toStrictEqual(1/3)
+        expect(child3.legalRights.valueOf()).toStrictEqual(1/3)
+        expect(grandchild.legalRights.valueOf()).toStrictEqual(0)
     })
     it('should give equal shares between second degree ', () => {
         const secondDegreesMembers = [
@@ -340,12 +340,12 @@ describe('Degree wise', () => {
         const grandchildren3 = solution.findMember('grandchildren3')!
         const grandgrandchildren = solution.findMember('grandgrandchildren')!
     
-        expect(deCujus.legalRights).toBe(0)
-        expect(deadSon.legalRights).toBe(0)
-        expect(grandchildren1.legalRights).toBe(1/3)
-        expect(grandchildren2.legalRights).toBe(1/3)
-        expect(grandchildren3.legalRights).toBe(1/3)
-        expect(grandgrandchildren.legalRights).toBe(0)
+        expect(deCujus.legalRights.valueOf()).toBe(0)
+        expect(deadSon.legalRights.valueOf()).toBe(0)
+        expect(grandchildren1.legalRights.valueOf()).toBe(1/3)
+        expect(grandchildren2.legalRights.valueOf()).toBe(1/3)
+        expect(grandchildren3.legalRights.valueOf()).toBe(1/3)
+        expect(grandgrandchildren.legalRights.valueOf()).toBe(0)
     })
     
     it('should give equal shares between third degree', () => {
@@ -415,9 +415,9 @@ describe('Degree wise', () => {
         const grandGrandchild2 = solution.findMember('grandGrandchild2')!
         const deadSon = solution.findMember('deadSon')!
     
-        expect(grandGrandchild1.legalRights).toStrictEqual(1/2)
-        expect(grandGrandchild2.legalRights).toStrictEqual(1/2)
-        expect(deadSon.legalRights).toStrictEqual(0)
+        expect(grandGrandchild1.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(grandGrandchild2.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(deadSon.legalRights.valueOf()).toStrictEqual(0)
     })
     
     it('should give equal shares between fourth degree', () => {
@@ -500,8 +500,8 @@ describe('Degree wise', () => {
         const deadGrandchild2 = solution.findMember('deadGrandchild')!
         const grandGrandGrandchild1 = solution.findMember('grandGrandGrandchild')!
     
-        expect(deadGrandchild2.legalRights).toStrictEqual(0)
-        expect(grandGrandGrandchild1.legalRights).toStrictEqual(1)
+        expect(deadGrandchild2.legalRights.valueOf()).toStrictEqual(0)
+        expect(grandGrandGrandchild1.legalRights.valueOf()).toStrictEqual(1)
     })
 
     it('should give equal shares between fifth degree', () => {
@@ -597,7 +597,7 @@ describe('Degree wise', () => {
         const solution = main(Family.create(fifthDegreesMembers), 'deCujus')
         const grandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandchild')!
     
-        expect(grandGrandGrandGrandchild.legalRights).toStrictEqual(1)
+        expect(grandGrandGrandGrandchild.legalRights.valueOf()).toStrictEqual(1)
     })
 
     it('should give equal shares between sixth degree', () => {
@@ -708,7 +708,7 @@ describe('Degree wise', () => {
         const solution = main(Family.create(sixthDegree), 'deCujus')
         const grandGrandGrandGrandGrandchild = solution.findMember('grandGrandGrandGrandGrandchild')!
     
-        expect(grandGrandGrandGrandGrandchild.legalRights).toStrictEqual(1)
+        expect(grandGrandGrandGrandGrandchild.legalRights.valueOf()).toStrictEqual(1)
     })
 })
 
@@ -801,10 +801,10 @@ describe('Représentation wise', () => {
         const représentant2 = solution.findMember('représentant2')!
         const représenté = solution.findMember('représenté')!
 
-        expect(normalHeir.legalRights).toStrictEqual(1/2)
-        expect(représentant1.legalRights).toStrictEqual(1/4)
-        expect(représentant2.legalRights).toStrictEqual(1/4)
-        expect(représenté.legalRights).toStrictEqual(0)
+        expect(normalHeir.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(représentant1.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(représentant2.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(représenté.legalRights.valueOf()).toStrictEqual(0)
 
     })
 
@@ -927,12 +927,12 @@ describe('Représentation wise', () => {
         const représentant3 = solution.findMember('représentant3')!
         const représenté = solution.findMember('représenté')!
 
-        expect(normalHeir1.legalRights).toStrictEqual(1/3)
-        expect(normalHeir2.legalRights).toStrictEqual(1/3)
-        expect(représentant1.legalRights).toStrictEqual(1/9)
-        expect(représentant2.legalRights).toStrictEqual(1/9)
-        expect(représentant3.legalRights).toStrictEqual(1/9)
-        expect(représenté.legalRights).toStrictEqual(0)
+        expect(normalHeir1.legalRights.valueOf()).toStrictEqual(1/3)
+        expect(normalHeir2.legalRights.valueOf()).toStrictEqual(1/3)
+        expect(représentant1.legalRights.valueOf()).toStrictEqual(1/9)
+        expect(représentant2.legalRights.valueOf()).toStrictEqual(1/9)
+        expect(représentant3.legalRights.valueOf()).toStrictEqual(1/9)
+        expect(représenté.legalRights.valueOf()).toStrictEqual(0)
 
     })
 
@@ -1056,12 +1056,12 @@ describe('Représentation wise', () => {
         const représenté = solution.findMember('représenté')!
         const recursiveReprésentanté = solution.findMember('recursiveReprésentanté')!
 
-        expect(normalHeir.legalRights).toStrictEqual(1/2)
-        expect(représentant1.legalRights).toStrictEqual(1/6)
-        expect(représentant2.legalRights).toStrictEqual(1/6)
-        expect(représenté.legalRights).toStrictEqual(0)
-        expect(deadReprésentant.legalRights).toStrictEqual(0)
-        expect(recursiveReprésentanté.legalRights).toStrictEqual(1/6)
+        expect(normalHeir.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(représentant1.legalRights.valueOf()).toStrictEqual(1/6)
+        expect(représentant2.legalRights.valueOf()).toStrictEqual(1/6)
+        expect(représenté.legalRights.valueOf()).toStrictEqual(0)
+        expect(deadReprésentant.legalRights.valueOf()).toStrictEqual(0)
+        expect(recursiveReprésentanté.legalRights.valueOf()).toStrictEqual(1/6)
     })
 
     it('should work with grandson of sub-representation', () => {
@@ -1199,13 +1199,13 @@ describe('Représentation wise', () => {
         const sonOfdeadReprésentant = solution.findMember('sonOfdeadReprésentant')!
         const SUT = solution.findMember('SUT')!
 
-        expect(normalHeir.legalRights).toStrictEqual(1/2)
-        expect(représentant1.legalRights).toStrictEqual(1/6)
-        expect(représentant2.legalRights).toStrictEqual(1/6)
-        expect(représenté.legalRights).toStrictEqual(0)
-        expect(deadReprésentant1.legalRights).toStrictEqual(0)
-        expect(sonOfdeadReprésentant.legalRights).toStrictEqual(0)
-        expect(SUT.legalRights).toStrictEqual(1/6)
+        expect(normalHeir.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(représentant1.legalRights.valueOf()).toStrictEqual(1/6)
+        expect(représentant2.legalRights.valueOf()).toStrictEqual(1/6)
+        expect(représenté.legalRights.valueOf()).toStrictEqual(0)
+        expect(deadReprésentant1.legalRights.valueOf()).toStrictEqual(0)
+        expect(sonOfdeadReprésentant.legalRights.valueOf()).toStrictEqual(0)
+        expect(SUT.legalRights.valueOf()).toStrictEqual(1/6)
     })
 
 })

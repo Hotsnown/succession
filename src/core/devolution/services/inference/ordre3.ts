@@ -1,4 +1,4 @@
-import { Family } from '../../entities'
+import { Family, LegalRight } from '../../entities'
 import { Devolution, repartitionParTête } from '.'
 import { assignFenteAscendante } from '../qualification/Fente'
 
@@ -35,8 +35,8 @@ function normalStrategy(family: Family) {
          repartitionParTête(paternals, paternals, 1 / 2).members.concat(
          repartitionParTête(maternals, maternals, 1 / 2).members.concat(
             [
-               family.findMember('mother')!.copyWith({legalRights: 0}), 
-               family.findMember('father')!.copyWith({legalRights: 0})
+               family.findMember('mother')!.copyWith({legalRights: LegalRight.create(0, 1)}), 
+               family.findMember('father')!.copyWith({legalRights: LegalRight.create(0, 1)})
             ]
          ))
       )
@@ -54,11 +54,11 @@ function noMotherSideRemaining(devolution: Devolution, maternals: Family) {
 function oneParentStrategy(family: Family): Family {
    return family.copyWith(family.members
       .map(member => member.isParentOfDeCujus(family)
-         ? member.copyWith({ legalRights: 1 / 2 })
-         : member.copyWith({ legalRights: member.attributes.ordre === 3 ? 1 / 4 : 0 })))
+         ? member.copyWith({ legalRights: LegalRight.create(1, 2)})
+         : member.copyWith({ legalRights: member.attributes.ordre === 3 ? LegalRight.create(1, 4) : LegalRight.create(0, 1)})))
 }
 
 function twoParentsStrategy(family: Family): Family {
    return family.copyWith(family.members
-      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? 1 / 2 : 0 })))
+      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.create(1, 2) : LegalRight.create(0, 1)})))
 }

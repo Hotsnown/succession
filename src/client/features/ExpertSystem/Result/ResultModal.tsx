@@ -1,5 +1,5 @@
 import React from 'react'
-import { Family } from '../../../../core/devolution/entities'
+import { Family, LegalRight, Member } from '../../../../core/devolution/entities'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 var Fraction = require('fractional').Fraction
 
@@ -9,6 +9,11 @@ interface IProps {
     toggle: () => void
 }
 
+const numArry: number[] = arry
+    .filter((i): i is number => {
+        return typeof i === "number";
+    });
+
 const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
   return (
     <div>
@@ -17,10 +22,11 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
         <ModalBody>
             <ul>
                 {results.members
-                    .filter(member => member.attributes.legalRights !== 'unassigned')
-                    .filter(member => member.attributes.legalRights !== 0)
+                    .filter((member) => member.attributes.legalRights !== 'unassigned')
+                    //@ts-ignore
+                    .filter((member) => member.attributes.legalRights.isNotZero())
                     .map((member, index) =>
-                    <li key={index}>{member.member_id} : { (new Fraction(member.legalRights)).numerator + '/' + (new Fraction(member.legalRights)).denominator}</li>)}
+                    <li key={index}>{member.member_id} : {member.attributes.legalRights.toString()}</li>)}
             </ul>
         </ModalBody>
         <ModalFooter>

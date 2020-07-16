@@ -1,4 +1,4 @@
-import { Family, Member } from "../../entities";
+import { Family, Member, LegalRight } from "../../entities";
 
  /**
  * Si le défunt laisse des enfants issus d'une précédente union, 
@@ -15,18 +15,18 @@ export function withDescendants (family: Family, spouse: Member, deCujus: Member
         .filter(member => member !== undefined)
         .map(member =>
             family.deCujus.childs.includes(member.member_id)
-                ? member.copyWith({legalRights: 3 / deCujus.childs.length / 4}) 
+                ? member.copyWith({legalRights: LegalRight.create(3 / deCujus.childs.length, 4)}) 
                 : member.member_id === spouse.member_id 
-                    ? member.copyWith({legalRights: 1/4})
-                    : member.copyWith({legalRights: 0})))
+                    ? member.copyWith({legalRights: LegalRight.create(1, 4)})
+                    : member.copyWith({legalRights: LegalRight.create(0, 1)})))
 }
 
 export function withoutDescendants (family: Family, spouse: Member): Family {
     return Family.create(family.members
         .filter(member => member !== undefined)
         .map(member => member.member_id === spouse.member_id 
-            ? member.copyWith({legalRights: 1}) 
-            : member.copyWith({legalRights: 0})
+            ? member.copyWith({legalRights: LegalRight.create(1, 1)}) 
+            : member.copyWith({legalRights: LegalRight.create(0, 1)})
         ))
 }
 

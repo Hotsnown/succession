@@ -75,10 +75,10 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
             const mother = family.findMember('mother')!
             const sibling1 = family.findMember('sibling1')!
         
-            expect(deCujus.legalRights).toStrictEqual(0)
-            expect(father.legalRights).toStrictEqual(0)
-            expect(mother.legalRights).toStrictEqual(1/2)
-            expect(sibling1.legalRights).toStrictEqual(1/2)
+            expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+            expect(father.legalRights.valueOf()).toStrictEqual(0)
+            expect(mother.legalRights.valueOf()).toStrictEqual(1/2)
+            expect(sibling1.legalRights.valueOf()).toStrictEqual(1/2)
         })
 })
 
@@ -190,12 +190,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
         const sibling2 = family.findMember('sibling2')!
         const nephew = family.findMember('nephew')!
     
-        expect(deCujus.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(1/4)
-        expect(mother.legalRights).toStrictEqual(1/4)
-        expect(sibling1.legalRights).toStrictEqual(1/2)
-        expect(sibling2.legalRights).toStrictEqual(0)
-        expect(nephew.legalRights).toStrictEqual(0)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(mother.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(sibling1.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(sibling2.legalRights.valueOf()).toStrictEqual(0)
+        expect(nephew.legalRights.valueOf()).toStrictEqual(0)
     })
 
     it('should give 25% to the two remaining parents (with representation)', () => {
@@ -305,12 +305,12 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
         const représentéSibling = family.findMember('représentéSibling')!
         const représentantNephew = family.findMember('représentantNephew')!
     
-        expect(deCujus.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(1/4)
-        expect(mother.legalRights).toStrictEqual(1/4)
-        expect(normalSibling.legalRights).toStrictEqual(1/4)
-        expect(représentéSibling.legalRights).toStrictEqual(0)
-        expect(représentantNephew.legalRights).toStrictEqual(1/4)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(mother.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(normalSibling.legalRights.valueOf()).toStrictEqual(1/4)
+        expect(représentéSibling.legalRights.valueOf()).toStrictEqual(0)
+        expect(représentantNephew.legalRights.valueOf()).toStrictEqual(1/4)
     })
 })
 
@@ -422,12 +422,12 @@ describe('si parent survivant = 0', () => {
         const sibling2 = family.findMember('sibling2')!
         const nephew = family.findMember('nephew')!
     
-        expect(deCujus.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(sibling1.legalRights).toStrictEqual(1)
-        expect(sibling2.legalRights).toStrictEqual(0)
-        expect(nephew.legalRights).toStrictEqual(0)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(sibling1.legalRights.valueOf()).toStrictEqual(1)
+        expect(sibling2.legalRights.valueOf()).toStrictEqual(0)
+        expect(nephew.legalRights.valueOf()).toStrictEqual(0)
     })
     it('should give 0% to deceased parents (with représentation)', () => {
         const noParents = [
@@ -536,11 +536,11 @@ describe('si parent survivant = 0', () => {
         const sibling2 = family.findMember('sibling2')!
         const nephew = family.findMember('nephew')!
     
-        expect(deCujus.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(sibling1.legalRights).toStrictEqual(1/2)
-        expect(sibling2.legalRights).toStrictEqual(0)
-        expect(nephew.legalRights).toStrictEqual(1/2)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(sibling1.legalRights.valueOf()).toStrictEqual(1/2)
+        expect(sibling2.legalRights.valueOf()).toStrictEqual(0)
+        expect(nephew.legalRights.valueOf()).toStrictEqual(1/2)
     })
 })

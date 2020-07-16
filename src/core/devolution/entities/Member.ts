@@ -1,6 +1,7 @@
-import { Family } from ".";
+import { Family, LegalRight } from ".";
 import { Degree, Ordre } from '../services/inference'
 import { ValueObject } from '../../shared/domain/value-objects'
+
 import * as R from 'ramda'
 
 export enum Status {
@@ -20,7 +21,7 @@ interface MemberProps {
             status: Status;
             isReprésenté: Représenté | 'unassigned';
             isReprésentant: Representant | 'unassigned';
-            legalRights: LegalRights | 'unassigned';
+            legalRights: LegalRight | 'unassigned';
             spouse: string
             branch: Branch | 'unassigned';
             //TODO add name
@@ -39,7 +40,7 @@ interface MemberAttributes {
         ordre: Ordre | 'unassigned';
         status: Status | 'valid' | 'invalid';
         spouse: string
-        legalRights: LegalRights | 'unassigned'
+        legalRights: LegalRight | 'unassigned'
         branch: Branch | 'unassigned'
         isReprésenté: Représenté | 'unassigned'
         isReprésentant: Representant | 'unassigned'
@@ -48,7 +49,6 @@ interface MemberAttributes {
 export type Branch = 'paternelle' | 'maternelle';
 export type Représenté = boolean;
 export type Representant = boolean;
-export type LegalRights = number;
 
 //TODO refactor with immer.js
 
@@ -61,7 +61,6 @@ export class Member extends ValueObject<MemberProps> {
         if (member.childs === undefined || member.childs === null) console.error(member)
         if (R.isNil(member)) console.error(member)
         if (member.attributes.status === undefined) console.error(`Error: ${member.member_id}'s status is ${member.attributes.status} wherehas it should be 'valid' | 'invalid'`)
-        if (member.attributes.legalRights && member.attributes.legalRights > 1) throw new Error(`${member.member_id}'s legalRights are over 100%: ${member.attributes.legalRights}`)    
         return new Member(
                 {
                     value: {
@@ -82,18 +81,14 @@ export class Member extends ValueObject<MemberProps> {
                                           member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
                             isReprésentant: member.attributes.isReprésentant === false || 
                                             member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
-                            legalRights: member.attributes.legalRights === 0 || 
+                            legalRights: member.attributes.legalRights === LegalRight.create(0, 1) || 
                                          member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' 
                                          //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
                         },
                     }
                 })
     }
-
-    set legalRights (value: LegalRights | 'unassigned') {
-        this.props.value.attributes.legalRights = value
-    }
-
+    
     get childs(): string[] {
         return this.props.value.childs;
     }
@@ -114,7 +109,7 @@ export class Member extends ValueObject<MemberProps> {
         return this.props.value.attributes.isReprésentant
     }
 
-    get legalRights(): LegalRights | 'unassigned' {
+    get legalRights(): LegalRight | 'unassigned' {
         return this.props.value.attributes.legalRights
     }
 
@@ -173,8 +168,7 @@ export class Member extends ValueObject<MemberProps> {
             .map(parent => family.findMember(parent)); //bug: includes deCujus
         let isNotSiblingOfDecujus: boolean;
         if (siblingOfDeCujus.every(member => typeof member !== undefined)) {
-            //@ts-ignore 
-            isNotSiblingOfDecujus = !this.isIn(siblingOfDeCujus); //TODO learn to narrow out undefined items in array
+            isNotSiblingOfDecujus = !this.isIn(siblingOfDeCujus as Member[]);
         }
         else {
             isNotSiblingOfDecujus = false;

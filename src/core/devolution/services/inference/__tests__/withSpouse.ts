@@ -1,4 +1,4 @@
-import { Status, Family, Member } from '../../../entities'
+import { Status, Family } from '../../../entities'
 import { main } from '../main'
 
 it('gives 100% to the spouse without descendants', () => {
@@ -57,9 +57,9 @@ it('gives 100% to the spouse without descendants', () => {
     const deCujus = solution.findMember('deCujus')!
     const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse.legalRights).toStrictEqual(1)
-    expect(deCujus.legalRights).toStrictEqual(0)
-    expect(grandParent.legalRights).toStrictEqual(0)
+    expect(spouse.legalRights.valueOf()).toStrictEqual(1)
+    expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+    expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
 })
 
 it('gives 25% to the spouse with descendants', () => {
@@ -138,10 +138,10 @@ it('gives 25% to the spouse with descendants', () => {
     const deCujus = solution.findMember('deCujus')!
     const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse.legalRights).toStrictEqual(1/4)
-    expect(child.legalRights).toStrictEqual(3/4)
-    expect(deCujus.legalRights).toStrictEqual(0)
-    expect(grandParent.legalRights).toStrictEqual(0)
+    expect(spouse.legalRights.valueOf()).toStrictEqual(1/4)
+    expect(child.legalRights.valueOf()).toStrictEqual(3/4)
+    expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+    expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
 })
 
 it('gives equal shares to all descendants', () => {
@@ -237,9 +237,9 @@ it('gives equal shares to all descendants', () => {
     const deCujus = solution.findMember('deCujus')!
     const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse.legalRights).toStrictEqual(1/4)
-    expect(childOne.legalRights).toStrictEqual(0.375)
-    expect(childTwo.legalRights).toStrictEqual(0.375)
-    expect(deCujus.legalRights).toStrictEqual(0)
-    expect(grandParent.legalRights).toStrictEqual(0)
+    expect(spouse.legalRights.valueOf()).toStrictEqual(1/4)
+    expect(childOne.legalRights.valueOf()).toStrictEqual(0.375)
+    expect(childTwo.legalRights.valueOf()).toStrictEqual(0.375)
+    expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+    expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
 })

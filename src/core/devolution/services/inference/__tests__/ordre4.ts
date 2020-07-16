@@ -145,13 +145,13 @@ describe('Degree wise', () => {
         const little_cousin = solution.findMember('little_cousin')!
         const son_of_little_cousin = solution.findMember('son_of_little_cousin')!
 
-        expect(deCujus.legalRights).toStrictEqual(0)
-        expect(mother.legalRights).toStrictEqual(0)
-        expect(father.legalRights).toStrictEqual(0)
-        expect(paternal_grand_father.legalRights).toStrictEqual(0)
-        expect(uncle.legalRights).toStrictEqual(0)
-        expect(cousin.legalRights).toStrictEqual(0)
-        expect(little_cousin.legalRights).toStrictEqual(1)
-        expect(son_of_little_cousin?.legalRights).toStrictEqual(0)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(mother.legalRights.valueOf()).toStrictEqual(0)
+        expect(father.legalRights.valueOf()).toStrictEqual(0)
+        expect(paternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
+        expect(uncle.legalRights.valueOf()).toStrictEqual(0)
+        expect(cousin.legalRights.valueOf()).toStrictEqual(0)
+        expect(little_cousin.legalRights.valueOf()).toStrictEqual(1)
+        expect(son_of_little_cousin?.legalRights.valueOf()).toStrictEqual(0)
     })
 })
