@@ -1,6 +1,6 @@
-import { Member }from '../../entities'
+import { MemberConstructor }from '../../entities'
 
-export interface MemberWithIndex extends Member {
+export interface MemberWithIndex extends MemberConstructor {
     index: number
 }
 

@@ -32,13 +32,13 @@ it('should test degrés in ordre 1', () => {
     const data: Query = {
         de_cujus: 'Bernard',
         family: [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 1},
-        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 2},
-        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 4},
-        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 5},
-        {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 6},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
         ]
     }
 
@@ -59,13 +59,13 @@ it('should test degrés in ordre 1', () => {
     })
 
     const target = [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre':0, 'ordre': 'unassigned'}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned'}, "index": 1},
-        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned'}, "index": 2},
-        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned'}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned'}, "index": 4},
-        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned'}, "index": 5},
-        {"member_id":"Romeo","childs":[],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned'}, "index": 6}
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre':0, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Romeo","childs":[],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
         ]
 
     expect(data.family).toStrictEqual(target)
@@ -76,13 +76,13 @@ it('should test degrés in ordre 2', () => {
     const data: Query = {
         de_cujus: 'Pierre',
         family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 1},
-        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 2},
-        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 3},
-        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 4},
-        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 5},
-        {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 6}
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
         ]
 }
 
@@ -103,13 +103,13 @@ data.family.forEach(member => {
     }
 })
     const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 0, 'ordre': 'unassigned'}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned'}, "index": 1},
-        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned'}, "index": 2},
-        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned'}, "index": 3},
-        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned'}, "index": 4},
-        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned'}, "index": 5},
-        {"member_id":"Guillaume","childs":[],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned'}, "index": 6}
+        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 0, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Guillaume","childs":[],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
         ]
 
         expect(data.family).toStrictEqual(target)
@@ -120,13 +120,13 @@ it('should test degrés in ordre 3', () => {
     const data: Query = {
         de_cujus: 'Pierre',
         family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 2},
-        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 4},
-        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 5},
-        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 6},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
         ]}
 
 
@@ -147,13 +147,13 @@ it('should test degrés in ordre 3', () => {
     })
 
     const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 0, 'ordre': 'unassigned'}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned'}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned'}, "index": 2},
-        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned'}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned'}, "index": 4},
-        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned'}, "index": 5},
-        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned'}, "index": 6},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 0, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre': 2, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": "valid", 'degre': 3, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 4, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
+        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 5, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
+        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": "valid", 'degre': 6, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
         ]
 
         expect(data.family).toStrictEqual(target)
@@ -164,11 +164,11 @@ it('should test degrés in ordre 4', () => {
     const data: Query = {
         de_cujus: 'Pierre',
         family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 2},
-        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 3},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned"}, "index": 4},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
         ]}
 
 
@@ -189,11 +189,11 @@ it('should test degrés in ordre 4', () => {
     })
 
     const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', 'degre': 0, 'ordre': 'unassigned'}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', 'degre': 1, 'ordre': 'unassigned'}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', 'degre': 2, 'ordre': 'unassigned'}, "index": 2},
-        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', 'degre': 3, 'ordre': 'unassigned'}, "index": 3},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', 'degre': 4, 'ordre': 'unassigned'}, "index": 4},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', 'degre': 0, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', 'degre': 1, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', 'degre': 2, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
+        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', 'degre': 3, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
+        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', 'degre': 4, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
         ]
 
         expect(data.family).toStrictEqual(target)
