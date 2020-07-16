@@ -10,14 +10,8 @@ Use the package manager [npm](https://www.npmjs.com/) to install succession.
 npm i
 ```
 
-Then, in another terminal, you need to set up the python dependency :
-
-```bash
-npm run python
-```
-
 ## Usage
 
 ```bash
-npm start
+npm run start:dev
 ```
