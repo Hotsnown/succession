@@ -1,7 +1,7 @@
 import { Status, Family } from '../../../entities'
 import { assignFenteAscendante } from '../Fente'
 
-it('should find both fente', () => {
+it.skip('should find both fente', () => {
     const existingFente = [
         {
             "childs": [],
