@@ -42,11 +42,11 @@ const footerItems: footerItem[] = [
   },
   {
     url: '/',
-    text: 'About Me'
+    text: 'A propos'
   },
   {
     url: '/',
-    text: 'Me contacter'
+    text: 'Contact'
   }
 ]
 
