@@ -1,8 +1,8 @@
 import TableList from '../features/Explore/Illustrations';
 import ExpertSystem from '../features/ExpertSystem/ExpertSystem';
-import { Intro } from '../features/Intro/intro';
-import { AboutUs } from '../features/AboutUs/aboutUs';
-import { Contact } from '../features/Contact/index'
+import { Intro } from '../components/Intro/intro';
+import { AboutUs } from '../components/AboutUs/aboutUs';
+import { Contact } from '../components/Contact/index'
 
 export interface Route {
   path: string;
