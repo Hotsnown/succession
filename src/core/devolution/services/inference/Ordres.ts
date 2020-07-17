@@ -2,81 +2,63 @@ import { ValueObject } from '../../../shared/domain/value-objects'
 import { Member, Family, Ordre } from '../../entities';
 import * as R from 'ramda'
 
-interface OrdreProps {
-    value: Record<string, Member[]>
-    ordres: Ordre[]
-}
+type MembersGroupedByOrdre = Record<string, Member[]>
+const ordres = [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4]
 
 /**
  * @desc Members are divided into four classes where each classe exclude other classes.
  *  If there are no members in one class, the property goes to all the members in the next class.
  */
-export class Ordres extends ValueObject<OrdreProps> {
-
-    public static create(members: Family): Ordres {
-        if (members === undefined || members === null || members.members.length < 0) {
-            throw new Error()
-        } else {
-            return new Ordres(
-                {
-                    value: byOrdre(members.members),
-                    ordres: [Ordre.Ordre1, Ordre.Ordre2, Ordre.Ordre3, Ordre.Ordre4],
-                })
-        }
-    }
-
-    get value() {
-        return this.props.value;
-    }
-
-    getFirstAppliableOrdre (): Family {
-        for (const ordre in this.props.ordres) {
-            if (this.props.value[ordre] !== undefined) {
-                if(this.atLeastOneMemberEligibleToInheritIn(ordre)) {
-                    return Family.create(this.props.value[ordre])
-                }
+export function getFirstAppliableOrdre (family: Family): Family {
+    const membersGroupedByOrdre = byOrdre(family.members)
+    for (const ordre in ordres) {
+        if (membersGroupedByOrdre[ordre] !== undefined) {
+            if(atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre, ordre)) {
+                return Family.create(membersGroupedByOrdre[ordre])
             }
         }
-        return Family.create([]) //TODO Error handling
     }
+    throw new Error('Should not be reachable')
+}
 
-    private atLeastOneMemberEligibleToInheritIn(ordre: string) {
-        return this.props.value[ordre].some(member => member.isEligibleToInherit());
-    }
+export function atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre: MembersGroupedByOrdre, ordre: string) {
+    return membersGroupedByOrdre[ordre].some(member => member.isEligibleToInherit());
+}
 
-    getFirstAppliableOrdreNumber (family: Family): number {
-        for (const ordre of this.props.ordres) {
-            if (this.props.value[ordre] !== undefined) {
-                if(this.atLeastOneMemberEligibleToInheritIn(ordre.toString())) {
-                    if (parseInt(ordre.toString()) === 2) {
-                        return this.computePriviledgeAscendantOrdre(family)
-                    }    
-                    return parseInt(ordre.toString()) //TODO: handle unknown case
-                }
+export function getFirstAppliableOrdreNumber (family: Family): number {
+    const membersGroupedByOrdre = byOrdre(family.members)
+    for (const ordre of ordres) {
+        if (membersGroupedByOrdre[ordre] !== undefined) {
+            if(atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre, ordre.toString())) {
+                if (parseInt(ordre.toString()) === 2) {
+                    return computePriviledgeAscendantOrdre(family)
+                }    
+                return parseInt(ordre.toString()) //TODO: handle unknown case
             }
         }
-        return 10 //TODO Error handling
     }
+    throw new Error('Should not be reachable')
+}
 
-    private computePriviledgeAscendantOrdre(family: Family) {
-        const parents = family.findParentsOf(family.deCujus.member_id)
-        if (this.noPriviledgedCollateral(family, parents)) {
-            return 3
-        } else {
-            return 2
-        }
-    }
-
-    private noPriviledgedCollateral(family: Family, parents: [Member, Member]) {
-        return family.members
-            .filter(member => !parents.includes(member))
-            .filter(member => member.attributes.ordre === 2)
-            .filter(member => member.isEligibleToInherit())
-            .length === 0;
+function computePriviledgeAscendantOrdre(family: Family) {
+    const parents = family.findParentsOf(family.deCujus.member_id)
+    if (noPriviledgedCollateral(family, parents)) {
+        return 3
+    } else {
+        return 2
     }
 }
 
-const byOrdre = R.groupBy(
+function noPriviledgedCollateral(family: Family, parents: [Member, Member]) {
+    //potential bug: it may filter out priviledged collaterals
+    return family.members
+        .filter(member => !parents.includes(member))
+        .filter(member => member.attributes.ordre === Ordre.Ordre2)
+        .filter(member => member.isEligibleToInherit())
+        .length === 0;
+}
+
+export const byOrdre = R.groupBy(
     (member: Member) => {
         const ordre = member.attributes.ordre
         return  ordre === 'unassigned' ? 'unassigned' :

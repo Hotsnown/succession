@@ -18,7 +18,7 @@ export function withDescendants (family: Family, spouse: Member, deCujus: Member
                 ? member.copyWith({legalRights: LegalRight.create(3 / deCujus.childs.length, 4)}) 
                 : member.member_id === spouse.member_id 
                     ? member.copyWith({legalRights: LegalRight.create(1, 4)})
-                    : member.copyWith({legalRights: LegalRight.create(0, 1)})))
+                    : member.copyWith({legalRights: LegalRight.zeroRight()})))
 }
 
 export function withoutDescendants (family: Family, spouse: Member): Family {
@@ -26,7 +26,7 @@ export function withoutDescendants (family: Family, spouse: Member): Family {
         .filter(member => member !== undefined)
         .map(member => member.member_id === spouse.member_id 
             ? member.copyWith({legalRights: LegalRight.create(1, 1)}) 
-            : member.copyWith({legalRights: LegalRight.create(0, 1)})
+            : member.copyWith({legalRights: LegalRight.zeroRight()})
         ))
 }
 

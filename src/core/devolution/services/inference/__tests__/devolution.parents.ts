@@ -1,6 +1,6 @@
 import { Status } from '../../../entities/index'
 import { Family } from '../../../entities/Family'
-import { Ordres } from '../Ordres'
+import { getFirstAppliableOrdreNumber, byOrdre } from '..'
 
 it('should return ordre 3 when there is no priviledged collateral', () => {
     const noPriviledgeCollateral = [
@@ -25,7 +25,7 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Deceased,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',
@@ -55,7 +55,7 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Valid,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',
@@ -100,7 +100,7 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
     ]
 
     const family = Family.create(noPriviledgeCollateral)
-    const ordre3 = Ordres.create(family).getFirstAppliableOrdreNumber(family)
+    const ordre3 = getFirstAppliableOrdreNumber(family)
 
     expect(ordre3).toStrictEqual(3)
 })
@@ -128,7 +128,7 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Deceased,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',
@@ -158,7 +158,7 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Valid,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',
@@ -203,7 +203,7 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
     ]
 
     const family = Family.create(noPriviledgeCollateral)
-    const ordre2 = Ordres.create(family).getFirstAppliableOrdreNumber(family)
+    const ordre2 = getFirstAppliableOrdreNumber(family)
 
     expect(ordre2).toStrictEqual(2)
 })
@@ -383,8 +383,7 @@ it('should test ordre on real attributes', () => {
           "member_id": "abe",
         }
       ]
-      
       //@ts-ignore
-      const sut = Ordres.create(Family.create(test))
+      const sut = Family.create(test)
       expect(sut).toBeTruthy()
 })

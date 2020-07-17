@@ -23,7 +23,7 @@ it.skip('should find both fente', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Deceased,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',
@@ -39,7 +39,7 @@ it.skip('should find both fente', () => {
             ],
             "attributes": {
                 "degre": 1,
-                "ordre": 2,
+                "ordre": 3,
                 "status": Status.Deceased,
                 "spouse": "",
                 "legalRights": "unassigned" as 'unassigned',

@@ -1,6 +1,5 @@
 export * from './Ordres'
 export * from './Degrees'
-export * from './Devolution'
 export * from './Représentation'
 export * from './RépartitionParTête'
 export * from './utils'

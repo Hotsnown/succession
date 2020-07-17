@@ -1,5 +1,6 @@
 import { Status, Family } from '../../../entities'
 import { main } from '../main'
+import { getFirstAppliableOrdreNumber } from '../Ordres'
 
 describe('test parents', () => {
     it('should give equal shares to two valid parents', () => {
@@ -24,7 +25,7 @@ describe('test parents', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Valid,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -40,7 +41,7 @@ describe('test parents', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Valid,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -85,6 +86,9 @@ describe('test parents', () => {
         ]
 
         const family = main(Family.create(existingFente), 'deCujus')
+
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
+
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -120,7 +124,7 @@ describe('test parents', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -136,7 +140,7 @@ describe('test parents', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Valid,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -181,6 +185,9 @@ describe('test parents', () => {
         ]
 
         const family = main(Family.create(existingFente), 'deCujus')
+
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
+
         const de_cujus = family.findMember('de_cujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
@@ -219,7 +226,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -235,7 +242,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -313,6 +320,8 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
 
         const family = main(Family.create(existingFente), 'deCujus')
 
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
+
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
@@ -346,7 +355,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -362,7 +371,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -480,7 +489,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -496,7 +505,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -590,6 +599,8 @@ describe('The ascendants of the same degree divide the succession by head', () =
 
         const family = main(Family.create(existingFente), 'deCujus')
 
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
+
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
@@ -625,7 +636,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -641,7 +652,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -734,6 +745,8 @@ describe('The ascendants of the same degree divide the succession by head', () =
         ]
     
         const family = main(Family.create(existingFente), 'deCujus')
+
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -776,7 +789,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -792,7 +805,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -885,6 +898,8 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
         ]
     
         const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
+
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -925,7 +940,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -941,7 +956,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -1034,6 +1049,8 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
         ]
     
         const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
+
+        expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!

@@ -1,5 +1,5 @@
-import { Family, LegalRight } from '../../entities'
-import { Devolution, repartitionParTête } from '.'
+import { Family, LegalRight, Refine, Ordre } from '../../entities'
+import { repartitionParTête, excludeInheligible } from '.'
 import { assignFenteAscendante } from '../qualification/Fente'
 
 /**
@@ -8,7 +8,7 @@ import { assignFenteAscendante } from '../qualification/Fente'
  * - Les ascendants de même degré se répartissent la succession par tête
  * - A défaut d'ascendant dans une branche, les ascendants de l'autre branche recueillent toute la succession
  */
-export function ordreThreeStrategy(family: Family): Family {
+export const ordreThreeStrategy: Refine = (family) => {
    
    switch (family.findParentsOfDecujus().length) {
       case 1: return oneParentStrategy(family)
@@ -17,48 +17,52 @@ export function ordreThreeStrategy(family: Family): Family {
    }
 }
 
-function normalStrategy(family: Family) {
+const normalStrategy: Refine = (family) => {
 
-   const devolution = new Devolution(family)
+   //TODO: use destructuring (ex const {maternals, paternals} = assignFenteAscendante())
    const qualification = assignFenteAscendante(family)
 
    const maternals = qualification.getMaternals()
    const paternals = qualification.getPaternals()
 
-   if (noMotherSideRemaining(devolution, maternals)) {
+   if (noMotherSideRemaining(maternals)) {
       return repartitionParTête(paternals, family)
-   } else if (noFatherSideRemaining(devolution, paternals)) {
+   } else if (noFatherSideRemaining(paternals)) {
       return repartitionParTête(maternals, family)
    } else {
+      //TODO: remove hard coded find
       if (!family.findMember('mother') || !family.findMember('father')) throw new Error('No mother/father found')
       return Family.create(
          repartitionParTête(paternals, paternals, 1 / 2).members.concat(
          repartitionParTête(maternals, maternals, 1 / 2).members.concat(
             [
-               family.findMember('mother')!.copyWith({legalRights: LegalRight.create(0, 1)}), 
-               family.findMember('father')!.copyWith({legalRights: LegalRight.create(0, 1)})
+               family.findMember('mother')!.copyWith({legalRights: LegalRight.zeroRight()}), 
+               family.findMember('father')!.copyWith({legalRights: LegalRight.zeroRight()})
             ]
          ))
       )
    }
 }
 
-function noFatherSideRemaining(devolution: Devolution, paternals: Family) {
-   return devolution.excludeInheligible(paternals).members.length === 0
+function noFatherSideRemaining(paternals: Family): boolean {
+   return excludeInheligible(paternals).members.length === 0
 }
 
-function noMotherSideRemaining(devolution: Devolution, maternals: Family) {
-   return devolution.excludeInheligible(maternals).members.length === 0
+function noMotherSideRemaining(maternals: Family): boolean {
+   return excludeInheligible(maternals).members.length === 0
 }
 
-function oneParentStrategy(family: Family): Family {
+const oneParentStrategy: Refine = (family) => {
    return family.copyWith(family.members
       .map(member => member.isParentOfDeCujus(family)
          ? member.copyWith({ legalRights: LegalRight.create(1, 2)})
-         : member.copyWith({ legalRights: member.attributes.ordre === 3 ? LegalRight.create(1, 4) : LegalRight.create(0, 1)})))
+         : member.copyWith({ legalRights: (member.attributes.ordre === Ordre.Ordre3 && member.member_id !== 'father' && member.member_id !== 'mother') 
+            ? LegalRight.create(1, 4) 
+            : LegalRight.zeroRight()})
+            ))
 }
 
-function twoParentsStrategy(family: Family): Family {
+const twoParentsStrategy: Refine = (family) => {
    return family.copyWith(family.members
-      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.create(1, 2) : LegalRight.create(0, 1)})))
+      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.create(1, 2) : LegalRight.zeroRight()})))
 }

@@ -1,4 +1,4 @@
-import { Family, Branch } from "../../entities"
+import { Family, Branch, Refine } from "../../entities"
 import { isMother, isFather, isAscendantOfFather, isAscendantOfMother } from '../inference'
 
 import * as R from 'ramda'
@@ -7,10 +7,9 @@ import * as R from 'ramda'
 * - A member belongs to the **maternal branch** if he is an ascendant of the de cujus' mother
 * - A member belongs to the **paternal branch** if he is an ascendant of the de cujus' father
 */
-export function assignFenteAscendante(family: Family) {
+export const assignFenteAscendante: Refine = (family) => {
 
-   const extractMother =
-       (family: Family): Family => {
+   const extractMother: Refine = (family) => {
            family.members
                .filter(member =>
                    member.isParentOfDeCujus(family) &&
@@ -20,20 +19,19 @@ export function assignFenteAscendante(family: Family) {
            return family
        }
 
-   const extractFather =
-       (family: Family): Family => {
+   const extractFather: Refine = (family) => {
            family.members
                .filter(member =>
                    member.isParentOfDeCujus(family) &&
                    isFather(member))
+                .map(m => {m.member_id; return m})
                .forEach(member =>
                    member.attributes.branch = 'paternelle')
 
            return family
        }
 
-   const extractMaternalGrandParents =
-       (family: Family): Family => {
+   const extractMaternalGrandParents: Refine = (family) => {
            family.members
                .flatMap(member =>
                    isAscendantOfMother(family.findParentsOf(member.member_id), family))
@@ -42,8 +40,7 @@ export function assignFenteAscendante(family: Family) {
            return family
        }
 
-   const extractPaternalGrandParents =
-       (family: Family): Family => {
+   const extractPaternalGrandParents: Refine = (family) => {
            family.members
                .flatMap(member =>
                    isAscendantOfFather(family.findParentsOf(member.member_id), family))

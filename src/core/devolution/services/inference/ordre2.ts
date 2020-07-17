@@ -1,10 +1,10 @@
-import { Family, Member, LegalRight } from '../../entities'
+import { Family, Member, LegalRight, Refine } from '../../entities'
 import { assignRepresentation} from '../qualification/Représentation'
 import { repartitionParTête, computeRepresentation } from '.'
 
 //TODO potential bug when there is only one parent in input
 
-export function ordreTwoStrategy(family: Family): Family {
+export const ordreTwoStrategy: Refine = (family) => {
     // 1/ qualifiedFamily
     //    Nombre de collatéraux = nombre de membres du degrés le plus proche + nombre de souche
     //    Nombre de parent survivant
@@ -26,7 +26,7 @@ export function ordreTwoStrategy(family: Family): Family {
     }
 }
 
-function normalStrategy(family: Family): Family {
+const normalStrategy: Refine = (family) => {
     const qualifiedFamily = assignRepresentation(family)
 
     const représentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)

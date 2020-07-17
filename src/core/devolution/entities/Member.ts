@@ -66,7 +66,7 @@ export class Member extends Entity<MemberProps> {
                                           member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
                             isReprésentant: member.attributes.isReprésentant === false || 
                                             member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
-                            legalRights: member.attributes.legalRights === LegalRight.create(0, 1) || 
+                            legalRights: member.attributes.legalRights === LegalRight.zeroRight() || 
                                          member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' 
                                          //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
                         },

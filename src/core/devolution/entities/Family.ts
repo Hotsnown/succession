@@ -3,6 +3,8 @@ import * as R from 'ramda'
 import { Status } from './Member'
 import { Entity } from '../../shared/domain/entities'
 
+export type Refine = (family: Family) => Family
+
 interface FamilyProps {
     value: {
         members: Member[],
@@ -77,6 +79,7 @@ export class Family extends Entity<FamilyProps> {
     }
 
     public getMaternals(): Family {
+        console.log(this.members.map(m => ({id: m.member_id, branch: m.attributes.branch})))
         return Family.create(this.members.filter(member => member.attributes.branch === 'maternelle'))
     }
 
@@ -117,7 +120,7 @@ function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]):
         return members.every(
             member => member.attributes.legalRights !== 'unassigned') &&
             members.map(member => member.attributes.legalRights as LegalRight)
-                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.create(0, 1))! > LegalRight.create(1, 1)
+                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.zeroRight())! > LegalRight.create(1, 1)
     }
 }
 

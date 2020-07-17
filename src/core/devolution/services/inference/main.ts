@@ -1,6 +1,5 @@
-import { Family, Member } from '../../entities'
-import { Ordres } from '.'
-import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants } from '.'
+import { Family, Member, Refine } from '../../entities'
+import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants, getFirstAppliableOrdreNumber, byOrdre } from '.'
 
 export function main(family: Family, deCujusId: string): Family {
     if (family.findMember('spouse')?.member_id) {
@@ -9,8 +8,8 @@ export function main(family: Family, deCujusId: string): Family {
     return withoutSpouseStrategy(family)
 }
 
-function withoutSpouseStrategy(family: Family): Family {
-    const strategy = Ordres.create(family).getFirstAppliableOrdreNumber(family)
+const withoutSpouseStrategy: Refine = (family) => {
+    const strategy = getFirstAppliableOrdreNumber(family)
        
     switch (strategy) {
        case 1: return ordreOneStrategy(family)

@@ -16,7 +16,7 @@ export function repartitionParTête(filteredMembers: Family, family: Family, sha
         .getFirstAppliableDegreeMembers(filteredMembers, family)
         .filter(member => member.isEligibleToInherit() || (member.isReprésenté === true))
 
-    const getLegalRightsByHead = (member: Member): LegalRight => member.isIn(priviledgedMembers) ? shareByHead(priviledgedMembers, shares) : LegalRight.create(0, 1)
+    const getLegalRightsByHead = (member: Member): LegalRight => member.isIn(priviledgedMembers) ? shareByHead(priviledgedMembers, shares) : LegalRight.zeroRight()
     const shareByHead = (members: Member[], shares: number): LegalRight => LegalRight.create(shares, members.length)
 
     const updatedMembers = family.members

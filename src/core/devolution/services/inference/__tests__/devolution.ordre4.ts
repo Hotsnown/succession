@@ -27,7 +27,7 @@ describe('Degree wise', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',
@@ -43,7 +43,7 @@ describe('Degree wise', () => {
                 ],
                 "attributes": {
                     "degre": 1,
-                    "ordre": 2,
+                    "ordre": 3,
                     "status": Status.Deceased,
                     "spouse": "",
                     "legalRights": "unassigned" as 'unassigned',

@@ -40,12 +40,12 @@ const updateMember = (member: Member, rootOfsouche: Member) => {
     }
     if (memberIsPartOfSouche(rootOfsouche, member)) {
         if (member.member_id.startsWith('deadReprésentant1')) {
-            return member.copyWith({ legalRights: LegalRight.create(0, 1)})
+            return member.copyWith({ legalRights: LegalRight.zeroRight()})
         } else {
             return member.copyWith({ legalRights: distributeSharesOf(rootOfsouche) })   
         }
     } else if (memberIsRootOfSouche(member, rootOfsouche)) {
-        return member.copyWith({ legalRights: LegalRight.create(0, 1)})
+        return member.copyWith({ legalRights: LegalRight.zeroRight()})
     } else {
         return member
     }

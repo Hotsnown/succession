@@ -18,7 +18,7 @@ export class Ordre {
 
     assignOrdre(deCujus: Member, nodeToQualify: Member, root: Member, parent: Member, grandParent: Member): Member {
       
-      const LCA = this.LCAutil(deCujus, nodeToQualify, root)
+      const LCA = this.findLowestCommonAncestor(deCujus, nodeToQualify, root)
 
       deCujus.attributes.ordre = 0
 
@@ -31,15 +31,22 @@ export class Ordre {
       return nodeToQualify
     }
 
-    private LCAutil(a: Member, b: Member, root: Member): Member {
+    //TODO : on simpson's tree, when bart (or maggie) is the de cujus, [marge, unknown, mona, milhouse, ...] eg outsiders are
+    //qualified as members of ordre 1.
+    //TODO: on Ordre1's tree, when son is the de cujus, outsiders are qualified as members of ordre 4 and real ordre are not qualified
+    // as members of ordre 4
+    //TODO: on Ordre1's tree, when grandchildren3 is the decujus, outsiders are qualified as members of ordre 4
+    //and members of ordre 2 are not qualified
+    //TODO: on Ordre1's tree, when grandgrandchildren is the decujus, putsiders are qualified as ordre 1
+    private findLowestCommonAncestor(deCujus: Member, nodeToQualify: Member, root: Member): Member {
       
-      if (a.member_id === root.member_id || b.member_id === root.member_id) return root;
+      if (deCujus.member_id === root.member_id || nodeToQualify.member_id === root.member_id) return root;
 
       let count = 0;
       let temp: Member | null = null;
 
       for (let iter of this.adj[root.index]) {
-        const res = this.LCAutil(a, b, iter);
+        const res = this.findLowestCommonAncestor(deCujus, nodeToQualify, iter);
         if (res != null) {
           count++;
           temp = res;

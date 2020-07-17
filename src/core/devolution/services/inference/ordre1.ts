@@ -1,15 +1,16 @@
-import { Family } from '../../entities'
-import { repartitionParTête, computeRepresentation, Ordres } from '.'
+import { Family, Refine } from '../../entities'
+import { repartitionParTête, computeRepresentation } from '.'
 import { assignRepresentation } from '../qualification/Représentation'
+import { byOrdre } from './Ordres'
 
-export function ordreOneStrategy(family: Family): Family {
-    /*
-    1) les personnes du même degré ont la même part.
-    2) Si 1 défunt dans le degré privilégié + le défunt a des enfants, les enfants 
-       se partagent la part du défunt. Réitérer 1
-    */
+/**
+1. les personnes du même degré ont la même part.
+2. Si 1 défunt dans le degré privilégié + le défunt a des enfants, les enfants 
+   se partagent la part du défunt. Réitérer 1
+*/
+export const ordreOneStrategy: Refine = (family) => {
 
-   const ordre1 = Family.create(Ordres.create(family).props.value[1].concat(family.deCujus))
+   const ordre1 = Family.create(byOrdre(family.members)[1].concat(family.deCujus))
 
    const qualification = assignRepresentation(ordre1)
    
