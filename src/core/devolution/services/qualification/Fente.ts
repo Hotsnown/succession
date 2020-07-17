@@ -24,7 +24,6 @@ export const assignFenteAscendante: Refine = (family) => {
                .filter(member =>
                    member.isParentOfDeCujus(family) &&
                    isFather(member))
-                .map(m => {m.member_id; return m})
                .forEach(member =>
                    member.attributes.branch = 'paternelle')
 

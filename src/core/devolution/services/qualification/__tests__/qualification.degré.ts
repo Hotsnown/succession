@@ -84,24 +84,23 @@ it('should test degrés in ordre 2', () => {
         {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
         {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
         ]
-}
+    }
 
+    const graph = new Degré(data.family.length)
 
-const graph = new Degré(data.family.length)
-
-data.family.forEach(member => {
-    if (member.childs) {
-        for (let child of member.childs) {
-            graph.addEdge(member, findByName(data, child))
+    data.family.forEach(member => {
+        if (member.childs) {
+            for (let child of member.childs) {
+                graph.addEdge(member, findByName(data, child))
+            }
         }
-    }
-})
+    })
 
-data.family.forEach(member => {
-    if (member.member_id !== data.de_cujus) {
-        graph.assignDegré(findByName(data, data.de_cujus), member)
-    }
-})
+    data.family.forEach(member => {
+        if (member.member_id !== data.de_cujus) {
+            graph.assignDegré(findByName(data, data.de_cujus), member)
+        }
+    })
     const target = [
         {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 0, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
         {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": "valid", 'degre': 1, 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},

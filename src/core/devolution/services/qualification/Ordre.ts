@@ -47,7 +47,7 @@ export class Ordre {
 
       for (let iter of this.adj[root.index]) {
         const res = this.findLowestCommonAncestor(deCujus, nodeToQualify, iter);
-        if (res != null) {
+        if (res !== null) {
           count++;
           temp = res;
         }
