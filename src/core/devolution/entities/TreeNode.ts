@@ -50,7 +50,7 @@ export class TreeNode {
       }
       for(let child of this.children) {
         const temp = child.getDescendentPathTo(descendentId);
-        if(temp != null) {
+        if(temp) {
           results.push(...temp);
           return results;
         }

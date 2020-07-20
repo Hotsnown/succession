@@ -1,5 +1,5 @@
-import { TreeNode } from '../TreeNode'
-import { findByName } from '../../services/qualification/Ordre'
+import { TreeNode } from './TreeNode'
+import { findByName } from '../services/qualification/Ordre'
 import { Query } from '../../services/qualification/Interface'
 
 function stringify(list: TreeNode[] | undefined | null ) {
@@ -43,7 +43,7 @@ it.skip('should work on ordre 1', () => {
     expect(TreeNode.getTreeNode(romeo.index)?.getAncestorPathTo(fred.index)?.map(m => m.label)).toStrictEqual(['Fred','Pierre','Claude','Alphonse','Leo','Romeo'].reverse())
 })
 
-it('should work on ordre 2', () => {
+it.skip('should work on ordre 2', () => {
     const data: Query = {
         de_cujus: 'Pierre',
         family: [
@@ -77,7 +77,7 @@ it('should work on ordre 2', () => {
     expect(TreeNode.getTreeNode(guillaume.index)?.getAncestorPathTo(marie.index)?.map(m => m.label)).toStrictEqual(['Marie', 'Gerard', 'Romeo', 'Leo', 'Guillaume' ].reverse())
 })
 
-it('should work on ordre 3', () => {
+it.skip('should work on ordre 3', () => {
     const data: Query = {
         de_cujus: 'Pierre',
         family: [
@@ -107,8 +107,8 @@ it('should work on ordre 3', () => {
     const cody = findByName(data, "Cody")
     const etienne = findByName(data, "Etienne")
 
-    expect(TreeNode.getTreeNode(cody.index)?.getDescendentPathTo(pierre.index)?.map(m => m.label)).toStrictEqual(['Marie', 'Gerard', 'Romeo', 'Leo', 'Guillaume' ])
     expect(TreeNode.getTreeNode(pierre.index)?.getAncestorPathTo(cody.index)?.map(m => m.label)).toStrictEqual(['Marie', 'Gerard', 'Romeo', 'Leo', 'Guillaume' ].reverse())
+    expect(TreeNode.getTreeNode(cody.index)?.getDescendentPathTo(etienne.index)?.map(m => m.label)).toStrictEqual(['Marie', 'Gerard', 'Romeo', 'Leo', 'Guillaume' ])
 })
 
 it('should work on ordre 4', () => {
@@ -123,10 +123,21 @@ it('should work on ordre 4', () => {
         ]
     }
 
+    data.family.forEach(member => {
+        if (member.childs) {
+            for (let child of member.childs) {
+                TreeNode.create(findByName(data, child).index, findByName(data, child).member_id, member.index)
+            }
+        }
+    })
+
     const pierre = findByName(data, "Pierre")
     const fred = findByName(data, "Fred")
     const bernard = findByName(data, "Bernard")
     const claude = findByName(data, "Claude")
     const cody = findByName(data, "Cody")
+
+    console.log(TreeNode.getTreeNode(bernard.index))
+    expect(TreeNode.getTreeNode(fred.index)?.getDescendentPathTo(bernard.index)?.map(m => m.label)).toStrictEqual([])
     
 })

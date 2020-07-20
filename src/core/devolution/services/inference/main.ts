@@ -2,10 +2,15 @@ import { Family, Member, Refine } from '../../entities'
 import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants, getFirstAppliableOrdreNumber, byOrdre } from '.'
 
 export function main(family: Family, deCujusId: string): Family {
-    if (family.findMember('spouse')?.member_id) {
-        return withSpouseController(family, family.findMember('spouse') as Member)
+    try {
+        if (family.findMember('spouse')?.member_id) {
+            return withSpouseController(family, family.findMember('spouse') as Member)
+        }
+        return withoutSpouseStrategy(family)
+    } catch (error) {
+        console.error(error.message)
+        return family
     }
-    return withoutSpouseStrategy(family)
 }
 
 const withoutSpouseStrategy: Refine = (family) => {

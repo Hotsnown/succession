@@ -51,3 +51,11 @@ it('testToString', () => {
 it('should get when value is 0', () => {
     expect(LegalRight.create(0, 1).isNotZero()).toBeFalsy()
 })
+
+it('should create fraction from percentage', () => {
+    expect(LegalRight.percent("0%")).toStrictEqual(LegalRight.create(0, 1))
+    expect(LegalRight.percent("25%")).toStrictEqual(LegalRight.create(1, 4))
+    expect(LegalRight.percent("50%")).toStrictEqual(LegalRight.create(1, 2))
+    expect(LegalRight.percent("75%")).toStrictEqual(LegalRight.create(3, 4))
+    expect(LegalRight.percent("100%")).toStrictEqual(LegalRight.create(1, 1))
+})

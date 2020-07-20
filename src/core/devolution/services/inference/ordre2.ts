@@ -1,4 +1,4 @@
-import { Family, Member, LegalRight, Refine } from '../../entities'
+import { Family, Member, LegalRight, Refine, Degree } from '../../entities'
 import { assignRepresentation} from '../qualification/Représentation'
 import { repartitionParTête, computeRepresentation } from '.'
 
@@ -40,13 +40,12 @@ const normalStrategy: Refine = (family) => {
 
 function oneParentStrategy(family: Family, parents: Member[]): Family {
 
-    const familyWithoutParents = Family.create(family.members.filter(member => !member.isIn(parents)))
-    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, 1 / 2)
+    const familyWithoutParents = family.filter(member => !member.isIn(parents))
+    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, LegalRight.percent('50%'))
 
-    return family.copyWith(family.members
-        .map(member => member.isIn(parents)
-            ? member.copyWith({ legalRights: LegalRight.create(1, 2)})
-            : member.copyWith({ legalRights: priviledgedMembers.findMember(member.member_id)!.legalRights })))
+    return family.map(member => member.isIn(parents)
+            ? member.copyWith({ legalRights: LegalRight.percent('50%')})
+            : member.copyWith({ legalRights: priviledgedMembers.findMember(member.member_id)!.legalRights }))
 }
 
 function twoParentsStrategy(family: Family, parents: Member[]): Family {
@@ -55,28 +54,26 @@ function twoParentsStrategy(family: Family, parents: Member[]): Family {
 
     const représentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)
 
-    const familyWithoutParents = Family.create(family.members.filter(member => !member.isIn(parents)))
+    const familyWithoutParents = family.filter(member => !member.isIn(parents))
     const qualifiedFamilyWithoutParents = assignRepresentation(familyWithoutParents)
 
-    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, 1 / 2)
-    const priviledgedMemberswithReprésentantion = computeRepresentation(qualifiedFamilyWithoutParents, 2, 1 / 2)
+    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, LegalRight.percent('50%'))
+    const priviledgedMemberswithReprésentantion = computeRepresentation(qualifiedFamilyWithoutParents, Degree.Degree2, LegalRight.percent('50%'))
 
     if (représentantsExist) {
-        return family.copyWith(family.members
-            .map(member => member.copyWith({
+        return family.map(member => member.copyWith({
                 legalRights: member.isIn(parents)
-                    ? LegalRight.create(1, 4)
+                    ? LegalRight.percent('25%')
                     : priviledgedMemberswithReprésentantion.findMember(member.member_id)!.legalRights
-            })))
+            }))
     } else {
-        return family.copyWith(family.members
-            .map(member => member.copyWith({
+        return family.map(member => member.copyWith({
                 legalRights: member.isIn(parents)
-                    ? LegalRight.create(1, 4)
+                    ? LegalRight.percent('25%')
                     : priviledgedMembers.findMember(member.member_id) !== undefined
                         ? priviledgedMembers.findMember(member.member_id)!.legalRights
-                        : LegalRight.create(1, 999)
-            })))
+                        : LegalRight.create(1, 999) //status code for error
+            }))
     }
 
 }

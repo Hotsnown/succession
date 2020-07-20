@@ -7,14 +7,10 @@ import * as R from 'ramda'
 export function assignRepresentation(family: Family): Family {
 
     const assignReprésenté =
-        (family: Family) =>
-            family.copyWith(family.members.map(member =>
-                member.copyWith({ isReprésenté: member.isReprésentéIn(family) })))
+        (family: Family) => family.map(member => member.copyWith({ isReprésenté: member.isReprésentéIn(family) }))
 
     const assignReprésentant = 
-        (family: Family) =>
-            family.copyWith(family.members.map(member =>
-                member.copyWith({ isReprésentant: member.isReprésentantIn(family) })))
+        (family: Family) => family.map(member => member.copyWith({ isReprésentant: member.isReprésentantIn(family) }))
 
     return R.pipe(
         assignReprésenté,

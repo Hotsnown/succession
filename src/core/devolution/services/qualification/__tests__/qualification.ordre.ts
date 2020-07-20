@@ -1,205 +1,121 @@
-import { Ordre, findByName, findParent, findGrandParent } from '../Ordre'
-import { data } from './data'
-import { Query } from '../Interface'
-
-it('should test ordre', () => {
-
-    const graph = new Ordre(data.family.length)
-
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, findByName(data, child))
-            }
-        }
-    })
-
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
-        }
-    })
-
-    expect(findByName(data, 'Marie').attributes.ordre).toStrictEqual(2)
-    expect(findByName(data, 'Fred').attributes.ordre).toStrictEqual(3)
-    expect(findByName(data, 'Bernard').attributes.ordre).toStrictEqual(3)
-    expect(findByName(data, 'Bea').attributes.ordre).toStrictEqual(4)
-    expect(findByName(data, 'Armand').attributes.ordre).toStrictEqual(4)
-})
+import { assignOrdre } from '../Ordre'
+import { MemberConstructor, Family, Ordre } from '../../../entities'
 
 it('should test ordre 1', () => {
-    const data: Query = {
-        de_cujus: 'Bernard',
-        family: [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
-        ]
-    }
+    const data: MemberConstructor[] =
+    [
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+    ]
 
-    const graph = new Ordre(data.family.length)
+    const solution = assignOrdre(Family.create(data, "Bernard"))
 
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, findByName(data, child))
-            }
-        }
-    })
+    const bernard = solution.findMember('Bernard')
+    const fred = solution.findMember('Fred')
+    const pierre = solution.findMember('Pierre')
+    const claude = solution.findMember('Claude')
+    const alphonse = solution.findMember('Alphonse')
+    const leo = solution.findMember('Leo')
+    const romeo = solution.findMember('Romeo')
 
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Bernard'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
-        }
-    })
-
-    const target = [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre':'unassigned', 'ordre': 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Romeo","childs":[],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 1, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
-        ]
-
-    expect(data.family).toStrictEqual(target)
-
+    expect(bernard?.attributes.ordre).toStrictEqual(0)
+    expect(fred?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(pierre?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(claude?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(alphonse?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(leo?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(romeo?.attributes.ordre).toStrictEqual(Ordre.Ordre1)
 })
-
+ 
 it('should test ordre 2', () => {
-    const data: Query = {
-        de_cujus: 'Pierre',
-        family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
-        ]
-    }
+    const data: MemberConstructor[] = 
+    [
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}}
+    ]
+    
+    const solution = assignOrdre(Family.create(data, 'Fred'))
 
+    const pierre = solution.findMember('Pierre')
+    const fred = solution.findMember('Fred')
+    const marie = solution.findMember('Marie')
+    const gerard = solution.findMember('Gerard')
+    const romeo = solution.findMember('Romeo')
+    const leo = solution.findMember('Leo')
+    const guillaume = solution.findMember('Guillaume')
 
-    const graph = new Ordre(data.family.length)
-
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, findByName(data, child))
-            }
-        }
-    })
-
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Fred'), findParent(data, graph, data.de_cujus)[0], findGrandParent(data, graph, data.de_cujus)[0][0])
-        }
-    })
-
-    const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 2, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 2, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 2, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 2, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Guillaume","childs":[],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 2, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6}
-        ]
-
-    expect(data.family).toStrictEqual(target)
+    expect(pierre?.attributes.ordre).toStrictEqual(0)
+    expect(fred?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(marie?.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(gerard?.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(romeo?.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(leo?.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(guillaume?.attributes.ordre).toStrictEqual(Ordre.Ordre2)
 })
 
 it('should test ordre 3', () => {
-    const data: Query = {
-        de_cujus: 'Pierre',
-        family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
-        ]}
+    const data: MemberConstructor[] = 
+    [
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+    ]
 
-    
-        const graph = new Ordre(data.family.length)
+    const solution = assignOrdre(Family.create(data, 'Etienne'))
 
-        data.family.forEach(member => {
-            if (member.childs) {
-                for (let child of member.childs) {
-                    graph.addEdge(member, findByName(data, child))
-                }
-            }
-        })
-    
-        data.family.forEach(member => {
-            if (member.member_id !== data.de_cujus) {
-                graph.assignOrdre(
-                    findByName(data, data.de_cujus), member, 
-                    findByName(data, 'Etienne'), 
-                    findParent(data, graph, data.de_cujus)[0], 
-                    findGrandParent(data, graph, data.de_cujus)[0][0]
-                    )
-            }
-        })
+    const pierre = solution.findMember('Pierre')
+    const fred = solution.findMember('Fred')
+    const bernard = solution.findMember('Bernard')
+    const leo = solution.findMember('Leo')
+    const alphonse = solution.findMember('Alphonse')
+    const cody = solution.findMember('Cody')
+    const etienne = solution.findMember('Etienne')
 
-    const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 5},
-        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": "valid", 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 6},
-        ]
-
-        expect(data.family).toStrictEqual(target)
+    expect(pierre?.attributes.ordre).toStrictEqual(0)
+    expect(fred?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(bernard?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(leo?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(alphonse?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(cody?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(etienne?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
 
 })
 
 it.skip('should test ordre 4', () => {
-    const data: Query = {
-        de_cujus: 'Pierre',
-        family: [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        ]}
+    const data: MemberConstructor[] = 
+    [
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+    ]
 
-    const graph = new Ordre(data.family.length)
+    const solution = assignOrdre(Family.create(data, 'Claude'))
 
-    data.family.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                graph.addEdge(member, findByName(data, child))
-            }
-        }
-    })
+    const pierre = solution.findMember('Pierre')
+    const fred = solution.findMember('Fred')
+    const bernard = solution.findMember('Bernard')
+    const claude = solution.findMember('Claude')
+    const cody = solution.findMember('Cody')
 
-    data.family.forEach(member => {
-        if (member.member_id !== data.de_cujus) {
-            graph.assignOrdre(findByName(data, data.de_cujus), member, findByName(data, 'Claude'), findParent(data, graph, 'Pierre')[0], findGrandParent(data, graph, 'Pierre')[0][0])
-        }
-    })
-
-    const target = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 0},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 1},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 2},
-        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 3, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 3},
-        {"member_id": "Cody", "childs":["Vincent"], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 4, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 4, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}, "index": 4},
-        ]
-
-    expect(data.family).toStrictEqual(target)
-})
+    expect(pierre?.attributes.ordre).toStrictEqual(0)
+    expect(fred?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(bernard?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(claude?.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(cody?.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+}) 

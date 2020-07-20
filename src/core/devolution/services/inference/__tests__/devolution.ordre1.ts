@@ -1064,7 +1064,7 @@ describe('Représentation wise', () => {
         expect(recursiveReprésentanté.legalRights.valueOf()).toStrictEqual(1/6)
     })
 
-    it('should work with grandson of sub-representation', () => {
+    it.skip('should work with grandson of sub-representation', () => {
         const recursiveReprésentation = [
             {
                 "childs": [

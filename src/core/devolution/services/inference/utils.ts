@@ -5,12 +5,12 @@ import { Degree, Ordre } from '../../entities'
 
 export const isMother =
     (member: Member) => member.attributes.degre === Degree.Degree1 && 
-                        member.attributes.ordre === Ordre.Ordre2 &&
+                        member.attributes.ordre === Ordre.Ordre3 &&
                         member.member_id === 'mother' //TODO distinguer entre la branche paternelle et maternelle
 
 export const isFather =
     (member: Member) => member.attributes.degre === Degree.Degree1 && 
-                        member.attributes.ordre === Ordre.Ordre2 &&
+                        member.attributes.ordre === Ordre.Ordre3 &&
                         member.member_id === 'father' //TODO
 
 export const isAscendantOfMother =
@@ -34,5 +34,5 @@ export const isAscendantOfFather =
                 )
                 
 export function excludeInheligible(family: Family): Family {
-    return Family.create(family.members.filter(member => member.isEligibleToInherit()))
+    return family.filter(member => member.isEligibleToInherit())
 }

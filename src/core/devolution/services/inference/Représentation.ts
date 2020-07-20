@@ -1,4 +1,4 @@
-import { Family, Member, LegalRight } from '../../entities'
+import { Family, Member, LegalRight, Degree } from '../../entities'
 import { Degrees, repartitionParTête } from '.'
 /**
  *  The representatives of the successor predeceased, 
@@ -11,7 +11,7 @@ import { Degrees, repartitionParTête } from '.'
  *     are divided between his child. Repeat first step between childs if
  *     a child is deceased.
  */
-export function computeRepresentation(family: Family, degree = 1, shares = 1): Family {
+export function computeRepresentation(family: Family, degree: Degree = Degree.Degree1, shares: LegalRight = LegalRight.create(1, 1)): Family {
 
     let recursiveFamily = repartitionParTête(family, family, shares)
     for (let n=degree; n < 3; n++) {
@@ -24,35 +24,30 @@ export function computeRepresentation(family: Family, degree = 1, shares = 1): F
 function updateFamily(family: Family, membersOfCurrentDegres: Family): Family {
     const rootOfSouches = souchesIn(membersOfCurrentDegres)
     for (const rootOfsouche of rootOfSouches) { //TODO handle multiple roots
-        return Family.create(
-            family.members.map(member => updateMember(member, rootOfsouche))
-        )
+        return family.map(member => updateMember(member, rootOfsouche))
     }
     return family
 }
 
 const updateMember = (member: Member, rootOfsouche: Member) => {
-    //WARNINF, you may need to use family.findMember(rootOfSourche) 
-    //when rootOfSouche is updated before membersOfSouche to prevent race conditions
-    //TODO: it should not give legalRights to a dead représentant
-    if (member.member_id === 'SUT') {
-        return member.copyWith({ legalRights: LegalRight.create(1, 6)})
-    }
+    //TODO: it should never give legalRights to a dead représentant
     if (memberIsPartOfSouche(rootOfsouche, member)) {
-        if (member.member_id.startsWith('deadReprésentant1')) {
-            return member.copyWith({ legalRights: LegalRight.zeroRight()})
-        } else {
-            return member.copyWith({ legalRights: distributeSharesOf(rootOfsouche) })   
-        }
+        return member.copyWith({ legalRights: distributeSharesOf(rootOfsouche) })   
     } else if (memberIsRootOfSouche(member, rootOfsouche)) {
-        return member.copyWith({ legalRights: LegalRight.zeroRight()})
+        return member.copyWith({ legalRights: LegalRight.percent('0%')})
     } else {
         return member
     }
 }
 
-const distributeSharesOf = (rootOfsouche: Member): LegalRight =>
-    LegalRight.create((rootOfsouche.legalRights.valueOf() as number), rootOfsouche.childs.length)
+const distributeSharesOf = (rootOfsouche: Member): LegalRight => {
+    const legalright = rootOfsouche.legalRights.valueOf()
+    if (typeof legalright === 'string') {
+        console.error(`Souches are expecting to share ${rootOfsouche.member_id}'s legalright whereas his legalRights ${legalright}.`)
+        return LegalRight.create(999, 1)
+    } else {
+        return LegalRight.create(legalright, rootOfsouche.childs.length)}
+    }
 
 const memberIsRootOfSouche = (member: Member, rootOfsouche: Member) =>
     member.member_id === rootOfsouche.member_id

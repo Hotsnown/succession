@@ -18,7 +18,7 @@ export function getFirstAppliableOrdre (family: Family): Family {
             }
         }
     }
-    throw new Error('Should not be reachable')
+    throw new Error('No appliable Ordre has been found.')
 }
 
 export function atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre: MembersGroupedByOrdre, ordre: string) {
@@ -33,11 +33,11 @@ export function getFirstAppliableOrdreNumber (family: Family): number {
                 if (parseInt(ordre.toString()) === 2) {
                     return computePriviledgeAscendantOrdre(family)
                 }    
-                return parseInt(ordre.toString()) //TODO: handle unknown case
+                return parseInt(ordre.toString())
             }
         }
     }
-    throw new Error('Should not be reachable')
+    throw new Error('No appliable Ordre number has been found.')
 }
 
 function computePriviledgeAscendantOrdre(family: Family) {

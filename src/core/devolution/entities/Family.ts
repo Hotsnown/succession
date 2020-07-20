@@ -9,6 +9,7 @@ interface FamilyProps {
     value: {
         members: Member[],
         deCujus: Member | undefined
+        root: Member | undefined
     }
 }
 
@@ -19,7 +20,7 @@ interface FamilyProps {
  */
 export class Family extends Entity<FamilyProps> {
 
-    public static create(members: MemberConstructor[]): Family {
+    public static create(members: MemberConstructor[], rootId?: string): Family {
         if (R.isNil(members)) console.error('Validation Error : Family members can not be Nil.')
         if (members.some(member => member === undefined)) console.error('Validation Error : Family members can not be Nil.')
         if (haveDuplicates(members)) console.error('Invariant Error : Duplicates found.') //members.map(member => member.member_id))
@@ -33,7 +34,9 @@ export class Family extends Entity<FamilyProps> {
                 value: {
                     members: members.map(member => Member.create(member)),
                     deCujus: members.map(member => Member.create(member))
-                        .find(isDecujus) //TODO Better error handling
+                        .find(isDecujus), //TODO Better error handling
+                    root: rootId ? members.map(member => Member.create(member))
+                        .find(member => member.member_id === rootId) : undefined
                 }
             })
     }
@@ -43,14 +46,18 @@ export class Family extends Entity<FamilyProps> {
     }
 
     get deCujus(): Member {
-        if (this.props.value.deCujus) {
-            return this.props.value.deCujus
-        } else {
-            throw new Error('No deCujus found')
-        }
+        //TODO set deCujus even when we can't guess from degré/ordre
+        if (!this.props.value.deCujus) throw new Error('No deCujus found')
+        return this.props.value.deCujus
     }
 
-    public findMember(querriedMember: string) {
+    get root(): Member {
+        if (!this.props.value.root) throw new Error('No root found')
+        return this.props.value.root
+    }
+
+    public findMember(querriedMember: string): Member | undefined {
+        if (!this.members.find(member => member.member_id === querriedMember)) console.error(`${querriedMember} has not been found`)
         return this.members.find(member => member.member_id === querriedMember)
     }
 
@@ -63,13 +70,8 @@ export class Family extends Entity<FamilyProps> {
         return [result[0], result[1]]
     }
 
-    public copyWith(members: Member[]): Family {
-        return Family.create(members);
-    }
-
     public debug(): Family {
-        this.members.map(member => console.log({ id: member.member_id, attributes: member.attributes }))
-        return this
+        return this.map(member => {console.log({ id: member.member_id, attributes: member.attributes }); return member})
     }
 
     public findParentsOfDecujus(): Member[] {
@@ -79,12 +81,23 @@ export class Family extends Entity<FamilyProps> {
     }
 
     public getMaternals(): Family {
-        console.log(this.members.map(m => ({id: m.member_id, branch: m.attributes.branch})))
         return Family.create(this.members.filter(member => member.attributes.branch === 'maternelle'))
     }
 
     public getPaternals(): Family {
         return Family.create(this.members.filter(member => member.attributes.branch === 'paternelle'))
+    }
+
+    public indexMembers(): Family {
+        return Family.create(this.members.map((member, index) => member.copyWith({index: index})))
+    }
+
+    public map(fn: (member: Member) => Member): Family {
+        return Family.create(R.map(fn, this.members));
+    }
+
+    public filter(pred: (member: Member) => boolean): Family {
+        return Family.create(R.filter(pred, this.members))
     }
 }
 
@@ -120,7 +133,7 @@ function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]):
         return members.every(
             member => member.attributes.legalRights !== 'unassigned') &&
             members.map(member => member.attributes.legalRights as LegalRight)
-                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.zeroRight())! > LegalRight.create(1, 1)
+                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.percent('0%'))! > LegalRight.create(1, 1)
     }
 }
 

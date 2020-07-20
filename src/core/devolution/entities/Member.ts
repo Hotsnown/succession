@@ -24,11 +24,12 @@ interface MemberAttributes {
         degre: ExtendedDegree | 'unassigned';
         ordre: ExtendedOrdre | 'unassigned';
         status: Status | 'valid' | 'invalid';
-        spouse: string
-        legalRights: LegalRight | 'unassigned'
-        branch: Branch | 'unassigned'
-        isReprésenté: Représenté | 'unassigned'
-        isReprésentant: Representant | 'unassigned'
+        spouse: string;
+        legalRights: LegalRight | 'unassigned';
+        branch: Branch | 'unassigned';
+        isReprésenté: Représenté | 'unassigned';
+        isReprésentant: Representant | 'unassigned';
+        index?: number;
 }
 
 export type Branch = 'paternelle' | 'maternelle';
@@ -66,9 +67,10 @@ export class Member extends Entity<MemberProps> {
                                           member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
                             isReprésentant: member.attributes.isReprésentant === false || 
                                             member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
-                            legalRights: member.attributes.legalRights === LegalRight.zeroRight() || 
-                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' 
+                            legalRights: member.attributes.legalRights === LegalRight.ZERO() || 
+                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' ,
                                          //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
+                            index: member.attributes.index,
                         },
                     }
                 })
@@ -96,6 +98,11 @@ export class Member extends Entity<MemberProps> {
 
     get legalRights(): LegalRight | 'unassigned' {
         return this.props.value.attributes.legalRights
+    }
+
+    get index(): number {
+        if (this.props.value.attributes.index === undefined) console.error('Index has not been set')
+        return this.props.value.attributes.index as number
     }
 
     /** Create new immutable member based on an existent one.

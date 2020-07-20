@@ -41,6 +41,17 @@ export class LegalRight extends ValueObject<LegalRightProps> {
         }
     }
 
+    public static percent (percentString: string) {
+        const result = parseInt(percentString.trim().replace("%", ""))
+        const gcd: number = greatestCommonDivisorOf(result, 100);
+        return new LegalRight({
+            value: {
+                numerator: result / gcd,
+                denominator: 100 / gcd
+            }
+        })
+    }
+
     get numerator(): number {
         return this.props.value.numerator
     }
@@ -84,7 +95,7 @@ export class LegalRight extends ValueObject<LegalRightProps> {
         return LegalRight.create(this.numerator / gcd, this.denominator / gcd);
     }
 
-    public static zeroRight() {
+    public static ZERO() {
         return LegalRight.create(0, 1)
     }
 

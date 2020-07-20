@@ -10,9 +10,7 @@ export class Controller {
             throw console.error(`Invalid input: ${err}`)
         } */
 
-        const family = Family.create(
-            Family.create(rawMemberList).members.filter(member => member !== undefined)
-            )
+        const family = Family.create(rawMemberList).filter(member => member !== undefined)
 
         try {
             return main(family, deCujusId)

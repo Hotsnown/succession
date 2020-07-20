@@ -1,4 +1,4 @@
-import { Family, LegalRight, Refine, Ordre } from '../../entities'
+import { Family, LegalRight, Refine, Ordre, Member } from '../../entities'
 import { repartitionParTête, excludeInheligible } from '.'
 import { assignFenteAscendante } from '../qualification/Fente'
 
@@ -33,11 +33,11 @@ const normalStrategy: Refine = (family) => {
       //TODO: remove hard coded find
       if (!family.findMember('mother') || !family.findMember('father')) throw new Error('No mother/father found')
       return Family.create(
-         repartitionParTête(paternals, paternals, 1 / 2).members.concat(
-         repartitionParTête(maternals, maternals, 1 / 2).members.concat(
+         repartitionParTête(paternals, paternals, LegalRight.percent('50%')).members.concat(
+         repartitionParTête(maternals, maternals, LegalRight.percent('50%')).members.concat(
             [
-               family.findMember('mother')!.copyWith({legalRights: LegalRight.zeroRight()}), 
-               family.findMember('father')!.copyWith({legalRights: LegalRight.zeroRight()})
+               family.findMember('mother')!.copyWith({legalRights: LegalRight.percent('0%')}), 
+               family.findMember('father')!.copyWith({legalRights: LegalRight.percent('0%')})
             ]
          ))
       )
@@ -53,16 +53,18 @@ function noMotherSideRemaining(maternals: Family): boolean {
 }
 
 const oneParentStrategy: Refine = (family) => {
-   return family.copyWith(family.members
-      .map(member => member.isParentOfDeCujus(family)
-         ? member.copyWith({ legalRights: LegalRight.create(1, 2)})
-         : member.copyWith({ legalRights: (member.attributes.ordre === Ordre.Ordre3 && member.member_id !== 'father' && member.member_id !== 'mother') 
-            ? LegalRight.create(1, 4) 
-            : LegalRight.zeroRight()})
-            ))
+   return family.map(member => member.isParentOfDeCujus(family)
+         ? member.copyWith({ legalRights: LegalRight.percent('50%')})
+         : member.copyWith({ legalRights: isPriviledgedAscendant(member) 
+            ? LegalRight.percent('25%')
+            : LegalRight.percent('0%')})
+            )
 }
 
 const twoParentsStrategy: Refine = (family) => {
-   return family.copyWith(family.members
-      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.create(1, 2) : LegalRight.zeroRight()})))
+   return family.map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.percent('50%') : LegalRight.percent('0%') }))
+}
+
+function isPriviledgedAscendant(member: Member) {
+   return (member.attributes.ordre === Ordre.Ordre3 && member.member_id !== 'father' && member.member_id !== 'mother')
 }

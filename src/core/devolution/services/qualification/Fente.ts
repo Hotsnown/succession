@@ -4,8 +4,8 @@ import { isMother, isFather, isAscendantOfFather, isAscendantOfMother } from '..
 import * as R from 'ramda'
 
 /**
-* - A member belongs to the **maternal branch** if he is an ascendant of the de cujus' mother
-* - A member belongs to the **paternal branch** if he is an ascendant of the de cujus' father
+ * - **Branche ascendante maternelle** : Given a deCujus, a node belongs to the branche maternelle if it is the deCujus’s mother or if it is an ascendant of the deCujus’s mother.
+ * - **Branche ascendante paternelle** : Given a deCujus, a node belongs to the branche paternelle if it is the deCujus’s father or if it is an ascendant of the deCujus’s mother.
 */
 export const assignFenteAscendante: Refine = (family) => {
 
