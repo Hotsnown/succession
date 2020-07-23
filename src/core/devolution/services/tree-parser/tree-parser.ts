@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { HouseHold } from './interface'
 import { Output } from './entities'
 

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { FamilyExample } from './interface'
 
 //src: https://www.google.com/search?q=god+greek+genealogy&sxsrf=ALeKk027F_-N2TmjJngpl_0G_k5lR5U-LA:1594669185927&tbm=isch&source=iu&ictx=1&fir=Q6l_gRNPBLYq0M%252C59J1Je4QdKQJQM%252C_&vet=1&usg=AI4_-kSGyNx_g9jdD5-Obicg1XOr2f6V7w&sa=X&ved=2ahUKEwjq2fHS_crqAhUQrxoKHWUmBWMQ9QEwD3oECAkQHg&biw=1912&bih=883#imgrc=Q6l_gRNPBLYq0M

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import TableList from '../features/Explore/Illustrations';
 import ExpertSystem from '../features/ExpertSystem/ExpertSystem';
 import { Intro } from '../components/Intro/intro';

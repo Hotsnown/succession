@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "ES2019",
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,6 +21,6 @@
     "jsx": "react"
   },
   "include": [
-    "src", "jest.config.js", "server", "server.js"
+    "src/core/successionnfig.js", "server", "server.js"
   ]
 }

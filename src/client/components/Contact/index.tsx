@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import React from 'react'
 
 import './css/main.css'

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { FamilyExample } from './interface'
 
 const ordre2: FamilyExample = {

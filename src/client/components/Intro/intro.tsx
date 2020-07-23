@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import * as React from 'react';
 import logo from './topola.jpg';
 import { Card, Row, Col, Image } from 'react-bootstrap';

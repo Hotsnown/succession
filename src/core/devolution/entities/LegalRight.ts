@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { ValueObject } from '../../shared/domain/value-objects'
 
 interface LegalRightProps {
@@ -41,6 +44,26 @@ export class LegalRight extends ValueObject<LegalRightProps> {
         }
     }
 
+    public static percent(percentString: string): LegalRight {
+        const result = parseInt(percentString.trim().replace('%', ''))
+        const gcd = greatestCommonDivisorOf(result, 100)
+        return new LegalRight({
+            value: {
+                numerator: result / gcd,
+                denominator: 100 / gcd
+            }
+        })
+    }
+
+    public static zeroRight(): LegalRight {
+        return new LegalRight({
+            value: {
+                numerator: 0,
+                denominator: 1
+            }
+        })
+    }
+
     get numerator(): number {
         return this.props.value.numerator
     }
@@ -82,10 +105,6 @@ export class LegalRight extends ValueObject<LegalRightProps> {
     public reduce(): LegalRight {
         const gcd = greatestCommonDivisorOf(this.numerator, this.denominator);
         return LegalRight.create(this.numerator / gcd, this.denominator / gcd);
-    }
-
-    public static zeroRight() {
-        return LegalRight.create(0, 1)
     }
 
     public isNotZero(): boolean {

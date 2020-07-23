@@ -1,7 +1,10 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Family, Refine } from '../../entities'
-import { repartitionParTête, computeRepresentation } from '.'
+import { repartitionParTête, computeRepresentation } from '../inference'
 import { assignRepresentation } from '../qualification/Représentation'
-import { byOrdre } from './Ordres'
+import { byOrdre } from './utils/Ordres'
 
 /**
 1. les personnes du même degré ont la même part.

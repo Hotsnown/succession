@@ -1,4 +1,7 @@
-import { Member, MemberConstructor, LegalRight } from '.'
+/* prettier-ignore */
+/*eslint-disable*/
+
+import { Member, MemberConstructor, LegalRight } from '../entities'
 import * as R from 'ramda'
 import { Status } from './Member'
 import { Entity } from '../../shared/domain/entities'
@@ -9,6 +12,7 @@ interface FamilyProps {
     value: {
         members: Member[],
         deCujus: Member | undefined
+        root?: Member
     }
 }
 
@@ -19,7 +23,7 @@ interface FamilyProps {
  */
 export class Family extends Entity<FamilyProps> {
 
-    public static create(members: MemberConstructor[]): Family {
+    public static create(members: MemberConstructor[], root?: string): Family {
         if (R.isNil(members)) console.error('Validation Error : Family members can not be Nil.')
         if (members.some(member => member === undefined)) console.error('Validation Error : Family members can not be Nil.')
         if (haveDuplicates(members)) console.error('Invariant Error : Duplicates found.') //members.map(member => member.member_id))
@@ -33,7 +37,9 @@ export class Family extends Entity<FamilyProps> {
                 value: {
                     members: members.map(member => Member.create(member)),
                     deCujus: members.map(member => Member.create(member))
-                        .find(isDecujus) //TODO Better error handling
+                        .find(isDecujus), //TODO Better error handling
+                    root: members.map(member => Member.create(member))
+                        .find(member => member.member_id === root)!
                 }
             })
     }
@@ -47,6 +53,14 @@ export class Family extends Entity<FamilyProps> {
             return this.props.value.deCujus
         } else {
             throw new Error('No deCujus found')
+        }
+    }
+
+    get root(): Member {
+        if (this.props.value.root) {
+            return this.props.value.root
+        } else {
+            throw new Error('No root found')
         }
     }
 
@@ -78,13 +92,23 @@ export class Family extends Entity<FamilyProps> {
             .filter(parent => parent.isEligibleToInherit())
     }
 
-    public getMaternals(): Family {
-        console.log(this.members.map(m => ({id: m.member_id, branch: m.attributes.branch})))
-        return Family.create(this.members.filter(member => member.attributes.branch === 'maternelle'))
+    public getBranches(): { maternals: Family, paternals: Family } {
+        return {
+            maternals: Family.create(this.members.filter(member => member.attributes.branch === 'maternelle')),
+            paternals: Family.create(this.members.filter(member => member.attributes.branch === 'paternelle'))
+        }
     }
 
-    public getPaternals(): Family {
-        return Family.create(this.members.filter(member => member.attributes.branch === 'paternelle'))
+    public map(fn: (member: Member) => Member): Family {
+        return Family.create(this.members.map(fn))
+    }
+
+    public filter(pred: (member: Member) => boolean): Family {
+        return Family.create(this.members.filter(pred))
+    }
+
+    public indexMembers(): Family {
+        return Family.create(this.members.map((member, index) => member.copyWith({index: index})))
     }
 }
 

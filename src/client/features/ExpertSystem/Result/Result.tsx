@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import React from 'react'
 import { getSolution } from '../../../../core/getSolution'
 import ResultModal from './ResultModal'

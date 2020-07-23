@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Family, MemberConstructor } from './entities'
 import { main } from './services/inference/main'
 

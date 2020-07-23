@@ -1,4 +1,24 @@
-import { Query, MemberWithIndex as Member } from './Interface'
+/* prettier-ignore */
+/*eslint-disable*/
+
+import { Refine, Family, Member, TreeNode } from '../../entities'
+
+/**
+ * Each node must be annotated with the ordre attribute, witch can take any of this values: 1 | 2 | 3 | 4 | 'outsider'.
+ * - **Ordre1** : Given a deCujus, a node x belongs to ordre 1 if x is a descendant of the deCujus.
+ * - **Ordre 2** : Given a deCujus, a node x belongs to ordre 2 if the LCA of x and deCujus is the mother/father of the deCujus
+ * - **Ordre 3** : Given a deCujus, a node x belongs to ordre 3 if x is an ascendant of the deCujus.
+ * - **Ordre 4** : Given a deCujus, a node x belongs to ordre 4 if the LCA of x and the deCujus is the grandparent/grand-grand-parent of the deCujus.
+ */
+export const assignOrdre: Refine = (family) => {
+
+  const graph = new Ordre(family.members.length)
+  const indexFamilyWithRoot = Family.create(family.indexMembers().members, family.root.member_id)
+  return family
+/* 
+  graph.buildGraph(indexFamilyWithRoot)
+  return assignOrdreOf(indexFamilyWithRoot, family, graph) */
+}
 
 export class Ordre { 
     V: number
@@ -59,15 +79,15 @@ export class Ordre {
     }
 }
 
-export const findByName = (data: Query, memberId: string): Member => data.family.find(member => member.member_id === memberId)! || console.error(`${memberId} has not been found`)
-export const findById = (data: Query, index: number): Member => data.family.find(member => member.index === index)! || console.error(`${index} has not been found`)
-
+//@ts-ignore
+export const findById = (data: Family, index: number): Member => data.members.find(member => member.index === index)! || console.error(`${index} has not been found`)
+/* 
 export const findParent = (data: Query, graph: {adj: Member[][]}, nodeId: string) => Object.entries(graph.adj)
   .filter(([_, childs]: [string, Member[]]) => childs.includes(findByName(data, nodeId)))
   .map(([parent, _]: [string, Member[]]) => findById(data, parseInt(parent)))
 
 export const findGrandParent = (data: Query, graph: {adj: Member[][]},nodeId: string) => findParent(data, graph, nodeId).map(m => findParent(data, graph, m.member_id))
-
+ */
 
 function isDescendant(LCA: Member, deCujus: Member): boolean {
   return LCA.member_id === deCujus.member_id;

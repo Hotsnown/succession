@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export function renderOrdres(ordre: OrdreData) {
 
     const { descendants, ascendantsPrivilégiés, collatérauxPrivilégiés, ascendants, collatéraux } = ordre

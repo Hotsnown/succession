@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export const sum = (a: number, b: number) => a + b
 
 /*export class TreeNode {

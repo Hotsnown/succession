@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import React from 'react'
 import Tree from './Tree/Tree'
 import initialTreeValue from './initialTreeValue'

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export class TreeNode {
 
     static TreeNodeLUT: Map<number, TreeNode>  = new Map<number, TreeNode>();
@@ -13,9 +16,38 @@ export class TreeNode {
       this.label = label;
       TreeNode.TreeNodeLUT.set(this.id, this);
     }
+  
+    get root(): TreeNode {
+      return this.parent ? this.parent.root : this;
+    }
 
     public static getTreeNode(id: number) {
-        return TreeNode.TreeNodeLUT.get(id);
+      return TreeNode.TreeNodeLUT.get(id);
+    }
+
+    private get firstChild(): TreeNode | null {
+      return this.children[0];
+    }
+  
+    private get nextSibling(): TreeNode | undefined {
+      if (this.parent) return this.parent.children[this.parent.children.indexOf(this) + 1];
+    }
+
+    private get parentNext(): TreeNode | undefined {
+      if (this.parent) return this.parent.nextSibling || this.parent.parentNext;
+    }
+
+    public get next(): TreeNode | undefined {
+      return this.firstChild || this.nextSibling || this.parentNext;
+    }
+
+    public get grandParent(): TreeNode | null {
+      if (this.parent) {
+        if (this.parent.parent) {
+          return this.parent.parent
+        }
+      }
+      return null
     }
     
     public static create(_id: number, _label: string, _parent?: number): TreeNode {
@@ -79,5 +111,40 @@ export class TreeNode {
   
     public toString(): string {
       return `{id: ${this.id}, label: ${this.label}}`;
+    }
+
+    public isRoot(): boolean {
+      return this.parent === null;
+    }
+  
+    public isLeaf(): boolean {
+      return this.children.length === 0;
+    }
+  
+    public getLevel(): number {
+      if (this.isRoot()) return 0;
+      else {
+        return this.parent!.getLevel() + 1;
+      }
+    }
+
+    public isChildOf(that: this): boolean {
+      if (this.parent === that) return true;
+      if (this.parent) return this.parent.isChildOf(that);
+      return false;
+    }
+  
+    public *descendants(): Iterable<TreeNode> {
+      for (const child of this.children) {
+        yield child;
+        yield* child.descendants();
+      }
+    }
+  
+    public *ancestors(): Iterable<TreeNode> {
+      if (this.parent) {
+        yield* this.parent.ancestors();
+        yield this.parent;
+      }
     }
   }

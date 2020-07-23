@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export enum Ordre {
     Ordre1 = 1, 
     Ordre2,

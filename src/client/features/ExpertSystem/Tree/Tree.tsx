@@ -52,6 +52,7 @@ class Tree extends React.Component <TreeProps, TreeState> {
   }
 
   getNewMember(name: string, id: string) {
+    //@ts-ignore
     return { 'id': id, 'name': name, 'partners': [], 'children': [] }
   }
 

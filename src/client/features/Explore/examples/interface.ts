@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export interface FamilyExample {
     [key: string]: Member
 }

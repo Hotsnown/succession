@@ -1,7 +1,14 @@
-import { MemberWithIndex as Member } from './Interface'
+/* prettier-ignore */
+/*eslint-disable*/
+
+import { Refine, Family, Member } from '../../entities'
 
 let min_num_of_edges: number
 let edge_count: number
+
+export const assignDegré: Refine = (family) => {
+    return family
+}
 
 export class Degré {
 

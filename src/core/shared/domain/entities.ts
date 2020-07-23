@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { v4 as uuidv4 } from 'uuid';
 
 const isEntity = (v: any): v is Entity<any> => {

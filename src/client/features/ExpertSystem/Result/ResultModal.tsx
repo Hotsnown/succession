@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import React from 'react'
 import { Family } from '../../../../core/devolution/entities'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';

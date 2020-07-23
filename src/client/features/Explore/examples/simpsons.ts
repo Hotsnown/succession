@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { FamilyExample } from './interface'
 
 export const simpsonsTree: FamilyExample = {

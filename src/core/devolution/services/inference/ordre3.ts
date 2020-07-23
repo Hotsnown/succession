@@ -1,5 +1,8 @@
-import { Family, LegalRight, Refine, Ordre } from '../../entities'
-import { repartitionParTête, excludeInheligible } from '.'
+/* prettier-ignore */
+/*eslint-disable*/
+
+import { Family, LegalRight, Refine, Ordre, Member } from '../../entities'
+import { repartitionParTête, excludeInheligible } from '../inference'
 import { assignFenteAscendante } from '../qualification/Fente'
 
 /**
@@ -9,8 +12,13 @@ import { assignFenteAscendante } from '../qualification/Fente'
  * - A défaut d'ascendant dans une branche, les ascendants de l'autre branche recueillent toute la succession
  */
 export const ordreThreeStrategy: Refine = (family) => {
+
+   const parents = family
+   .filter(member => member.isParentOfDeCujus(family))
+   .filter(parent => parent.isEligibleToInherit())
+   .members
    
-   switch (family.findParentsOfDecujus().length) {
+   switch (parents.length) {
       case 1: return oneParentStrategy(family)
       case 2: return twoParentsStrategy(family)
       default: return normalStrategy(family)
@@ -19,37 +27,28 @@ export const ordreThreeStrategy: Refine = (family) => {
 
 const normalStrategy: Refine = (family) => {
 
-   //TODO: use destructuring (ex const {maternals, paternals} = assignFenteAscendante())
-   const qualification = assignFenteAscendante(family)
+   const { maternals, paternals } = assignFenteAscendante(family).getBranches()
 
-   const maternals = qualification.getMaternals()
-   const paternals = qualification.getPaternals()
-
-   if (noMotherSideRemaining(maternals)) {
+   if (nobodyRemainingIn(maternals)) {
       return repartitionParTête(paternals, family)
-   } else if (noFatherSideRemaining(paternals)) {
+   } else if (nobodyRemainingIn(paternals)) {
       return repartitionParTête(maternals, family)
    } else {
       //TODO: remove hard coded find
       if (!family.findMember('mother') || !family.findMember('father')) throw new Error('No mother/father found')
       return Family.create(
-         repartitionParTête(paternals, paternals, 1 / 2).members.concat(
-         repartitionParTête(maternals, maternals, 1 / 2).members.concat(
-            [
-               family.findMember('mother')!.copyWith({legalRights: LegalRight.zeroRight()}), 
-               family.findMember('father')!.copyWith({legalRights: LegalRight.zeroRight()})
-            ]
-         ))
+         [
+            ...repartitionParTête(paternals, paternals, LegalRight.percent('50%')).members,
+            ...repartitionParTête(maternals, maternals, LegalRight.percent('50%')).members,
+            family.findMember('mother')!.copyWith({ legalRights: LegalRight.percent('0%') }), 
+            family.findMember('father')!.copyWith({ legalRights: LegalRight.percent('0%') }),
+         ]
       )
    }
 }
 
-function noFatherSideRemaining(paternals: Family): boolean {
-   return excludeInheligible(paternals).members.length === 0
-}
-
-function noMotherSideRemaining(maternals: Family): boolean {
-   return excludeInheligible(maternals).members.length === 0
+function nobodyRemainingIn(side: Family): boolean {
+   return excludeInheligible(side).members.length === 0
 }
 
 const oneParentStrategy: Refine = (family) => {
@@ -63,6 +62,10 @@ const oneParentStrategy: Refine = (family) => {
 }
 
 const twoParentsStrategy: Refine = (family) => {
-   return family.copyWith(family.members
-      .map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.create(1, 2) : LegalRight.zeroRight()})))
+   return family.map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.percent('50%') : LegalRight.percent('0%') }))
+}
+
+//TODO: ??
+function isPriviledgedAscendant(member: Member) {
+   return (member.attributes.ordre === Ordre.Ordre3 && member.member_id !== 'father' && member.member_id !== 'mother')
 }

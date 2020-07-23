@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export enum Degree {
     Degree1 = 1,
     Degree2 = 2,

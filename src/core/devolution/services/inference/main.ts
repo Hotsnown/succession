@@ -1,5 +1,8 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Family, Member, Refine } from '../../entities'
-import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants, getFirstAppliableOrdreNumber, byOrdre } from '.'
+import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants, getFirstAppliableOrdreNumber, byOrdre } from '../inference'
 
 export function main(family: Family, deCujusId: string): Family {
     if (family.findMember('spouse')?.member_id) {

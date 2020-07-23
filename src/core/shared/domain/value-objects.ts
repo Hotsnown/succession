@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { shallowEqual } from "shallow-equal-object";
 
 interface ValueObjectProps {

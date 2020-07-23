@@ -1,4 +1,7 @@
-import { Family, LegalRight, Ordre, ExtendedOrdre, ExtendedDegree } from ".";
+/* prettier-ignore */
+/*eslint-disable*/
+
+import { Family, LegalRight, Ordre, ExtendedOrdre, ExtendedDegree } from "../entities";
 import { Entity } from "../../shared/domain/entities";
 
 import * as R from 'ramda'
@@ -29,6 +32,7 @@ interface MemberAttributes {
         branch: Branch | 'unassigned'
         isReprésenté: Représenté | 'unassigned'
         isReprésentant: Representant | 'unassigned'
+        index?: number
 }
 
 export type Branch = 'paternelle' | 'maternelle';
@@ -66,9 +70,10 @@ export class Member extends Entity<MemberProps> {
                                           member.attributes.isReprésenté ? member.attributes.isReprésenté : 'unassigned',
                             isReprésentant: member.attributes.isReprésentant === false || 
                                             member.attributes.isReprésentant ? member.attributes.isReprésentant : 'unassigned',
-                            legalRights: member.attributes.legalRights === LegalRight.zeroRight() || 
-                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' 
+                            legalRights: member.attributes.legalRights === LegalRight.percent('0%') || 
+                                         member.attributes.legalRights ? member.attributes.legalRights : 'unassigned' ,
                                          //0 is evaluated as falsy. Encapsulate it to be more concise with || ??
+                            index: member.attributes.index
                         },
                     }
                 })
@@ -80,6 +85,11 @@ export class Member extends Entity<MemberProps> {
 
     get member_id(): string {
         return this.props.value.member_id
+    }
+
+    get index(): number {
+        if (!this.props.value.attributes.index) console.error('Member\'s index is not set.')
+        return this.props.value.attributes.index as number
     }
 
     get attributes() {

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Controller } from './devolution/controller'
 import treeParser from './devolution/services/tree-parser/tree-parser'
 import { RawTree } from '../client/features/ExpertSystem/Interface'

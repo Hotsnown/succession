@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Family } from "../../entities"
 import * as R from 'ramda'
 

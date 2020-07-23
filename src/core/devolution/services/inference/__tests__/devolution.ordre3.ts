@@ -1,6 +1,6 @@
 import { Status, Family } from '../../../entities'
 import { main } from '../main'
-import { getFirstAppliableOrdreNumber } from '../Ordres'
+import { getFirstAppliableOrdreNumber } from '../utils/Ordres'
 
 describe('test parents', () => {
     it('should give equal shares to two valid parents', () => {

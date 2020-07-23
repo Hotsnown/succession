@@ -1,6 +1,6 @@
 import { Status, Family } from '../../../entities'
 import { main } from '../main'
-import { getFirstAppliableOrdreNumber } from '../Ordres'
+import { getFirstAppliableOrdreNumber } from '../utils/Ordres'
 
 describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (ne pas oublier la représentation)', () =>  {
     it('should give 50% to the remaining parent', () => {

@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { FamilyExample } from "./interface";
 
 const source = "https://2.bp.blogspot.com/-SC40puN2t4w/Uhu9IZ4IHdI/AAAAAAAABjA/CwovRpC7LFM/s1600/Louis%20xiv.jpg"

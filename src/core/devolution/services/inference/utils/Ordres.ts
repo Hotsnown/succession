@@ -21,7 +21,7 @@ export function getFirstAppliableOrdre (family: Family): Family {
             }
         }
     }
-    throw new Error('Should not be reachable')
+    throw console.error('Should not be reachable')
 }
 
 export function atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre: MembersGroupedByOrdre, ordre: string) {
@@ -40,7 +40,7 @@ export function getFirstAppliableOrdreNumber (family: Family): number {
             }
         }
     }
-    throw new Error('Should not be reachable')
+    throw console.error('Should not be reachable')
 }
 
 function computePriviledgeAscendantOrdre(family: Family) {

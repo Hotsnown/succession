@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 export class Output {
     de_cujus: string
     family: Family[]

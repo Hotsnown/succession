@@ -1,3 +1,6 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 const simpsonsTree = {
     abe: {
         id: "abe",
