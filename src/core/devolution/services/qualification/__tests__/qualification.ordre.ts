@@ -4,7 +4,7 @@ import { MemberConstructor, Family } from '../../../entities'
 
 it('should test ordre 1', () => {
     const data: MemberConstructor[] =  [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
@@ -13,7 +13,7 @@ it('should test ordre 1', () => {
         {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignOrdre(Family.create(data))
+    const solution = assignOrdre(Family.create(data, "Bernard"))
 
     const bernard = solution.findMember('Bernard')!
     const fred = solution.findMember('Fred')!
@@ -23,18 +23,18 @@ it('should test ordre 1', () => {
     const leo = solution.findMember('Leo')!
     const romeo = solution.findMember('Romeo')!
 
-    expect(bernard.attributes.ordre).toStrictEqual(0)!
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
-    expect(pierre.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
-    expect(claude.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
-    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
-    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre1)!
+    //expect(bernard.attributes.ordre).toStrictEqual(0)
+    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(pierre.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(claude.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre1)
 })
 
 it('should test ordre 2', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
@@ -43,9 +43,9 @@ it('should test ordre 2', () => {
         {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}}
         ]
 
-    const solution = assignOrdre(Family.create(data))
+    const solution = assignOrdre(Family.create(data, "Fred"))
 
-    const bernard = solution.findMember('Bernard')!
+    const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
     const marie = solution.findMember('Marie')!
     const gerard = solution.findMember('Gerard')!
@@ -53,7 +53,7 @@ it('should test ordre 2', () => {
     const leo = solution.findMember('Leo')!
     const guillaume = solution.findMember('Guillaume')!
 
-    expect(bernard.attributes.ordre).toStrictEqual(0)!
+    expect(pierre.attributes.ordre).toStrictEqual(0)!
     expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
     expect(marie.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
     expect(gerard.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
@@ -64,7 +64,7 @@ it('should test ordre 2', () => {
 
 it('should test ordre 3', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
@@ -73,7 +73,7 @@ it('should test ordre 3', () => {
         {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignOrdre(Family.create(data))
+    const solution = assignOrdre(Family.create(data, "Etienne"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
@@ -92,9 +92,9 @@ it('should test ordre 3', () => {
     expect(etienne.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
 })
 
-it.skip('should test ordre 4', () => {
+it('should test ordre 4', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
@@ -103,7 +103,7 @@ it.skip('should test ordre 4', () => {
         ]
 
 
-    const solution = assignOrdre(Family.create(data))
+    const solution = assignOrdre(Family.create(data, "Claude"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!

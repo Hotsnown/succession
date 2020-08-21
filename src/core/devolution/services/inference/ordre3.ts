@@ -1,8 +1,9 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Family, LegalRight, Refine, Ordre, Member } from '../../entities'
+import { Family, LegalRight, Refine } from '../../entities'
 import { extractFente } from './utils/Fente'
+import { repartitionParTête } from './utils/RépartitionParTête'
 
 /**
  * - Si il existe un ascendant dans chaque ligne (mère, père ou autre), chaque ligne récupère la moitié de la succession.
@@ -12,36 +13,44 @@ import { extractFente } from './utils/Fente'
  */
 export const ordreThreeStrategy: Refine = (family) => {
 
+
+   const familyWithoutParents = family.filter(member => !member.isParentOfDeCujus(family) || !member.isEligibleToInherit())
+
    const parents = family
-   .filter(member => member.isParentOfDeCujus(family))
-   .filter(parent => parent.isEligibleToInherit())
-   .members
+      .filter(member => member.isParentOfDeCujus(family) && member.isEligibleToInherit())
+      .members
+
+
+   const oneParentStrategy: Refine = (family) => {
+      return Family.create([
+         ...parents.map(member => member.copyWith({legalRights: LegalRight.percent('50%')})),
+         ...repartitionParTête(familyWithoutParents, familyWithoutParents, LegalRight.percent('50%')).members
+         
+      ])
+   }
+
+   const twoParentsStrategy: Refine = (family) => {
+      return Family.create(
+         [
+            ...parents.map(member => member.copyWith({legalRights: LegalRight.percent('50%')})),
+            ...familyWithoutParents.map(member => member.copyWith({legalRights: LegalRight.percent('0%')})).members,
+         ]
+      )
+   }
+
+   const normalStrategy: Refine = (family) => {
+      return Family.create(
+         extractFente(family).members.concat(
+         [
+            ...family.findParentsOf(family.deCujus.member_id).map(member => member.copyWith({legalRights: LegalRight.percent('0%')}))
+         ])
+      )
+   }
    
    switch (parents.length) {
+      case 0: return normalStrategy(family)
       case 1: return oneParentStrategy(family)
       case 2: return twoParentsStrategy(family)
-      default: return normalStrategy(family)
-   }
-}
-
-const oneParentStrategy: Refine = (family) => {
-   return family.copyWith(family.members
-      .map(member => member.isParentOfDeCujus(family)
-         ? member.copyWith({ legalRights: LegalRight.percent('50%')})
-         : member.copyWith({ legalRights: (member.attributes.ordre === Ordre.Ordre3 && member.member_id !== 'father' && member.member_id !== 'mother') 
-            ? LegalRight.percent('25%') 
-            : LegalRight.percent('0%')})
-            ))
-}
-
-const twoParentsStrategy: Refine = (family) => {
-   return family.map(member => member.copyWith({ legalRights: member.isParentOfDeCujus(family) ? LegalRight.percent('50%') : LegalRight.percent('0%') }))
-}
-
-const normalStrategy: Refine = (family) => {
-   return Family.create(extractFente(family).members.concat(
-      [
-         family.findMember('mother')!.copyWith({ legalRights: LegalRight.percent('0%') }), 
-         family.findMember('father')!.copyWith({ legalRights: LegalRight.percent('0%') }),
-      ]))
+      default: throw new Error('Should not be reachable')
+   }  
 }

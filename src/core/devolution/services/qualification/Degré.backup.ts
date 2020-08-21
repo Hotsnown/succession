@@ -1,21 +1,13 @@
+/* prettier-ignore */
+/*eslint-disable*/
+
 import { Refine, Family, Member } from '../../entities'
 
 let min_num_of_edges: number
 let edge_count: number
 
-/**
- * Given the De Cujus and v, v’s degree is the minimum number of edges between the De Cujus and v.
- */
-export const assignDegré: Refine = (family) =>  {
-
-    const graph = new Degré(family.members.length)
-
-    const indexFamily = family.indexMembers()
-
-    buildGraph(indexFamily, graph)
-    assignDegréOf(indexFamily, graph)
-
-    return indexFamily
+export const assignDegré: Refine = (family) => {
+    return family
 }
 
 export class Degré {
@@ -56,29 +48,6 @@ export class Degré {
             default: {console.error(`Error: ${nodeToQualify.member_id} => ${min_num_of_edges} minimum number of edges`); return nodeToQualify}
         }
     }
-}
-
-function assignDegréOf(indexFamily: Family, graph: Degré) {
-    indexFamily.members.forEach(member => {
-        if (member.member_id !== indexFamily.deCujus.member_id) {
-            graph.assignDegré(indexFamily.deCujus, member)
-        }
-    })
-}
-
-function buildGraph(indexFamily: Family, graph: Degré) {
-    indexFamily.members.forEach(member => {
-        if (member.childs) {
-            for (let child of member.childs) {
-                if (indexFamily.findMember(child)) {
-                    graph.addEdge(member, indexFamily.findMember(child) as Member)
-                }
-                else {
-                    console.error(`${child} has not been found.`)
-                }
-            }
-        }
-    })
 }
 
 function minEdgeDFSUtil(graph: Degré, visited: boolean[], src: Member, des: Member): void {

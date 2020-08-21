@@ -1,7 +1,4 @@
-/* prettier-ignore */
-/*eslint-disable*/
-
-import { Refine, Family, Member, TreeNode } from '../../entities'
+import { Refine, Family, Member, MemberConstructor } from '../../entities'
 
 /**
  * Each node must be annotated with the ordre attribute, witch can take any of this values: 1 | 2 | 3 | 4 | 'outsider'.
@@ -14,13 +11,12 @@ export const assignOrdre: Refine = (family) => {
 
   const graph = new Ordre(family.members.length)
   const indexFamilyWithRoot = Family.create(family.indexMembers().members, family.root.member_id)
-  return family
-/* 
+
   graph.buildGraph(indexFamilyWithRoot)
-  return assignOrdreOf(indexFamilyWithRoot, family, graph) */
+  return assignOrdreOf(indexFamilyWithRoot, family, graph)
 }
 
-export class Ordre { 
+class Ordre { 
     V: number
     adj: Member[][]
     
@@ -34,6 +30,21 @@ export class Ordre {
 
     addEdge(src: Member, des: Member): void { 
         this.adj[src.index].push(des); 
+    }
+
+    buildGraph(family: Family) {
+      family.members.forEach(member => {
+        if (member.childs) {
+          for (let child of member.childs) {
+            if (!family.findMember(child)) {
+              console.error(`${child} has not been found`)
+            }
+            else {
+              this.addEdge(member, family.findMember(child) as Member)
+            }
+          }
+        }
+      })
     }
 
     assignOrdre(deCujus: Member, nodeToQualify: Member, root: Member, parent: Member, grandParent: Member): Member {
@@ -67,13 +78,13 @@ export class Ordre {
 
       for (let iter of this.adj[root.index]) {
         const res = this.findLowestCommonAncestor(deCujus, nodeToQualify, iter);
-        if (res !== null) {
+        if (res) {
           count++;
           temp = res;
         }
       }
       
-      if (count == 2) return root;
+      if (count === 2) return root;
         
       return temp as Member;
     }
@@ -81,13 +92,31 @@ export class Ordre {
 
 //@ts-ignore
 export const findById = (data: Family, index: number): Member => data.members.find(member => member.index === index)! || console.error(`${index} has not been found`)
-/* 
-export const findParent = (data: Query, graph: {adj: Member[][]}, nodeId: string) => Object.entries(graph.adj)
-  .filter(([_, childs]: [string, Member[]]) => childs.includes(findByName(data, nodeId)))
+
+export const findParent = (data: Family, graph: {adj: Member[][]}, nodeId: string) => Object.entries(graph.adj)
+  .filter(([_, childs]: [string, Member[]]) => childs.includes(data.findMember(nodeId) as Member))
   .map(([parent, _]: [string, Member[]]) => findById(data, parseInt(parent)))
 
-export const findGrandParent = (data: Query, graph: {adj: Member[][]},nodeId: string) => findParent(data, graph, nodeId).map(m => findParent(data, graph, m.member_id))
- */
+export const findGrandParent = (data: Family, graph: {adj: Member[][]},nodeId: string) => findParent(data, graph, nodeId).map(m => findParent(data, graph, m.member_id))
+
+function assignOrdreOf(indexFamily: Family, family: Family, graph: Ordre): Family {
+  return indexFamily.map(member => {
+    if (member.member_id !== indexFamily.deCujus.member_id) {
+      let grandParent = null as unknown as Member
+      let parent = null as unknown as Member
+      let deCujus = family.deCujus.member_id
+      if (findParent(indexFamily, graph, deCujus)) {
+        parent = findParent(indexFamily, graph, deCujus)[0]
+      }
+      if (findGrandParent(indexFamily, graph, deCujus)[0]) {
+        grandParent = findGrandParent(indexFamily, graph, deCujus)[0][0]
+      }
+      return graph.assignOrdre(indexFamily.deCujus, member, indexFamily.root, parent, grandParent)
+    } else {
+      return member
+    }
+  })
+}
 
 function isDescendant(LCA: Member, deCujus: Member): boolean {
   return LCA.member_id === deCujus.member_id;

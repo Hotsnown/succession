@@ -280,7 +280,9 @@ it('should work with deceased descendants', () => {
             "member_id": "grandParent"
         },
         {
-            "childs": [],
+            "childs": [
+                "représentant"
+            ],
             "attributes": {
                 "degre": 1,
                 "ordre": 1,
@@ -344,10 +346,10 @@ it('should work with deceased descendants', () => {
 })
 
 it('should work with representation', () => {
-    const withDeceasedDescendantsMembers = [
+    const withReprésentation = [
         {
             "childs": [
-                "deceasedChild",
+                "représenté",
                 "child",
             ],
             "attributes": {
@@ -392,7 +394,7 @@ it('should work with representation', () => {
                 "isReprésentant": "unassigned" as 'unassigned',
                 "isReprésenté": "unassigned" as 'unassigned',
             },
-            "member_id": "deceasedChild"
+            "member_id": "représenté"
         },
         {
             "childs": [],
@@ -424,7 +426,7 @@ it('should work with representation', () => {
         },
         {
             "childs": [
-                "deceasedChild",
+                "représenté",
                 "child",
             ],
             "attributes": {
@@ -441,20 +443,20 @@ it('should work with representation', () => {
         }
     ]
 
-    const family = Family.create(withDeceasedDescendantsMembers)
+    const family = Family.create(withReprésentation)
 
     const solution = main(family, 'deCujus')
 
     const child = solution.findMember("child")!
     const spouse = solution.findMember("spouse")!
-    const deceasedChild = solution.findMember("deceasedChild")!
+    const représenté = solution.findMember("représenté")!
     const deCujus = solution.findMember('deCujus')!
     const grandParent = solution.findMember('grandParent')!
     const representant = solution.findMember('representant')!
 
     expect(spouse.legalRights.valueOf()).toStrictEqual(1/4)
     expect(child.legalRights.valueOf()).toStrictEqual(3/8)
-    expect(deceasedChild.legalRights.valueOf()).toStrictEqual(0)
+    expect(représenté.legalRights.valueOf()).toStrictEqual(0)
     expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
     expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
     expect(representant.legalRights.valueOf()).toStrictEqual(3/8)

@@ -1,9 +1,9 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Family, Refine } from '../../entities'
-import { repartitionParTête } from '../inference'
+import { Refine } from '../../entities'
+import { extractFente } from './utils/Fente'
 
 export const ordreFourStrategy: Refine = (family) => {
-    return repartitionParTête(family, family)
+    return extractFente(family)
  }
