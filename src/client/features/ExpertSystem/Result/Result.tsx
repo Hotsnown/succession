@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import React from 'react'
-import { getSolution } from '../../../../core/getSolution'
+import { getSolution } from '../../../../core/devolution/getSolution'
 import ResultModal from './ResultModal'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'

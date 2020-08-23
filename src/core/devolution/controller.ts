@@ -6,7 +6,7 @@ import { main } from './services/inference/main'
 
 export class Controller {
 
-    getDevolution(rawMemberList: MemberConstructor[], deCujusId: string): Family {
+    getDevolution(rawMemberList: MemberConstructor[]): Family {
 
 /*         if (!isValidMemberList(rawMemberList)) {
             const err = rawMemberList.filter(member => !isValidMember(member)).map(member => member.member_id); 
@@ -18,7 +18,7 @@ export class Controller {
             )
 
         try {
-            return main(family, deCujusId)
+            return main(family)
         } catch(e) {
             console.error(e)
             family.debug()

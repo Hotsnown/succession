@@ -7,6 +7,8 @@ import Footer from "../components/Footer/Footer";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
+import { Documentation } from 'publicodes'
+import { engine } from '../../core/explain/main'
 
 interface MainProps {
 
@@ -61,6 +63,9 @@ class Main extends React.Component<MainProps, MainState> {
                 />
               );
             })}
+             <Route>
+                <Documentation language={'fr'} engine={engine} documentationPath={'/documentation'} />
+            </Route>
           </Switch>
           <Footer fluid />
         </div>

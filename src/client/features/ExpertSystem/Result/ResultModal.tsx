@@ -4,6 +4,7 @@
 import React from 'react'
 import { Family } from '../../../../core/devolution/entities'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { MesDépenses } from '../Explain/devolution'
 
 interface IProps {
     results: Family
@@ -26,6 +27,7 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
                     .map((member, index) =>
                     <li key={index}>{member.member_id} : {member.attributes.legalRights.toString()}</li>)}
             </ul>
+            <MesDépenses/>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>Explain me!</Button>{' '}
