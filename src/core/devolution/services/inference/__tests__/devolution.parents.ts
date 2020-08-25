@@ -1,4 +1,4 @@
-import { Status } from '../../../entities/index'
+import { Status, MemberConstructor } from '../../../entities/index'
 import { Family } from '../../../entities/Family'
 import { getFirstAppliableOrdreNumber, byOrdre } from '..'
 
@@ -16,11 +16,11 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
                 "isReprésentant": "unassigned" as 'unassigned',
                 "isReprésenté": "unassigned" as 'unassigned',
             },
-            "member_id": "de_cujus"
+            "member_id": "deCujus"
         },
         {
             "childs": [
-                "de_cujus",
+                "deCujus",
                 "siblingOfDecujus"
             ],
             "attributes": {
@@ -51,7 +51,7 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
         },
         {
             "childs": [
-                "de_cujus"
+                "deCujus"
             ],
             "attributes": {
                 "degre": 1,
@@ -99,7 +99,7 @@ it('should return ordre 3 when there is no priviledged collateral', () => {
         }
     ]
 
-    const family = Family.create(noPriviledgeCollateral)
+    const family = Family.create(noPriviledgeCollateral, 'deCujus')
     const ordre3 = getFirstAppliableOrdreNumber(family)
 
     expect(ordre3).toStrictEqual(3)
@@ -119,11 +119,11 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
                 "isReprésentant": "unassigned" as 'unassigned',
                 "isReprésenté": "unassigned" as 'unassigned',
             },
-            "member_id": "de_cujus"
+            "member_id": "deCujus"
         },
         {
             "childs": [
-                "de_cujus",
+                "deCujus",
                 "siblingOfDecujus"
             ],
             "attributes": {
@@ -154,7 +154,7 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
         },
         {
             "childs": [
-                "de_cujus"
+                "deCujus"
             ],
             "attributes": {
                 "degre": 1,
@@ -202,18 +202,19 @@ it('should return ordre 2 when there is priviledged collaterals', () => {
         }
     ]
 
-    const family = Family.create(noPriviledgeCollateral)
+    const family = Family.create(noPriviledgeCollateral, 'deCujus')
     const ordre2 = getFirstAppliableOrdreNumber(family)
 
     expect(ordre2).toStrictEqual(2)
 })
 
 it('should test ordre on real attributes', () => {
-    const test = [
+    const test: MemberConstructor[] = [
         {
           "childs": [],
           "attributes": {
             "status": Status.Deceased,
+            "ordre": 'unassigned',
             'degre': 'unassigned',
             "spouse": "",
             "legalRights": "unassigned" as 'unassigned',
@@ -227,6 +228,7 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "status": Status.Valid,
+            "ordre": 'unassigned',
             'degre': 'unassigned',
             "spouse": "",
             "legalRights": "unassigned" as 'unassigned',
@@ -254,6 +256,7 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             'degre': 'unassigned',
+            "ordre": 'unassigned',
             "status": Status.Valid,
             "spouse": "",
             "legalRights": "unassigned" as 'unassigned',
@@ -280,6 +283,7 @@ it('should test ordre on real attributes', () => {
         {
           "childs": [],
           "attributes": {
+            "ordre": 'unassigned',
             "degre": 'unassigned',
             "status": Status.Valid,
             "spouse": "",
@@ -324,6 +328,7 @@ it('should test ordre on real attributes', () => {
           "childs": [],
           "attributes": {
             "degre": 'unassigned',
+            "ordre": 'unassigned',
             "status": Status.Deceased,
             "spouse": "",
             "legalRights": "unassigned" as 'unassigned',
@@ -383,7 +388,6 @@ it('should test ordre on real attributes', () => {
           "member_id": "abe",
         }
       ]
-      //@ts-ignore
-      const sut = Family.create(test)
+      const sut = Family.create(test, 'deCujus')
       expect(sut).toBeTruthy()
 })

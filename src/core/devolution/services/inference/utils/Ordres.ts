@@ -1,7 +1,6 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { ValueObject } from '../../../../shared/domain/value-objects'
 import { Member, Family, Ordre } from '../../../entities';
 import * as R from 'ramda'
 
@@ -17,14 +16,14 @@ export function getFirstAppliableOrdre (family: Family): Family {
     for (const ordre in ordres) {
         if (membersGroupedByOrdre[ordre] !== undefined) {
             if(atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre, ordre)) {
-                return Family.create(membersGroupedByOrdre[ordre])
+                return Family.create(membersGroupedByOrdre[ordre], family.deCujus.member_id)
             }
         }
     }
-    throw console.error('Should not be reachable')
+    console.error('Should not be reachable')
 }
 
-export function atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre: MembersGroupedByOrdre, ordre: string) {
+export function atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre: MembersGroupedByOrdre, ordre: string): boolean {
     return membersGroupedByOrdre[ordre].some(member => member.isEligibleToInherit());
 }
 
@@ -33,26 +32,26 @@ export function getFirstAppliableOrdreNumber (family: Family): number {
     for (const ordre of ordres) {
         if (membersGroupedByOrdre[ordre] !== undefined) {
             if(atLeastOneMemberEligibleToInheritIn(membersGroupedByOrdre, ordre.toString())) {
-                if (parseInt(ordre.toString()) === 2) {
+                if (parseInt(ordre.toString()) === Ordre.Ordre2) {
                     return computePriviledgeAscendantOrdre(family)
                 }    
                 return parseInt(ordre.toString()) //TODO: handle unknown case
             }
         }
     }
-    throw console.error('Should not be reachable')
+    console.error('Should not be reachable')
 }
 
-function computePriviledgeAscendantOrdre(family: Family) {
+function computePriviledgeAscendantOrdre(family: Family): Ordre.Ordre2 | Ordre.Ordre3 {
     const parents = family.findParentsOf(family.deCujus.member_id)
     if (noPriviledgedCollateral(family, parents)) {
-        return 3
+        return Ordre.Ordre3
     } else {
-        return 2
+        return Ordre.Ordre2
     }
 }
 
-function noPriviledgedCollateral(family: Family, parents: [Member, Member]) {
+function noPriviledgedCollateral(family: Family, parents: [Member, Member]): boolean {
     //potential bug: it may filter out priviledged collaterals
     return family.members
         .filter(member => !parents.includes(member))

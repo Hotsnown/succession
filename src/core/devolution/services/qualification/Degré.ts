@@ -12,6 +12,9 @@ export const assignDegré: Refine = (family) =>  {
 
     const indexFamily = family.indexMembers()
 
+    indexFamily.deCujus.attributes.degre = 0
+    indexFamily.findMember(indexFamily.deCujus.member_id).attributes.degre = 0
+
     buildGraph(indexFamily, graph)
     assignDegréOf(indexFamily, graph)
 
@@ -43,7 +46,9 @@ export class Degré {
 
         minEdgeDFSUtil(this, visited, deCujus, nodeToQualify);
 
-        deCujus.attributes.degre = 0
+        if (nodeToQualify.member_id === deCujus.member_id) {
+            nodeToQualify.attributes.degre = 0; return nodeToQualify
+        }
 
         switch(min_num_of_edges) {
             case 1: {nodeToQualify.attributes.degre = 1; return nodeToQualify}

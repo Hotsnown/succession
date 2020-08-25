@@ -29,19 +29,18 @@ export default treeParser
 
 function parseNode(facts: Output) {
     return (node: any) => {
-        let parent = node[0]
         let houseHold = node[1].children
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
             if (hasMultipleChildren(houseHold)) {
-                extractMultipleChildren(getChildrenString(houseHold), facts, parent, node[1].status)
+                extractMultipleChildren(getChildrenString(houseHold), facts, node[1].id, node[1].status)
             }
             else {
                 getChildrenArray(houseHold)
-                    .map(extractSingleChildren(facts, parent, node[1].status))
+                    .map(extractSingleChildren(facts, node[1].id, node[1].status))
             }
         }
         else {
-            facts.appendFamily(parent, [], node[1].status)
+            facts.appendFamily(node[1].id, [], node[1].status)
         }
     }
 }

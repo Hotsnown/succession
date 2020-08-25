@@ -13,7 +13,7 @@ it('should test ordre 1', () => {
         {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignOrdre(Family.create(data, "Bernard"))
+    const solution = assignOrdre(Family.create(data, "Bernard", "Bernard"))
 
     const bernard = solution.findMember('Bernard')!
     const fred = solution.findMember('Fred')!
@@ -23,7 +23,7 @@ it('should test ordre 1', () => {
     const leo = solution.findMember('Leo')!
     const romeo = solution.findMember('Romeo')!
 
-    //expect(bernard.attributes.ordre).toStrictEqual(0)
+    expect(bernard.attributes.ordre).toStrictEqual(0)
     expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre1)
     expect(pierre.attributes.ordre).toStrictEqual(Ordre.Ordre1)
     expect(claude.attributes.ordre).toStrictEqual(Ordre.Ordre1)
@@ -43,7 +43,7 @@ it('should test ordre 2', () => {
         {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}}
         ]
 
-    const solution = assignOrdre(Family.create(data, "Fred"))
+    const solution = assignOrdre(Family.create(data, "Pierre", "Fred"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
@@ -53,13 +53,13 @@ it('should test ordre 2', () => {
     const leo = solution.findMember('Leo')!
     const guillaume = solution.findMember('Guillaume')!
 
-    expect(pierre.attributes.ordre).toStrictEqual(0)!
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(marie.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
-    expect(gerard.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
-    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
-    expect(guillaume.attributes.ordre).toStrictEqual(Ordre.Ordre2)!
+    expect(pierre.attributes.ordre).toStrictEqual(0)
+    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(marie.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(gerard.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(guillaume.attributes.ordre).toStrictEqual(Ordre.Ordre2)
 })
 
 it('should test ordre 3', () => {
@@ -73,7 +73,7 @@ it('should test ordre 3', () => {
         {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignOrdre(Family.create(data, "Etienne"))
+    const solution = assignOrdre(Family.create(data, "Pierre", "Etienne"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
@@ -83,13 +83,13 @@ it('should test ordre 3', () => {
     const cody = solution.findMember('Cody')!
     const etienne = solution.findMember('Etienne')!
 
-    expect(pierre.attributes.ordre).toStrictEqual(0)!
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(bernard.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(cody.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
-    expect(etienne.attributes.ordre).toStrictEqual(Ordre.Ordre3)!
+    expect(pierre.attributes.ordre).toStrictEqual(0)
+    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(bernard.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(cody.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(etienne.attributes.ordre).toStrictEqual(Ordre.Ordre3)
 })
 
 it('should test ordre 4', () => {
@@ -98,12 +98,11 @@ it('should test ordre 4', () => {
         {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id": "Cody", "childs":["Vincent"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-
-    const solution = assignOrdre(Family.create(data, "Claude"))
+    const solution = assignOrdre(Family.create(data, "Pierre", "Claude"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!

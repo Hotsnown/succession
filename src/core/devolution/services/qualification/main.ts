@@ -8,7 +8,7 @@ import { assignFenteAscendante } from "./Fente";
 import { Refine } from '../../entities'
 import * as R from 'ramda'
 
-export const main: Refine = (family) => {
+export const getQualification: Refine = (family) => {
     return R.pipe(
         assignDegré,
         assignOrdre,

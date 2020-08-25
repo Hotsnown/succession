@@ -15,7 +15,7 @@ it('', () => {
         {"member_id": "maternal_cousin", "childs":[], "attributes": {"status": 'valid', "degre":4, "ordre": 4, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
     ]
 
-    const solution = assignFenteCollaterale(Family.create(family))
+    const solution = assignFenteCollaterale(Family.create(family, 'deCujus', 'maternal_grand_father'))
     const deCujus = solution.findMember('deCujus')
     const mother = solution.findMember('mother')
     const maternal_grand_mother = solution.findMember('maternal_grand_mother')

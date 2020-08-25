@@ -1,29 +1,63 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Controller } from './controller'
 import treeParser from './services/tree-parser/tree-parser'
-import { RawTree } from '../../client/features/ExpertSystem/Interface'
-import { main } from './services/qualification/main'
-import { Family } from './entities'
+import { getQualification } from './services/qualification/main'
+import { getDevolution } from './services/inference/main'
+import { Family, MemberConstructor } from './entities'
+import { Output } from './services/tree-parser/entities'
 
-export function getSolution (memberList: RawTree, deCujusId: string, rootId: string): Family {
+import * as R from 'ramda'
+
+export function getSolution (memberListFromUI: any, deCujusId: string, rootId: string): Family {
     
-    if (memberList.id === undefined) {
-        console.error("Error: member list is undefined")
-        return (Family.create([]))
+    if (memberListFromUI.length === undefined) {
+        console.error("Error: member list data from UI is undefined")
+        return (Family.create([], ''))
     }
 
-    const devolution = new Controller()
+    const res = treeParser(memberListFromUI, deCujusId)
 
-    const getQualification = (data: RawTree, deCujus: string, rootId: string) => {
-        const res = treeParser(data, deCujus)
-        res.family.forEach((o, index) => o.index = index)
-        //@ts-ignore
-        const family = Family.create(res.family, rootId)
-        console.log(family)
-        return main(family)
+    const rawData: MemberConstructor[] = setDefaultAttributes(res)
+
+    const family = Family.create(
+        Family.create(rawData, deCujusId, rootId).members.filter(member => member !== undefined),
+        deCujusId, 
+        rootId
+        )
+
+    //TODO convert status 'invalid' | 'valid' to Status here and not in member's constructor
+    
+    try {
+        return R.pipe(
+            getQualification,
+            getDevolution,
+        )(family)
+    } catch (e) {
+        console.error(e)
+        family.debug()
+        return family
     }
+    
+}
 
-    return devolution.getDevolution(getQualification(memberList, deCujusId, rootId).members)
+function setDefaultAttributes(res: Output) {
+    const rawData: MemberConstructor[] = []
+    for (let rawMember of res.family) {
+        rawData.push({
+            member_id: rawMember.member_id,
+            attributes: {
+                status: rawMember.attributes.status,
+                degre: 'unassigned',
+                ordre: 'unassigned',
+                spouse: rawMember.attributes.spouse,
+                legalRights: 'unassigned',
+                branch: 'unassigned',
+                isReprésenté: 'unassigned',
+                isReprésentant: 'unassigned'
+            },
+            childs: rawMember.childs
+        })
+    }
+    return rawData
 }

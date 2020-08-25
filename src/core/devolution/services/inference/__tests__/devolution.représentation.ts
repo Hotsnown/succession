@@ -67,7 +67,7 @@ it('should not give to the représentant the same right as the other members whe
         },
     ]
 
-    const family = Family.create(oneRepresentantOneValid)
+    const family = Family.create(oneRepresentantOneValid, 'abe')
     const qualification = assignRepresentation(family)
     const solution = computeRepresentation(qualification)
 

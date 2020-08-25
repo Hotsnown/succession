@@ -15,11 +15,11 @@ it('should find both fente', () => {
                 "isReprésentant": "unassigned" as 'unassigned',
                 "isReprésenté": "unassigned" as 'unassigned',
             },
-            "member_id": "de_cujus"
+            "member_id": "deCujus"
         },
         {
             "childs": [
-                "de_cujus",
+                "deCujus",
             ],
             "attributes": {
                 "degre": 1,
@@ -35,7 +35,7 @@ it('should find both fente', () => {
         },
         {
             "childs": [
-                "de_cujus"
+                "deCujus"
             ],
             "attributes": {
                 "degre": 1,
@@ -195,7 +195,7 @@ it('should find both fente', () => {
         }
     ]
 
-    const family = Family.create(existingFente)
+    const family = Family.create(existingFente, 'deCujus')
     const solution = assignFenteAscendante(family)
 
     const father = solution.findMember('father')!

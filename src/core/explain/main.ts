@@ -1,6 +1,5 @@
 import Engine, { formatValue } from 'publicodes'
 
-// On définit une liste de règles publicodes
 const rules = `
 droits de pierre:
   formule:

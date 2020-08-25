@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import TableList from '../features/Explore/Illustrations';
-import ExpertSystem from '../features/ExpertSystem/ExpertSystem';
+import ExpertSystem from '../features/ExpertSystem';
 import { Intro } from '../components/Intro/intro';
 import { AboutUs } from '../components/AboutUs/aboutUs';
 import { Contact } from '../components/Contact/index'

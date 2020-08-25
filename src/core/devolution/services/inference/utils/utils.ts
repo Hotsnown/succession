@@ -36,6 +36,6 @@ export const isAscendantOfFather =
                 .map(ascendantOfFather => family.findMember(ascendantOfFather.member_id)!)
                 )
                 
-export function excludeInheligible(family: Family): Family {
-    return Family.create(family.members.filter(member => member.isEligibleToInherit()))
+export function excludeInheligible(family: Family, wholeFamily: Family): Family {
+    return Family.create(family.members.filter(member => member.isEligibleToInherit()), wholeFamily.deCujus.member_id)
 }

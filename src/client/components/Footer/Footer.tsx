@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 import { Container, Row } from "reactstrap";
+import { Link } from 'react-router-dom'
 
 interface FooterProps {
   default?: boolean
@@ -16,7 +17,11 @@ const Footer = (props: FooterProps) => (
         <nav className="footer-nav">
           <ul>
             {footerItems.map((footerItem, index) =>
-              <li key={index}><a href={footerItem.url} target="_blank">{footerItem.text}</a></li>)}
+              <>
+                {index === 0 ? null : '  •  '}
+                <li key={index}><a href={footerItem.url}>{footerItem.text}</a></li>
+              </>
+              )}
           </ul>
         </nav>
         {/* <div className="credits ml-auto">
@@ -41,11 +46,11 @@ const footerItems: footerItem[] = [
     text: 'En savoir plus'
   },
   {
-    url: '/',
+    url: '/succession/aboutus',
     text: 'A propos'
   },
   {
-    url: '/',
+    url: '/succession/contact',
     text: 'Contact'
   }
 ]

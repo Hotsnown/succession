@@ -1,9 +1,9 @@
 import { Status, Family } from '../../../entities'
-import { main } from '../main'
+import { getDevolution } from '../main'
 import { getFirstAppliableOrdreNumber } from '../utils/Ordres'
 
 describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (ne pas oublier la représentation)', () =>  {
-    it('should give 50% to the remaining parent', () => {
+    it('should give 50% to the regetDevolutioning parent', () => {
             const onlyOneParent = [
                 {
                     "childs": [],
@@ -69,7 +69,7 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
                 }
             ]
     
-            const family = main(Family.create(onlyOneParent), 'deCujus')
+            const family = getDevolution(Family.create(onlyOneParent, 'deCujus'))
 
             expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(2)
             
@@ -86,7 +86,7 @@ describe('calcul : si un parent survivant : 50% + 50% / nombre de collatéraux (
 })
 
 describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de collatéraux (ne pas oublier la représentation)', () => {
-    it('should give 25% to the two remaining parents (no representation)', () => {
+    it('should give 25% to the two regetDevolutioning parents (no representation)', () => {
         const secondOrdreMembers = [
             {
                 "childs": [],
@@ -184,7 +184,7 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
             }
         ]
 
-        const family = main(Family.create(secondOrdreMembers), 'deCujus')
+        const family = getDevolution(Family.create(secondOrdreMembers, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(2)
         
@@ -203,7 +203,7 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
         expect(nephew.legalRights.valueOf()).toStrictEqual(0)
     })
 
-    it('should give 25% to the two remaining parents (with representation)', () => {
+    it('should give 25% to the two regetDevolutioning parents (with representation)', () => {
         const secondOrdreMembers = [
             {
                 "childs": [],
@@ -301,7 +301,7 @@ describe('calcul : si deux parents survivants : 25% + 25% + 50% / nombre de coll
             }
         ]
 
-        const family = main(Family.create(secondOrdreMembers), 'deCujus')
+        const family = getDevolution(Family.create(secondOrdreMembers, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(2)
         
@@ -420,7 +420,7 @@ describe('si parent survivant = 0', () => {
             }
         ]
 
-        const family = main(Family.create(noParents), 'deCujus')
+        const family = getDevolution(Family.create(noParents, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(2)
         
@@ -536,7 +536,7 @@ describe('si parent survivant = 0', () => {
             }
         ]
 
-        const family = main(Family.create(noParents), 'deCujus')
+        const family = getDevolution(Family.create(noParents, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(2)
         

@@ -4,22 +4,23 @@
 import { Family, Member, Refine } from '../../entities'
 import { ordreOneStrategy, ordreTwoStrategy, ordreThreeStrategy, ordreFourStrategy, withDescendants, withoutDescendants, getFirstAppliableOrdreNumber, byOrdre } from '../inference'
 
-export const main: Refine = (family) => {
+export const getDevolution: Refine = (family) => {
     if (doSpouseExist(family)) {
         return whithSpouseStrategy(family)
+    } else {
+        return withoutSpouseStrategy(family)
     }
-    return withoutSpouseStrategy(family)
 }
 
 const withoutSpouseStrategy: Refine = (family) => {
     const strategy = getFirstAppliableOrdreNumber(family)
-       
+
     switch (strategy) {
-       case 1: return ordreOneStrategy(family)
-       case 2: return ordreTwoStrategy(family)
-       case 3: return ordreThreeStrategy(family)
-       case 4: return ordreFourStrategy(family)
-       default: return family
+        case 1: return ordreOneStrategy(family)
+        case 2: return ordreTwoStrategy(family)
+        case 3: return ordreThreeStrategy(family)
+        case 4: return ordreFourStrategy(family)
+        default: return family
     }
 }
 

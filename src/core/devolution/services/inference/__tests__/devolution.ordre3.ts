@@ -1,5 +1,5 @@
 import { Status, Family } from '../../../entities'
-import { main } from '../main'
+import { getDevolution } from '../main'
 import { getFirstAppliableOrdreNumber } from '../utils/Ordres'
 
 describe('test parents', () => {
@@ -17,11 +17,11 @@ describe('test parents', () => {
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -37,7 +37,7 @@ describe('test parents', () => {
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -85,17 +85,17 @@ describe('test parents', () => {
             }
         ]
 
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
 
-        const de_cujus = family.findMember('de_cujus')!
+        const deCujus = family.findMember('deCujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
 
-        expect(de_cujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
         expect(mother.legalRights.valueOf()).toStrictEqual(1 / 2)
         expect(father.legalRights.valueOf()).toStrictEqual(1 / 2)
         expect(maternal_grand_father.legalRights.valueOf()).toStrictEqual(0)
@@ -116,11 +116,11 @@ describe('test parents', () => {
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -136,7 +136,7 @@ describe('test parents', () => {
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -184,17 +184,17 @@ describe('test parents', () => {
             }
         ]
 
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
 
-        const de_cujus = family.findMember('de_cujus')!
+        const deCujus = family.findMember('deCujus')!
         const mother = family.findMember('mother')!
         const father = family.findMember('father')!
         const paternal_grand_mother = family.findMember('paternal_grand_mother')!
         const paternal_grand_father = family.findMember('paternal_grand_father')!
 
-        expect(de_cujus.legalRights.valueOf()).toStrictEqual(0)
+        expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
         expect(mother.legalRights.valueOf()).toStrictEqual(1 / 2)
         expect(father.legalRights.valueOf()).toStrictEqual(0)
         expect(paternal_grand_mother.legalRights.valueOf()).toStrictEqual(1/4)
@@ -218,11 +218,11 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -238,7 +238,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -318,7 +318,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, "deCujus"))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
 
@@ -347,11 +347,11 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -367,7 +367,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -447,7 +447,7 @@ describe('In each branch the ascendants of the nearest degree are favored.', () 
             }
         ]
 
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, 'deCujus'))
 
         const maternal_grand_father = family.findMember('maternal_grand_father')!
         const maternal_grand_grand_father = family.findMember('maternal_grand_grand_father')!
@@ -481,11 +481,11 @@ describe('The ascendants of the same degree divide the succession by head', () =
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -501,7 +501,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -597,7 +597,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
 
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
 
@@ -628,11 +628,11 @@ describe('The ascendants of the same degree divide the succession by head', () =
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -648,7 +648,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -744,7 +744,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
             }
         ]
     
-        const family = main(Family.create(existingFente), 'deCujus')
+        const family = getDevolution(Family.create(existingFente, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     
@@ -768,7 +768,7 @@ describe('The ascendants of the same degree divide the succession by head', () =
 
 describe('If there is no ascendant in one branch, the ascendants in the other branch collects the entire estate', () => {
     it('should give all estate to the paternal side when all members of the mother side deceased', () => {
-        const onlyPaternalBranchRemaining = [
+        const onlyPaternalBranchRegetDevolutioning = [
             {
                 "childs": [],
                 "attributes": {
@@ -781,11 +781,11 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -801,7 +801,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -897,7 +897,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
+        const family = getDevolution(Family.create(onlyPaternalBranchRegetDevolutioning, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     
@@ -919,7 +919,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
     })
 
     it('should give all estate to the maternal side when all members of the father side deceased', () => {
-        const onlyPaternalBranchRemaining = [
+        const onlyPaternalBranchRegetDevolutioning = [
             {
                 "childs": [],
                 "attributes": {
@@ -932,11 +932,11 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
                     "isReprésentant": "unassigned" as 'unassigned',
                     "isReprésenté": "unassigned" as 'unassigned',
                 },
-                "member_id": "de_cujus"
+                "member_id": "deCujus"
             },
             {
                 "childs": [
-                    "de_cujus",
+                    "deCujus",
                 ],
                 "attributes": {
                     "degre": 1,
@@ -952,7 +952,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             },
             {
                 "childs": [
-                    "de_cujus"
+                    "deCujus"
                 ],
                 "attributes": {
                     "degre": 1,
@@ -1048,7 +1048,7 @@ describe('If there is no ascendant in one branch, the ascendants in the other br
             }
         ]
     
-        const family = main(Family.create(onlyPaternalBranchRemaining), 'deCujus')
+        const family = getDevolution(Family.create(onlyPaternalBranchRegetDevolutioning, 'deCujus'))
 
         expect(getFirstAppliableOrdreNumber(family)).toStrictEqual(3)
     

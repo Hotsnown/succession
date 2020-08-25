@@ -27,12 +27,12 @@ interface MemberAttributes {
         degre: ExtendedDegree | 'unassigned';
         ordre: ExtendedOrdre | 'unassigned';
         status: Status | 'valid' | 'invalid';
-        spouse: string
-        legalRights: LegalRight | 'unassigned'
-        branch: Branch | 'unassigned'
-        isReprésenté: Représenté | 'unassigned'
-        isReprésentant: Representant | 'unassigned'
-        index?: number
+        spouse: string | 'without spouse';
+        legalRights: LegalRight | 'unassigned';
+        branch: Branch | 'unassigned';
+        isReprésenté: Représenté | 'unassigned';
+        isReprésentant: Representant | 'unassigned';
+        index?: number;
 }
 
 export type Branch = 'paternelle' | 'maternelle';
@@ -58,7 +58,6 @@ export class Member extends Entity<MemberProps> {
                         attributes: { 
                             degre: member.attributes.degre,
                             ordre: member.attributes.ordre,
-                            //@ts-ignore
                             status: (member.attributes.status === Status.Valid || Status.Deceased) 
                                 ? member.attributes.status
                                 : (member.attributes.status === 'valid') 

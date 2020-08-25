@@ -2,12 +2,12 @@
 /*eslint-disable*/
 
 import React from 'react'
-import { Family } from '../../../../core/devolution/entities'
+import { FamilyDTO } from '../Interface'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MesDépenses } from '../Explain/devolution'
 
 interface IProps {
-    results: Family
+    results: FamilyDTO
     isModalOpen: boolean
     toggle: () => void
 }
@@ -22,8 +22,7 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
                 {results.members
                     .filter((member) => member !== undefined)
                     .filter((member) => member.attributes.legalRights !== 'unassigned')
-                    //@ts-ignore
-                    .filter((member) => member.attributes.legalRights.isNotZero())
+                    .filter((member) => member.attributes.legalRights!.isNotZero())
                     .map((member, index) =>
                     <li key={index}>{member.member_id} : {member.attributes.legalRights.toString()}</li>)}
             </ul>

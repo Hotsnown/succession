@@ -13,7 +13,7 @@ import { byOrdre } from './utils/Ordres'
 */
 export const ordreOneStrategy: Refine = (family) => {
 
-   const ordre1 = Family.create(byOrdre(family.members)[1].concat(family.deCujus))
+   const ordre1 = Family.create(byOrdre(family.members)[1].concat(family.deCujus), family.deCujus.member_id)
 
    const qualification = assignRepresentation(ordre1)
    

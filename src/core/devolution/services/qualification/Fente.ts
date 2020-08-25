@@ -12,6 +12,10 @@ import * as R from 'ramda'
 */
 export const assignFenteAscendante: Refine = (family) => {
 
+    if (family.findParentsOfDecujus()[0] === undefined || family.findParentsOfDecujus()[1] === undefined) {
+        return family
+    }
+
    const extractAscendants =
        (family: Family, targetBranch: Branch): Family => {
 
@@ -90,39 +94,26 @@ export const assignFenteCollaterale: Refine = (family) => {
 
 const extractMother: Refine = (family) => {
     family.members
-        .filter(member =>
-            member.isParentOfDeCujus(family) &&
-            isMother(member))
-        .forEach(member =>
-            member.attributes.branch = 'maternelle')
+        .filter(member => member.isParentOfDeCujus(family) && isMother(member))
+        .forEach(member => member.attributes.branch = 'maternelle')
     return family
 }
 
 const extractFather: Refine = (family) => {
     family.members
-        .filter(member =>
-            member.isParentOfDeCujus(family) &&
-            isFather(member))
-        .forEach(member =>
-            member.attributes.branch = 'paternelle')
-
+        .filter(member => member.isParentOfDeCujus(family) && isFather(member))
+        .forEach(member => member.attributes.branch = 'paternelle')
     return family
 }
 
 const extractMaternalGrandParents: Refine = (family) => {
     family.members
-        .flatMap(member =>
-            isAscendantOfMother(family.findParentsOf(member.member_id), family))
-        .forEach(member =>
-            member.attributes.branch = 'maternelle')
+                .flatMap(member => isAscendantOfMother(family.findParentsOf(member.member_id), family))
+                .forEach(member => member.attributes.branch = 'maternelle')
     return family
 }
 
 const extractPaternalGrandParents: Refine = (family) => {
-    family.members
-        .flatMap(member =>
-            isAscendantOfFather(family.findParentsOf(member.member_id), family))
-        .forEach(member =>
-            member.attributes.branch = 'paternelle')
+    family.members.flatMap(member => isAscendantOfFather(family.findParentsOf(member.member_id), family)).forEach(member => member.attributes.branch = 'paternelle')
     return family
 }

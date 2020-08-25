@@ -28,7 +28,8 @@ function updateFamily(family: Family, membersOfCurrentDegres: Family): Family {
     const rootOfSouches = souchesIn(membersOfCurrentDegres)
     for (const rootOfsouche of rootOfSouches) { //TODO handle multiple roots
         return Family.create(
-            family.members.map(member => updateMember(member, rootOfsouche))
+            family.members.map(member => updateMember(member, rootOfsouche)),
+            family.deCujus.member_id
         )
     }
     return family

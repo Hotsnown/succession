@@ -1,4 +1,4 @@
-import { Degré, assignDegré } from '../Degré'
+import { assignDegré } from '../Degré'
 import { Family, Degree, MemberConstructor } from '../../../entities'
 
 it('should test degrés in ordre 1', () => {
@@ -12,7 +12,7 @@ it('should test degrés in ordre 1', () => {
         {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignDegré(Family.create(data))
+    const solution = assignDegré(Family.create(data, "Bernard", "Bernard"))
 
     const bernard = solution.findMember('Bernard')!
     const fred = solution.findMember('Fred')!
@@ -42,7 +42,7 @@ it('should test degrés in ordre 2', () => {
         {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}}
         ]
 
-    const solution = assignDegré(Family.create(data))
+    const solution = assignDegré(Family.create(data, "Pierre", "Fred"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
@@ -72,7 +72,7 @@ it('should test degrés in ordre 3', () => {
         {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-    const solution = assignDegré(Family.create(data))
+    const solution = assignDegré(Family.create(data, "Pierre", "Etienne"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!
@@ -97,12 +97,11 @@ it('should test degrés in ordre 4', () => {
         {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id": "Cody", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id": "Cody", "childs":["Vincent"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
         ]
 
-
-    const solution = assignDegré(Family.create(data))
+    const solution = assignDegré(Family.create(data, "Pierre", "Claude"))
 
     const pierre = solution.findMember('Pierre')!
     const fred = solution.findMember('Fred')!

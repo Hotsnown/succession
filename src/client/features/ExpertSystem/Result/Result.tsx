@@ -6,26 +6,24 @@ import { getSolution } from '../../../../core/devolution/getSolution'
 import ResultModal from './ResultModal'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import { Family } from '../../../../core/devolution/entities'
 import { RawTree } from '../Interface'
 import { Navbar } from 'reactstrap'
+import { FamilyDTO } from '../Interface'
 
 export interface IResult {
     deCujus: string
     memberList: RawTree
-    extractMemberList: () => void
     rootId: string
 }
 
-const Result = ({ memberList, extractMemberList, deCujus, rootId }: IResult) => {
+const Result = ({ memberList, deCujus, rootId }: IResult) => {
     
-    const [results, setResults] = React.useState<Family>(Family.create([]))
+    const [results, setResults] = React.useState<FamilyDTO>({members: []})
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
     const handleToggle = () => setIsModalOpen(!isModalOpen);
 
     const processSolution = (): void => {
-        extractMemberList()
 
         if (!isValidMemberList(memberList)) throw new Error()
         if (!isValidDeCujus(deCujus)) throw new Error()

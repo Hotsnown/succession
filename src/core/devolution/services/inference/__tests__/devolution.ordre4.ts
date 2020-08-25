@@ -1,5 +1,5 @@
 import { Status, Family } from '../../../entities'
-import { main } from '../main'
+import { getDevolution } from '../main'
 
 //TODO : qualification fente
 //TODO : legalRights fente
@@ -133,8 +133,8 @@ describe('Degree wise', () => {
                 "member_id": "son_of_little_cousin"
             },
         ]
-        const family = Family.create(simpleOrdre4)
-        const solution = main(family, 'deCujus')
+        const family = Family.create(simpleOrdre4, 'deCujus')
+        const solution = getDevolution(family)
 
         const deCujus = solution.findMember('deCujus')!
         const mother = solution.findMember('mother')!

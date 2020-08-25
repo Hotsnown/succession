@@ -12,14 +12,7 @@ export const App = () => {
     const [memberList, setMemberList] = React.useState<any>({})
     const [deCujus, setDeCujus] = React.useState<string>('deCujus')
 
-    const formRef = React.createRef<Tree>();
-
-    const extractMemberList = () => {
-        const familyTree = formRef.current;
-        if (familyTree) {
-            setMemberList(familyTree.state.memberlist)
-        }
-    };
+    const updateMemberList = (memberList: any) => setMemberList(memberList)
 
     const url = new URL(window.location.href);
     var paramsString = url.search
@@ -42,7 +35,6 @@ export const App = () => {
             <div className="content">
                 <Container fluid>
                     <Result 
-                        extractMemberList={extractMemberList} 
                         memberList={memberList}
                         deCujus={deCujus} 
                         rootId={root} />
@@ -50,7 +42,7 @@ export const App = () => {
                         root={root}
                         datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
                         onUpdateDeCujus={handleUpdateDeCujus}
-                        ref={formRef} />
+                        updateMemberList={updateMemberList} />
                 </Container>
             </div>
         </>

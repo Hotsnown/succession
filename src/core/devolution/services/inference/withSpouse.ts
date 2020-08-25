@@ -16,20 +16,21 @@ export function withDescendants (family: Family, spouse: Member, deCujus: Member
     //TODO : enfants avec plusieurs partenaires
     //TODO : représentation
 
-    const cleanFamily = assignRepresentation(Family.create(family.members.filter(member => member !== undefined)))
-    const childs = cleanFamily.members.filter(member => family.deCujus.childs.includes(member.member_id))
-    const others = cleanFamily.members.filter(member => !family.deCujus.childs.includes(member.member_id) && member.member_id !== spouse.member_id)
+    const cleanFamily = assignRepresentation(Family.create(family.members.filter(member => member !== undefined), family.deCujus.member_id))
+    const childs = cleanFamily.members.filter(withoutDeCujusChilds(family))
+    const others = cleanFamily.members.filter(withDeCujusChilds(family)).filter(without(spouse))
     
     const computedChilds = childs.some(member => member.isReprésentant) 
-        ? computeRepresentation(Family.create(childs), Degree.Degree1, LegalRight.percent('75%')).members
-        : repartitionParTête(Family.create(childs), family, LegalRight.percent('75%')).members
+        ? computeRepresentation(Family.create(childs, family.deCujus.member_id), Degree.Degree1, LegalRight.percent('75%')).members
+        : repartitionParTête(Family.create(childs, family.deCujus.member_id), family, LegalRight.percent('75%')).members
 
     return Family.create(
         [
             spouse.copyWith({legalRights: LegalRight.percent('25%')}),
             ...computedChilds,
-            ...others.map(member => member.copyWith({ legalRights: LegalRight.percent('0%') }))
-        ]
+            ...others.map(noLegalRights())
+        ],
+        family.deCujus.member_id
     )
 }
 
@@ -37,10 +38,26 @@ export function withoutDescendants (family: Family, spouse: Member): Family {
     return Family.create(
         [
             spouse.copyWith({ legalRights: LegalRight.percent('100%')}),
-            ...family.filter(member => member.member_id !== spouse.member_id)
-                     .map(member => member.copyWith({ legalRights: LegalRight.percent('0%')}))
-                     .members
-        ]
+            ...family.members
+                     .filter(without(spouse))
+                     .map(noLegalRights())
+        ],
+        family.deCujus.member_id
     )
 }
 
+function without(memberToOmit: Member) {
+    return member => member.member_id !== memberToOmit.member_id;
+}
+
+function withDeCujusChilds(family: Family) {
+    return member => !family.deCujus.childs.includes(member.member_id);
+}
+
+function withoutDeCujusChilds(family: Family) {
+    return member => family.deCujus.childs.includes(member.member_id);
+}
+
+function noLegalRights(): (value: Member, index: number, array: Member[]) => Member {
+    return member => member.copyWith({ legalRights: LegalRight.percent('0%') });
+}

@@ -37,7 +37,7 @@ it('should not be appliable when members doesnt belong do Ordre 1', () => {
         }
     ]
 
-    const family = Family.create(secondOrdreMembers)
+    const family = Family.create(secondOrdreMembers, 'homer')
     const {members} = assignRepresentation(family)
 
     expect(members
@@ -113,7 +113,7 @@ it('should not be appliable when members are not parent with the représenté', 
     ]
 
 
-    const family = Family.create(unrelatedMembers)
+    const family = Family.create(unrelatedMembers, 'abe')
     const {members} = assignRepresentation(family)
 
     expect(members
@@ -191,7 +191,7 @@ it('should not work when a potential représentant' +
         },
     ]
 
-    const family = Family.create(deadAlphonse)
+    const family = Family.create(deadAlphonse, 'abe')
     const solution = assignRepresentation(family)
 
     const alphonse = solution.findMember('alphonse')
@@ -276,7 +276,7 @@ it('should be appliable when members are child of a sibling', () => {
         },
     ]
 
-    const family = Family.create(firstOrderMembers)
+    const family = Family.create(firstOrderMembers, 'abe')
     const solution = assignRepresentation(family)
 
     const nephew = solution.findMember('nephew')

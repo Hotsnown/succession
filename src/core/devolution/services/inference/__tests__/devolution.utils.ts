@@ -36,7 +36,7 @@ it('should find the parents of a member', () => {
         }
     ]
 
-    const family = Family.create(secondOrdreMembers)
+    const family = Family.create(secondOrdreMembers, 'homer')
 
     expect(
         family.findParentsOf('maggie')

@@ -3,24 +3,25 @@
 
 export class Output {
     de_cujus: string
-    family: Family[]
+    family: RawMember[]
 
     constructor(de_cujus: string){
         this.de_cujus = de_cujus
         this.family = []
     }
 
-    appendFamily(member_id: string, childs: string[], status: 'valid' | 'invalid') {
+    appendFamily(member_id: string, childs: string[], status: 'valid' | 'invalid', spouse?: string) {
         this.family.push({
             member_id: member_id, 
             childs: childs,
             attributes: {
-                status: status
+                status: status,
+                spouse: spouse || 'without spouse'
             }})
     }
 }
 
-interface Family {
+interface RawMember {
     member_id: string;
     childs: string[];
     attributes: Attributes;
@@ -29,4 +30,5 @@ interface Family {
 
 interface Attributes {
     status: 'valid' | 'invalid'
+    spouse: string | 'without spouse'
 }
