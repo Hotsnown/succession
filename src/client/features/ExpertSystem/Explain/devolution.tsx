@@ -7,7 +7,7 @@ export function MesDépenses() {
 		<p>
 			Accéder aux{' '}
 			<RuleLink
-				dottedName={'droits de pierre'}
+				dottedName={'ordre1'}
 				engine={engine}
 				documentationPath={'/documentation'}
 			/>

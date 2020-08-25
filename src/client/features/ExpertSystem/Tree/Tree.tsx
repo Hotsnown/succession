@@ -7,7 +7,7 @@ interface TreeProps {
   root: string
   datalist: any
   onUpdateDeCujus: (value: string) => void
-  updateMemberList: (memberlist: any) => void
+  onUpdateMemberList: (memberlist: any) => void
 }
 
 interface TreeState {
@@ -43,11 +43,11 @@ class Tree extends React.Component <TreeProps, TreeState> {
   }
 
   componentDidUpdate(prev, props) {
-    this.props.updateMemberList(this.state.memberlist)
+    this.props.onUpdateMemberList(this.state.memberlist)
   }
 
   componentDidMount() {
-    this.props.updateMemberList(this.state.memberlist)
+    this.props.onUpdateMemberList(this.state.memberlist)
   }
 
   getNextMemberId(memberlist: undefined | any[]) {

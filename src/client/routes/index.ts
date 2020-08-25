@@ -6,6 +6,7 @@ import ExpertSystem from '../features/ExpertSystem';
 import { Intro } from '../components/Intro/intro';
 import { AboutUs } from '../components/AboutUs/aboutUs';
 import { Contact } from '../components/Contact/index'
+import { Documentation } from '../features/ExpertSystem/Explain/Documentation'
 
 export interface Route {
   path: string;
@@ -49,6 +50,13 @@ const routes: Route[] = [
     name: 'Contact',
     icon: 'nc-icon nc-tile-56',
     component: Contact,
+    layout: '/succession',
+  },
+  {
+    path: '/documentation',
+    name: 'Documentation',
+    icon: 'nc-icon nc-tile-56',
+    component: Documentation,
     layout: '/succession',
   }
 ];

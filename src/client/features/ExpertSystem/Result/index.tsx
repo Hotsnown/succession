@@ -20,16 +20,15 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
         <ModalBody>
             <ul>
                 {results.members
-                    .filter((member) => member !== undefined)
-                    .filter((member) => member.attributes.legalRights !== 'unassigned')
-                    .filter((member) => member.attributes.legalRights!.isNotZero())
+                    .filter((member) => member !== undefined &&
+                                        member.attributes.legalRights !== 'unassigned' && 
+                                        member.attributes.legalRights!.isNotZero())
                     .map((member, index) =>
                     <li key={index}>{member.member_id} : {member.attributes.legalRights.toString()}</li>)}
             </ul>
-            <MesDépenses/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Explain me!</Button>{' '}
+          <Button color="primary" onClick={toggle}><MesDépenses/></Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
