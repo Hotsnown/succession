@@ -2,8 +2,7 @@
 /*eslint-disable*/
 
 import React from 'react'
-import Tree from './Tree/Tree'
-import initialTreeValue from './initialTreeValue'
+import { Chart } from './Chart'
 import Container from 'react-bootstrap/Container'
 import { getSolution } from './../../../core/devolution/getSolution'
 import ResultModal from './Result'
@@ -47,11 +46,13 @@ export const App = () => {
                         </ButtonGroup>
                         <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
                     </Navbar>
-                    <Tree
+                    <Chart
+                        renderTree={false}
                         root={root}
-                        datalist={JSON.parse(family) || JSON.parse(JSON.stringify(initialTreeValue))}
-                        onUpdateDeCujus={handleUpdateDeCujus}
-                        onUpdateMemberList={onUpdateMemberList} />
+                        family={family}
+                        handleUpdateDeCujus={handleUpdateDeCujus}
+                        onUpdateMemberList={onUpdateMemberList}
+                    />
                 </Container>
             </div>
         </>
@@ -65,15 +66,15 @@ const isValidMemberList = (memberList: RawTree): boolean => true // TODO : alrea
 
 function getInitialDataFromUrl() {
     const url = new URL(window.location.href)
-    var paramsString = url.search
-    var searchParams = new URLSearchParams(paramsString)
+    const paramsString = url.search
+    const searchParams = new URLSearchParams(paramsString)
     const root = searchParams.get('root')
     const family = searchParams.get('family')
     if (!root) {
-        throw new Error(`${root} is not a valid root`)
+        //throw new Error(`${root} is not a valid root`)
     }
     if (!family) {
-        throw new Error(`${family} is not a valid family`)
+        //throw new Error(`${family} is not a valid family`)
     }
     return { root, family }
 }
