@@ -35,7 +35,7 @@ export function getFirstAppliableOrdreNumber (family: Family): number {
                 if (parseInt(ordre.toString()) === Ordre.Ordre2) {
                     return computePriviledgeAscendantOrdre(family)
                 }    
-                return parseInt(ordre.toString()) //TODO: handle unknown case
+                return parseInt(ordre.toString())
             }
         }
     }

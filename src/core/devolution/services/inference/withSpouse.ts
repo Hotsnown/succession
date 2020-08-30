@@ -13,6 +13,7 @@ import { assignRepresentation } from "../qualification/Représentation";
  */
 export function withDescendants (family: Family, spouse: Member, deCujus: Member): Family {
     //TODO : qualification du conjoint survivant
+    //TODO : option du conjoint
     //TODO : enfants avec plusieurs partenaires
     //TODO : représentation
 

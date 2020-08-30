@@ -96,7 +96,7 @@ export class Family extends Entity<FamilyProps> {
     }
 
     public debug(): Family {
-        this.members.map(member => console.log({ id: member.member_id, attributes: member.attributes }))
+        this.members.map(member => {console.log({ id: member.member_id, attributes: member.attributes }); return member})
         return this
     }
 
@@ -163,7 +163,7 @@ function sumOfLegalRightsExceedsOneHundredPercent(members: MemberConstructor[]):
         return members.every(
             member => member.attributes.legalRights !== 'unassigned') &&
             members.map(member => member.attributes.legalRights as LegalRight)
-                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.zeroRight())! > LegalRight.create(1, 1)
+                .reduce((a: LegalRight, b: LegalRight) => (a as unknown as LegalRight).plus(b as unknown as LegalRight), LegalRight.percent('0%'))! > LegalRight.create(1, 1)
     }
 }
 

@@ -31,7 +31,7 @@ it('should test ordre 1', () => {
     expect(grand_grand_grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
     expect(grand_grand_grand_grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
 })
-
+ 
 it('should test ordre 2', () => {
     const data: MemberConstructor[] = [
         {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
