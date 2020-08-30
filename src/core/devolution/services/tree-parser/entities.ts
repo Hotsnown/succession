@@ -10,7 +10,7 @@ export class Output {
         this.family = []
     }
 
-    appendFamily(member_id: string, childs: string[], status: 'valid' | 'invalid', spouse?: string) {
+    appendFamily(member_id: string, childs: string[], status: Status, spouse?: string[]) {
         this.family.push({
             member_id: member_id, 
             childs: childs,
@@ -28,7 +28,9 @@ interface RawMember {
     index?: number
 }
 
+type Status = 'valid' | 'invalid'
+
 interface Attributes {
-    status: 'valid' | 'invalid'
-    spouse: string | 'without spouse'
+    status: Status
+    spouse: string[] | 'without spouse'
 }

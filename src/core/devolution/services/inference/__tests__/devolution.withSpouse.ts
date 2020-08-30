@@ -1,56 +1,34 @@
-import { Status, Family } from '../../../entities'
+import { Status, Family, MemberConstructor } from '../../../entities'
 import { getDevolution } from '../main'
+
+it('should not go with the with spouse strategy when spouse is ineligible to inherit', () => {
+    const withSpouse: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": ["child"], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child", "childs": [ "deCujus", ], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [""], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse",  "childs": ["child"], "attributes": { "degre": 1, "ordre": 2, "status": Status.Deceased, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
+    ]
+
+    const family = Family.create(withSpouse, 'deCujus')
+    const solution = getDevolution(family)
+
+    const spouse = solution.findMember('spouse')
+    const deCujus = solution.findMember('deCujus')
+    const child = solution.findMember('child')
+
+    expect(spouse.attributes.legalRights.valueOf()).toStrictEqual(0)
+    expect(deCujus.attributes.legalRights.valueOf()).toStrictEqual(0)
+    expect(child.attributes.legalRights.valueOf()).toStrictEqual(1)
+})
 
 it('gives 100% to the spouse without descendants', () => {
 
-    const withSpouseControllerMembers = [
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [
-                "deCujus",
-            ],
-            "attributes": {
-                "degre": 2,
-                "ordre": 3,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "grandParent"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "spouse"
-        }
+    const withSpouse: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "grandParent", "childs": [ "deCujus", ], "attributes": { "degre": 2, "ordre": 3, "status": Status.Valid, "spouse": [""], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse",  "childs": [], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
     ]
 
-    const family = Family.create(withSpouseControllerMembers, 'deCujus')
+    const family = Family.create(withSpouse, 'deCujus')
     const solution = getDevolution(family)
 
     const spouse = solution.findMember('spouse')!
@@ -62,83 +40,28 @@ it('gives 100% to the spouse without descendants', () => {
     expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
 })
 
-it('gives 25% to the spouse with descendants', () => {
+it('gives 25% to the last eligible to inherit spouse with descendants', () => {
 
-    const withDescendantsMembers = [
-        {
-            "childs": [
-                "child"
-            ],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [
-                "deCujus",
-            ],
-            "attributes": {
-                "degre": 2,
-                "ordre": 3,
-                "status": Status.Valid,
-                "spouse": '',
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "grandParent"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "child"
-        },
-        {
-            "childs": [
-                "child"
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "spouse"
-        }
+    const withDescendantsMembers: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [ "child" ], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["lastSpouse", "deceasedSpouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", } }, 
+        { "member_id": "grandParent", "childs": [ "deCujus", ], "attributes": { "degre": 2, "ordre": 3, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "lastSpouse", "childs": [ "child" ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }},
+        { "member_id": "deceasedSpouse", "childs": [ "child" ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Deceased, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
     ]
 
     const family = Family.create(withDescendantsMembers, 'deCujus')
 
     const solution = getDevolution(family)
 
-    const spouse = solution.findMember('spouse')!
+    const lastSpouse = solution.findMember('lastSpouse')!
+    const deceasedSpouse = solution.findMember('deceasedSpouse')
     const child = solution.findMember('child')!
     const deCujus = solution.findMember('deCujus')!
     const grandParent = solution.findMember('grandParent')!
 
-    expect(spouse.legalRights.valueOf()).toStrictEqual(1/4)
+    expect(lastSpouse.legalRights.valueOf()).toStrictEqual(1/4)
+    expect(deceasedSpouse.legalRights.valueOf()).toStrictEqual(0)
     expect(child.legalRights.valueOf()).toStrictEqual(3/4)
     expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
     expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
@@ -146,85 +69,12 @@ it('gives 25% to the spouse with descendants', () => {
 
 it('gives equal shares to all descendants', () => {
 
-    const withDescendantsMembers = [
-        {
-            "childs": [
-                "child1",
-                "child2",
-            ],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [
-                "deCujus",
-            ],
-            "attributes": {
-                "degre": 2,
-                "ordre": 3,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "grandParent"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "child1"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "child2"
-        },
-        {
-            "childs": [
-                "child1",
-                "child2",
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "spouse"
-        }
+    const withDescendantsMembers: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [ "child1", "child2", ], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "grandParent", "childs": [ "deCujus", ], "attributes": { "degre": 2, "ordre": 3, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child1", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child2", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse", "childs": [ "child1", "child2", ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
     ]
 
     const family = Family.create(withDescendantsMembers, 'deCujus')
@@ -245,87 +95,12 @@ it('gives equal shares to all descendants', () => {
 })
 
 it('should work with deceased descendants', () => {
-    const withDeceasedDescendantsMembers = [
-        {
-            "childs": [
-                "deceasedChild",
-                "child",
-            ],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [
-                "deCujus",
-            ],
-            "attributes": {
-                "degre": 2,
-                "ordre": 3,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "grandParent"
-        },
-        {
-            "childs": [
-                "représentant"
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Deceased,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deceasedChild"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "child"
-        },
-        {
-            "childs": [
-                "deceasedChild",
-                "child",
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "spouse"
-        }
+    const withDeceasedDescendantsMembers: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [ "deceasedChild", "child", ], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "grandParent", "childs": [ "deCujus", ], "attributes": { "degre": 2, "ordre": 3, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "deceasedChild", "childs": [ "représentant" ], "attributes": { "degre": 1, "ordre": 1, "status": Status.Deceased, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse", "childs": [ "deceasedChild", "child", ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
     ]
 
     const family = Family.create(withDeceasedDescendantsMembers, 'deCujus')
@@ -345,102 +120,37 @@ it('should work with deceased descendants', () => {
     expect(grandParent.legalRights.valueOf()).toStrictEqual(0)
 })
 
+it('should give all rights to the spouse when all descendants are dead', () => {
+    const withDeceasedDescendantsMembers: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [ "deceasedChild1", "deceasedChild2", ], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "deceasedChild1", "childs": [ "représentant" ], "attributes": { "degre": 1, "ordre": 1, "status": Status.Deceased, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "deceasedChild2", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Deceased, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse", "childs": [ "deceasedChild", "deceasedChild2", ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
+    ]
+
+    const family = Family.create(withDeceasedDescendantsMembers, 'deCujus')
+
+    const solution = getDevolution(family)
+
+    const deCujus = solution.findMember('deCujus')
+    const deceasedChild1 = solution.findMember("deceasedChild1")!
+    const spouse = solution.findMember("spouse")!
+    const deceasedChild2 = solution.findMember("deceasedChild2")!
+
+    expect(spouse.legalRights.valueOf()).toStrictEqual(1)
+    expect(deceasedChild1.legalRights.valueOf()).toStrictEqual(0)
+    expect(deceasedChild2.legalRights.valueOf()).toStrictEqual(0)
+    expect(deCujus.legalRights.valueOf()).toStrictEqual(0)
+})
+
 it.skip('should work with representation', () => {
-    const withReprésentation = [
-        {
-            "childs": [
-                "représenté",
-                "child",
-            ],
-            "attributes": {
-                "degre": 0,
-                "ordre": 0,
-                "status": Status.Deceased,
-                "spouse":"spouse",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "deCujus"
-        },
-        {
-            "childs": [
-                "deCujus",
-            ],
-            "attributes": {
-                "degre": 2,
-                "ordre": 3,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "grandParent"
-        },
-        {
-            "childs": [
-                "representant"
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Deceased,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "représenté"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 2,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "representant"
-        },
-        {
-            "childs": [],
-            "attributes": {
-                "degre": 1,
-                "ordre": 1,
-                "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "child"
-        },
-        {
-            "childs": [
-                "représenté",
-                "child",
-            ],
-            "attributes": {
-                "degre": 1,
-                "ordre": 2,
-                "status": Status.Valid,
-                "spouse": "deCujus",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
-            },
-            "member_id": "spouse"
-        }
+    const withReprésentation: MemberConstructor[] = [
+        { "member_id": "deCujus", "childs": [ "représenté", "child", ], "attributes": { "degre": 0, "ordre": 0, "status": Status.Deceased, "spouse":["spouse"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "grandParent", "childs": [ "deCujus", ], "attributes": { "degre": 2, "ordre": 3, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "représenté", "childs": [ "representant" ], "attributes": { "degre": 1, "ordre": 1, "status": Status.Deceased, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "representant", "childs": [], "attributes": { "degre": 2, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "child", "childs": [], "attributes": { "degre": 1, "ordre": 1, "status": Status.Valid, "spouse": [''], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}, 
+        { "member_id": "spouse", "childs": [ "représenté", "child", ], "attributes": { "degre": 1, "ordre": 2, "status": Status.Valid, "spouse": ["deCujus"], "legalRights": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", }}
     ]
 
     const family = Family.create(withReprésentation, 'deCujus')

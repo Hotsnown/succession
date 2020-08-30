@@ -4,15 +4,14 @@
 import React from 'react'
 import { FamilyDTO } from '../Interface'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { MesDépenses } from '../Explain/devolution'
 
-interface IProps {
+interface ResultProps {
     results: FamilyDTO
     isModalOpen: boolean
     toggle: () => void
 }
 
-const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
+const ResultModal = ({ results, isModalOpen, toggle }: ResultProps) => {
   return (
     <div>
       <Modal isOpen={isModalOpen} toggle={toggle}>
@@ -28,7 +27,7 @@ const ResultModal = ({ results, isModalOpen, toggle }: IProps) => {
             </ul>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}><MesDépenses/></Button>{' '}
+          <Button color="primary" onClick={toggle}>Explain me!</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>

@@ -143,5 +143,4 @@ function encodeFamilyUrl (family: FamilyExample, root: string) {
   return `http://${process.env.NODE_ENV === 'production' ? window.location.hostname : 'localhost:3000'}/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
 }
 
-
 export default Tables;

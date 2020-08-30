@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import { Family, Member, LegalRight, Degree } from "../../entities";
-import { repartitionParTête, computeRepresentation } from '../inference'
+import { repartitionParTête, répartitionParSouche } from '../inference'
 import { assignRepresentation } from "../qualification/Représentation";
  
 /**
@@ -21,7 +21,7 @@ export function withDescendants (family: Family, spouse: Member, deCujus: Member
     const others = cleanFamily.members.filter(withDeCujusChilds(family)).filter(without(spouse))
     
     const computedChilds = childs.some(member => member.isReprésentant) 
-        ? computeRepresentation(Family.create(childs, family.deCujus.member_id), Degree.Degree1, LegalRight.percent('75%')).members
+        ? répartitionParSouche(Family.create(childs, family.deCujus.member_id), Degree.Degree1, LegalRight.percent('75%')).members
         : repartitionParTête(Family.create(childs, family.deCujus.member_id), family, LegalRight.percent('75%')).members
 
     return Family.create(

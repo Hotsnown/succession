@@ -1,9 +1,9 @@
-import { Status, Family } from '../../../entities'
+import { Status, Family, MemberConstructor } from '../../../entities'
 import { assignRepresentation } from '../../qualification/Représentation'
-import { computeRepresentation } from '..'
+import { répartitionParSouche } from '..'
 
 it('should not give to the représentant the same right as the other members when representant is dead', () => {
-    const oneRepresentantOneValid = [
+    const oneRepresentantOneValid:MemberConstructor[] = [
         {
             "childs": [
                 "homer",
@@ -13,11 +13,11 @@ it('should not give to the représentant the same right as the other members whe
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Deceased,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
+                "spouse": [''],
+                "legalRights": "unassigned",
+                "branch": "unassigned",
+                "isReprésentant": "unassigned",
+                "isReprésenté": "unassigned",
             },
             "member_id": "abe"
         },
@@ -27,11 +27,11 @@ it('should not give to the représentant the same right as the other members whe
             "degre": 1,
             "ordre": 1,
             "status": Status.Valid,
-            "spouse": "",
-            "legalRights": "unassigned" as 'unassigned',
-            "branch": "unassigned" as 'unassigned',
-            "isReprésentant": "unassigned" as 'unassigned',
-            "isReprésenté": "unassigned" as 'unassigned',
+            "spouse": [''],
+            "legalRights": "unassigned",
+            "branch": "unassigned",
+            "isReprésentant": "unassigned",
+            "isReprésenté": "unassigned",
         },
         "member_id": "validDescendant"
         },
@@ -43,11 +43,11 @@ it('should not give to the représentant the same right as the other members whe
                 "degre": 1,
                 "ordre": 1,
                 "status": Status.Deceased,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
+                "spouse": [''],
+                "legalRights": "unassigned",
+                "branch": "unassigned",
+                "isReprésentant": "unassigned",
+                "isReprésenté": "unassigned",
             },
             "member_id": "homer"
         },
@@ -57,11 +57,11 @@ it('should not give to the représentant the same right as the other members whe
                 "degre": 2,
                 "ordre": 1,
                 "status": Status.Deceased,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
+                "spouse": [''],
+                "legalRights": "unassigned",
+                "branch": "unassigned",
+                "isReprésentant": "unassigned",
+                "isReprésenté": "unassigned",
             },
             "member_id": "alphonse"
         },
@@ -69,7 +69,7 @@ it('should not give to the représentant the same right as the other members whe
 
     const family = Family.create(oneRepresentantOneValid, 'abe')
     const qualification = assignRepresentation(family)
-    const solution = computeRepresentation(qualification)
+    const solution = répartitionParSouche(qualification)
 
     const alphonse = solution.findMember('alphonse')!
     const validDescendant = solution.findMember('validDescendant')!

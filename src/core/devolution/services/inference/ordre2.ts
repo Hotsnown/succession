@@ -1,9 +1,10 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Family, Member, LegalRight, Refine, Degree } from '../../entities'
+import { Refine } from '../../entities'
 import { assignRepresentation} from '../qualification/Représentation'
-import { repartitionParTête, computeRepresentation } from '../inference'
+import { repartitionParTête, répartitionParSouche } from '../inference'
+import { répartitionEnConcoursPèreOuMère, répartitionEnConcoursPèreEtMère } from './utils/RépartitionEnConcours'
 
 //TODO potential bug when there is only one parent in input
 
@@ -18,11 +19,12 @@ export const ordreTwoStrategy: Refine = (family) => {
     //
     const parents = family.members
         .filter(member => member.isParentOfDeCujus(family))
+        .map(member => {console.log(member.member_id); return member})
         .filter(parent => parent.isEligibleToInherit())
 
     switch (parents.length) {
-        case 1: return oneParentStrategy(family, parents)
-        case 2: return twoParentsStrategy(family, parents)
+        case 1: return répartitionEnConcoursPèreOuMère(family, parents)
+        case 2: return répartitionEnConcoursPèreEtMère(family, parents)
         case 0: return normalStrategy(family)
         default: throw new Error('Should not be reachable')
     }
@@ -34,45 +36,8 @@ const normalStrategy: Refine = (family) => {
     const représentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)
 
     if (représentantsExist) {
-        return computeRepresentation(qualifiedFamily)
+        return répartitionParSouche(qualifiedFamily)
     } else {
         return repartitionParTête(qualifiedFamily, qualifiedFamily)
-    }
-}
-
-function oneParentStrategy(family: Family, parents: Member[]): Family {
-
-    const familyWithoutParents = Family.create(family.members.filter(member => !member.isParentOfDeCujus(family)), family.deCujus.member_id)
-    const priviledgedMembers = repartitionParTête(familyWithoutParents, familyWithoutParents, LegalRight.percent('50%'))
-
-    return Family.create(
-        [
-            ...parents.map(member => member.copyWith({ legalRights: LegalRight.percent('50%')})),
-            ...priviledgedMembers.members,
-        ],
-        family.deCujus.member_id
-    )
-}
-
-function twoParentsStrategy(family: Family, parents: Member[]): Family {
-
-    const qualifiedFamily = assignRepresentation(family)
-    const doReprésentantsExist = qualifiedFamily.members.some(member => member.isReprésentant)
-
-    const familyWithoutParents = Family.create(family.members.filter(member => !member.isParentOfDeCujus(family)), family.deCujus.member_id)
-    const qualifiedFamilyWithoutParents = assignRepresentation(familyWithoutParents)
-
-    if (doReprésentantsExist) {
-        return Family.create([
-            ...computeRepresentation(qualifiedFamilyWithoutParents, Degree.Degree2, LegalRight.percent('50%')).members,
-            ...parents.filter(member => member !== undefined).map(member => member.copyWith({ legalRights: LegalRight.percent('25%')}))
-            ],
-            family.deCujus.member_id)
-    } else {
-        return Family.create([
-            ...repartitionParTête(familyWithoutParents, familyWithoutParents, LegalRight.percent('50%')).members,
-            ...parents.map(member => member.copyWith({ legalRights: LegalRight.percent('25%')}))
-        ],
-        family.deCujus.member_id)
     }
 }

@@ -7,7 +7,7 @@ import Footer from "../components/Footer/Footer";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
-import { Documentation } from '../features/ExpertSystem/Explain/Documentation'
+import { Documentation } from '../features/Explain/Documentation'
 
 interface MainProps {
 

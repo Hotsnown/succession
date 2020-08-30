@@ -1,8 +1,5 @@
 import { LegalRight } from "../../../core/devolution/entities";
 
-/* prettier-ignore */
-/*eslint-disable*/
-
 export interface RawTree {
     id: string;
     name: string;

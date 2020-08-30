@@ -1,18 +1,18 @@
-import { Status, Family } from '../../../entities'
+import { Status, Family, MemberConstructor } from '../../../entities'
 
 it('should find the parents of a member', () => {
-    const secondOrdreMembers = [
+    const secondOrdreMembers: MemberConstructor[] = [
         {
             "childs": [],
             "attributes": {
                 "degre": 0,
                 "ordre": 0,
                 "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
+                "spouse": [''],
+                "legalRights": "unassigned",
+                "branch": "unassigned",
+                "isReprésentant": "unassigned",
+                "isReprésenté": "unassigned",
             },
             "member_id": "maggie"
         },
@@ -26,11 +26,11 @@ it('should find the parents of a member', () => {
                 "degre": 1,
                 "ordre": 2,
                 "status": Status.Valid,
-                "spouse": "",
-                "legalRights": "unassigned" as 'unassigned',
-                "branch": "unassigned" as 'unassigned',
-                "isReprésentant": "unassigned" as 'unassigned',
-                "isReprésenté": "unassigned" as 'unassigned',
+                "spouse": [''],
+                "legalRights": "unassigned",
+                "branch": "unassigned",
+                "isReprésentant": "unassigned",
+                "isReprésenté": "unassigned",
             },
             "member_id": "homer"
         }

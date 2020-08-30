@@ -6,7 +6,7 @@ import ExpertSystem from '../features/ExpertSystem';
 import { Intro } from '../components/Intro/intro';
 import { AboutUs } from '../components/AboutUs/aboutUs';
 import { Contact } from '../components/Contact/index'
-import { Documentation } from '../features/ExpertSystem/Explain/Documentation'
+import { Documentation } from '../features/Explain/Documentation'
 
 export interface Route {
   path: string;

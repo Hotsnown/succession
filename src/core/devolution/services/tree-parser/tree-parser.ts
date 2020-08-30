@@ -19,8 +19,7 @@ type Status = 'valid' | 'invalid'
 function treeParser(tree: Tree, deCujus: string): Output {
     let facts: Output = new Output(deCujus)
 
-    Object.entries(tree)
-        .map(parseNode(facts))
+    Object.entries(tree).map(parseNode(facts))
 
     return facts
 }
@@ -30,17 +29,21 @@ export default treeParser
 function parseNode(facts: Output) {
     return (node: any) => {
         let houseHold = node[1].children
+        let spouses = null
+        if (node[1].partners) {
+            spouses = node[1].partners.filter(spouse => spouse !== undefined).map(spouse => spouse.id)
+        }
         if (houseHold !== undefined && !isEmpty(houseHold) ) {
             if (hasMultipleChildren(houseHold)) {
-                extractMultipleChildren(getChildrenString(houseHold), facts, node[1].id, node[1].status)
+                extractMultipleChildren(getChildrenString(houseHold), facts, node[1].id, node[1].status, spouses)
             }
             else {
                 getChildrenArray(houseHold)
-                    .map(extractSingleChildren(facts, node[1].id, node[1].status))
+                    .map(extractSingleChildren(facts, node[1].id, node[1].status, spouses))
             }
         }
         else {
-            facts.appendFamily(node[1].id, [], node[1].status)
+            facts.appendFamily(node[1].id, [], node[1].status, spouses)
         }
     }
 }
@@ -57,12 +60,12 @@ function hasMultipleChildren(houseHold: HouseHold) {
     return getChildrenArray(houseHold).length
 }
 
-function extractMultipleChildren(childrens: string[], facts: Output, parent: string, status: Status) {
-    facts.appendFamily(parent, childrens, status)
+function extractMultipleChildren(childrens: string[], facts: Output, parent: string, status: Status, spouses) {
+    facts.appendFamily(parent, childrens, status, spouses)
 }
 
-function extractSingleChildren(facts: Output, parent: string, status: Status) {
-    return (children: any) =>  facts.appendFamily(parent, children.id, status)
+function extractSingleChildren(facts: Output, parent: string, status: Status, spouses) {
+    return (children: any) =>  facts.appendFamily(parent, children.id, status, spouses)
 }
 
 function isEmpty(obj: Object) {

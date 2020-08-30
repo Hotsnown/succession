@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import { Family, Branch, Refine, TreeNode, Member } from "../../entities"
-import { isMother, isFather, isAscendantOfFather, isAscendantOfMother } from '../inference'
+import { isMother, isFather } from '../inference'
 
 import * as R from 'ramda'
 
@@ -12,36 +12,10 @@ import * as R from 'ramda'
 */
 export const assignFenteAscendante: Refine = (family) => {
 
-    if (family.findParentsOfDecujus()[0] === undefined || family.findParentsOfDecujus()[1] === undefined) {
+    if (bothParentOfDeCujusAreUndefined(family)) {
+        console.debug('Error: the de Cujus parents must be both not undefined when trying to assign the fente ascendante.')
         return family
     }
-
-   const extractAscendants =
-       (family: Family, targetBranch: Branch): Family => {
-
-           function extract(family: Family): Family {
-               family.members
-                   .filter(member => member.attributes.branch === targetBranch)
-                   .map(member => family.findParentsOf(member.member_id)
-                       .filter(member => member !== undefined)
-                       .map(member => member.member_id)
-                       .map(member => family.findMember(member))
-                       .forEach(member =>
-                           member
-                               ? member.attributes.branch === 'unassigned'
-                                   ? member.attributes.branch = targetBranch
-                                   : null
-                               : null))
-
-               return family
-           }
-
-           let recursiveFamily = family
-           for (let n = 0; n < 6; n++) {
-               recursiveFamily = extract(recursiveFamily)
-           }
-           return recursiveFamily
-       }
 
    const extractPaternalAscendants = R.partialRight(extractAscendants, ['paternelle'])
    const extractMaternalAscendants = R.partialRight(extractAscendants, ['maternelle'])
@@ -49,14 +23,43 @@ export const assignFenteAscendante: Refine = (family) => {
    return R.pipe(
        extractMother,
        extractFather,
-       extractMaternalGrandParents,
-       extractPaternalGrandParents,
        extractPaternalAscendants,
        extractMaternalAscendants,
-   )(family)
+   )(family).debug()
+}
+
+
+function extractAscendants (family: Family, targetBranch: Branch): Family {
+
+    function dfs(child: Member, targetBranch: Branch, visited = new Set<Member>()) {
+        visited.add(child)
+
+        if (!child) return
+
+        const parents = family.findParentsOf(family.findMember(child.member_id).member_id)
+                                .filter(member => member !== undefined);
+
+        for (const parent of parents) {
+
+            if (child.attributes.branch === 'maternelle') parent.attributes.branch = 'maternelle'
+            else if (child.attributes.branch === 'paternelle') parent.attributes.branch = 'paternelle'
+            
+            visited.add(parent)
+            dfs(parent, targetBranch, visited)
+        }
+    }
+    dfs (family.deCujus, targetBranch)
+       
+    return family
 }
 
 export const assignFenteCollaterale: Refine = (family) => {
+
+    if (bothParentOfDeCujusAreUndefined(family)) {
+        console.debug('Error: the de Cujus parents must be both not undefined when trying to assign the fente collatérale.')
+        return family
+    }
+
     const indexFamily = family.indexMembers()
 
     indexFamily.members.forEach(member => {
@@ -69,24 +72,24 @@ export const assignFenteCollaterale: Refine = (family) => {
         if (member.childs) {
             for (let child of member.childs) {
                 TreeNode.create(
-                    indexFamily.findMember(child)!.index, 
-                    indexFamily.findMember(child)!.member_id, 
+                    indexFamily.findMember(child).index, 
+                    indexFamily.findMember(child).member_id, 
                     member.index
                     )
             }
         }
     })
 
-    const LCA = TreeNode.getTreeNode(indexFamily.findMember('maternal_grand_father')!.index)!
+    const LCA = TreeNode.getTreeNode(indexFamily.findMember('maternal_grand_father').index)
 
-    indexFamily.findMember('maternal_grand_father')!.attributes.branch = 'maternelle'
+    indexFamily.findMember('maternal_grand_father').attributes.branch = 'maternelle'
 
-    for (const ascendant of TreeNode.getTreeNode(indexFamily.findMember('mother')!.index)!.ancestors()) {
-        indexFamily.findMember(ascendant.label)!.attributes.branch = 'maternelle'
+    for (const ascendant of TreeNode.getTreeNode(indexFamily.findMember('mother').index).ancestors()) {
+        indexFamily.findMember(ascendant.label).attributes.branch = 'maternelle'
     }
     
     for (const descendant of LCA.descendants()) {
-        indexFamily.findMember(descendant.label)!.attributes.branch = 'maternelle'
+        indexFamily.findMember(descendant.label).attributes.branch = 'maternelle'
     }
 
     return indexFamily
@@ -106,14 +109,6 @@ const extractFather: Refine = (family) => {
     return family
 }
 
-const extractMaternalGrandParents: Refine = (family) => {
-    family.members
-                .flatMap(member => isAscendantOfMother(family.findParentsOf(member.member_id), family))
-                .forEach(member => member.attributes.branch = 'maternelle')
-    return family
-}
-
-const extractPaternalGrandParents: Refine = (family) => {
-    family.members.flatMap(member => isAscendantOfFather(family.findParentsOf(member.member_id), family)).forEach(member => member.attributes.branch = 'paternelle')
-    return family
+function bothParentOfDeCujusAreUndefined(family: Family) {
+    return family.findParentsOf(family.deCujus.member_id)[0] === undefined || family.findParentsOf(family.deCujus.member_id)[1] === undefined
 }

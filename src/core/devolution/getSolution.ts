@@ -4,14 +4,14 @@
 import treeParser from './services/tree-parser/tree-parser'
 import { getQualification } from './services/qualification/main'
 import { getDevolution } from './services/inference/main'
-import { Family, MemberConstructor } from './entities'
+import { Family, MemberConstructor, Status } from './entities'
 import { Output } from './services/tree-parser/entities'
 
 import * as R from 'ramda'
 
 export function getSolution (memberListFromUI: any, deCujusId: string, rootId: string): Family {
     
-    if (memberListFromUI.length === undefined) {
+     if (memberListFromUI === undefined) {
         console.error("Error: member list data from UI is undefined")
         return (Family.create([], ''))
     }
@@ -35,10 +35,8 @@ export function getSolution (memberListFromUI: any, deCujusId: string, rootId: s
         )(family)
     } catch (e) {
         console.error(e)
-        family.debug()
         return family
     }
-    
 }
 
 function setDefaultAttributes(res: Output) {
@@ -47,14 +45,15 @@ function setDefaultAttributes(res: Output) {
         rawData.push({
             member_id: rawMember.member_id,
             attributes: {
-                status: rawMember.attributes.status,
+                status: rawMember.attributes.status === 'valid' ? Status.Valid : Status.Deceased,
                 degre: 'unassigned',
                 ordre: 'unassigned',
                 spouse: rawMember.attributes.spouse,
                 legalRights: 'unassigned',
                 branch: 'unassigned',
                 isReprésenté: 'unassigned',
-                isReprésentant: 'unassigned'
+                isReprésentant: 'unassigned',
+                index: "unassigned"
             },
             childs: rawMember.childs
         })

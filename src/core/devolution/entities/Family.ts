@@ -1,7 +1,7 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Member, MemberConstructor, LegalRight } from '../entities'
+import { Member, MemberConstructor, LegalRight, Spouse } from '../entities'
 import * as R from 'ramda'
 import { Status } from './Member'
 import { Entity } from '../../shared/domain/entities'
@@ -69,11 +69,20 @@ export class Family extends Entity<FamilyProps> {
         }
     }
 
-    public findMember(querriedMember: string) {
-        return this.members.find(member => member.member_id === querriedMember)
+    public findMember(querriedMember: string): Member {
+
+        if (querriedMember === '') throw new Error('Error: Querried member must not be empty.')
+
+        const ret = this.members.find(member => member.member_id === querriedMember)
+
+        if (ret) return ret
+        else {
+            console.error(`Error : ${querriedMember} has not been found.`)
+        }
     }
 
-    public findSpouseOf(knownSpouseName: string) {
+    public findSpouseOf(knownSpouseName: Spouse): Member {
+        //if (knownSpouseName === 'without spouse') return
         return this.members.find(member => member.attributes.spouse === knownSpouseName)
     }
 
@@ -99,14 +108,22 @@ export class Family extends Entity<FamilyProps> {
     }
 
     public getBranches(): { maternals: Branch, paternals: Branch } {
+        
+        const maternalsRet = this.members.filter(member => member.attributes.branch === 'maternelle')
+        const paternalsRet = this.members.filter(member => member.attributes.branch === 'paternelle')
+
+        console.log('ICI')
+        this.debug()
+        if (!maternalsRet.length && !paternalsRet.length) console.error('Error : Branches members can not be an empty array.')
+        
         return {
-            maternals: Branch.create(this.members.filter(member => member.attributes.branch === 'maternelle'), this.deCujus.member_id),
-            paternals: Branch.create(this.members.filter(member => member.attributes.branch === 'paternelle'), this.deCujus.member_id)
+            maternals: Branch.create(maternalsRet, this.deCujus.member_id),
+            paternals: Branch.create(paternalsRet, this.deCujus.member_id)
         }
     }
 
     public indexMembers(): Family {
-        return Family.create(this.members.map((member, index) => member.copyWith({index: index})), this.deCujus.member_id, this.root.member_id)
+        return Family.create(this.members.map((member, index) => member.copyWith({ index: index })), this.deCujus.member_id, this.root.member_id)
     }
 }
 

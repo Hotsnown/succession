@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Successions",
+  "name": "Simulateur Droit des Successions.",
   "icons": [
     {
       "src": "favicon.ico",

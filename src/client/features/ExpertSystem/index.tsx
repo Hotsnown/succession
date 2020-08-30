@@ -13,13 +13,6 @@ import { RawTree } from './Interface'
 import { Navbar } from 'reactstrap'
 import { FamilyDTO } from './Interface'
 
-
-export interface IResult {
-    deCujus: string
-    memberList: RawTree
-    rootId: string
-}
-
 export const App = () => {
 
     const { root, family } = getInitialDataFromUrl()

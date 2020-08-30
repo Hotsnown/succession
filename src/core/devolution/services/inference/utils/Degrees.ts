@@ -53,13 +53,19 @@ export class Degrees extends ValueObject<DegreesProps> {
     static getMembersOfDegre(querriedDegree: Degree, family: Family): Family {
         return Family.create(Degrees
                 .create(family)
-                .value[querriedDegree])
+                .value[querriedDegree],
+                family.deCujus.member_id)
     }
 
     public getFirstAppliableDegreeMembers(filteredMembers: Family, family: Family): Member[] {
-        return Degrees
-                .create(filteredMembers)
-                .value[this.firstAppliableDegree]
+        const ret = Degrees
+                        .create(filteredMembers)
+                        .value[this.firstAppliableDegree]
+        if (ret) {
+            return ret
+        } else {
+            console.error('Error: first appliable degree members not found for ' + this.firstAppliableDegree)
+        }
     }
 }
 

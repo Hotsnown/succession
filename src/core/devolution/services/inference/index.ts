@@ -3,7 +3,7 @@
 
 export * from './utils/Ordres'
 export * from './utils/Degrees'
-export * from './utils/Représentation'
+export * from './utils/RépartitionParSouche'
 export * from './utils/RépartitionParTête'
 export * from './utils/utils'
 export * from './withSpouse'

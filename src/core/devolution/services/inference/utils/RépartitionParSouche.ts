@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import { Family, Member, LegalRight, Degree } from '../../../entities'
-import { Degrees, repartitionParTête } from '../../inference'
+import { Degrees, repartitionParTête } from '..'
 /**
  *  The representatives of the successor predeceased, 
  *  not coming from their leader, are not counted per head, 
@@ -14,7 +14,7 @@ import { Degrees, repartitionParTête } from '../../inference'
  *     are divided between his child. Repeat first step between childs if
  *     a child is deceased.
  */
-export function computeRepresentation(family: Family, degree: Degree = 1, shares: LegalRight = LegalRight.percent('100%')): Family {
+export function répartitionParSouche(family: Family, degree: Degree = 1, shares: LegalRight = LegalRight.percent('100%')): Family {
 
     let recursiveFamily = repartitionParTête(family, family, shares)
     for (let n=degree; n < 3; n++) {

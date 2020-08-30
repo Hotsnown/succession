@@ -18,7 +18,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "noImplicitAny": true,
+    "jsx": "react",
   },
   "include": [
     "src/core/successionnfig.js", "server", "server.js"

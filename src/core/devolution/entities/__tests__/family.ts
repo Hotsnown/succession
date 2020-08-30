@@ -39,3 +39,8 @@ it('should create and read deCujus', () => {
     expect(family.deCujus.attributes.degre).toStrictEqual(0)
     expect(family.deCujus.attributes.ordre).toStrictEqual(0)
 })
+
+it('should find parents of deCujus', () => {
+    const family = Family.create(data, "Bernard", "Bernard")
+    
+})

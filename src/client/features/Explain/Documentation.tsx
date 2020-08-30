@@ -2,7 +2,7 @@ import React from 'react'
 import { Documentation as Docu } from 'publicodes'
 import { useLocation } from 'react-router-dom'
 import { SearchBar } from './SearchBar'
-import { engine } from '../../../../core/explain/main'
+import { engine } from '../../../core/explain/main'
 
 export const Documentation = () => {
 

@@ -1,4 +1,4 @@
-import { Refine, Family, Member } from '../../entities'
+import { Refine, Family, Member, Ordre as O } from '../../entities'
 
 /**
  * Each node must be annotated with the ordre attribute, witch can take any of this values: 1 | 2 | 3 | 4 | 'outsider'.
@@ -32,6 +32,11 @@ export const assignOrdre: Refine = (family) => {
 
 function assignOrdreOf(nodeToQualify: Member, graph: Ordre, family: Family): Member {
       
+  //TODO : Ordre can not determine outsider and should not rely on degré
+  if (nodeToQualify.attributes.degre === 'outsider') {
+    return nodeToQualify.copyWith({ ordre: 'outsider' })
+  }
+
   const LCA = graph.findLowestCommonAncestor(family.deCujus, nodeToQualify, family.root)
 
   if(!LCA) {
@@ -39,15 +44,14 @@ function assignOrdreOf(nodeToQualify: Member, graph: Ordre, family: Family): Mem
     return nodeToQualify
   }
 
-  const parent = parentOfDeCujus(family)
-  const grandParent = grandParentOfDeCujus(parentOfDeCujus(family), family)
+  if (isDescendant(LCA, family.deCujus)) {return nodeToQualify.copyWith({ ordre: O.Ordre1 })}
+  else if (isPriviledgedCollateral(LCA, parentOfDeCujus(family), nodeToQualify)) {return nodeToQualify.copyWith({ ordre: O.Ordre2 })}
+  else if (isAscendant(LCA, nodeToQualify)) {return nodeToQualify.copyWith({ ordre: O.Ordre3 })}
+  else if (isCollateral(LCA, ancestorOfDeCujus(family), nodeToQualify)) {return nodeToQualify.copyWith({ ordre: O.Ordre4 })}
+  else {
+    nodeToQualify.attributes.ordre = 'outsider'
+  }
   
-  if (isDescendant(LCA, family.deCujus)) {nodeToQualify.attributes.ordre = 1; return nodeToQualify}
-  if (isPriviledgedCollateral(LCA, parent, nodeToQualify)) {nodeToQualify.attributes.ordre = 2; return nodeToQualify}
-  if (isAscendant(LCA, nodeToQualify)) {nodeToQualify.attributes.ordre = 3; return nodeToQualify}
-  if (isCollateral(LCA, grandParent, nodeToQualify)) {nodeToQualify.attributes.ordre = 4; return nodeToQualify}
-  
-  nodeToQualify.attributes.ordre = 'outsider'
   return nodeToQualify
 }
 
@@ -55,32 +59,49 @@ function isDescendant(LCA: Member, deCujus: Member): boolean {
   return LCA.member_id === deCujus.member_id;
 }
 
-function isPriviledgedCollateral(LCA: Member, parent: Member, nodeToQualify: Member): boolean {
-  return LCA.member_id === parent.member_id && nodeToQualify.member_id !== parent.member_id;
+function isPriviledgedCollateral(LCA: Member, parents: Member[], nodeToQualify: Member): boolean {
+  return parents.filter(member => member !== undefined).some(parent => LCA.member_id === parent.member_id && nodeToQualify.member_id !== parent.member_id);
 }
 
 function isAscendant(LCA: Member, nodeToQualify: Member): boolean {
   return LCA.member_id === nodeToQualify.member_id;
 }
 
-function isCollateral(LCA: Member, grandParent: Member, nodeToQualify: Member): boolean {
-  return LCA.member_id === grandParent.member_id && nodeToQualify.member_id !== grandParent.member_id;
+function isCollateral(LCA: Member, ancestors: Member[], nodeToQualify: Member): boolean {
+  return ancestors.filter(ancestor => ancestor !== undefined).some(ancestor => LCA.member_id === ancestor.member_id && nodeToQualify.member_id !== ancestor.member_id);
 }
 
-function parentOfDeCujus(family: Family): Member {
-  let parent = null as unknown as Member
-  if (family.findParentsOfDecujus()) {
-    [parent] = family.findParentsOfDecujus()
-  }
-  return parent
+function parentOfDeCujus(family: Family): Member[] {
+  return family.findParentsOf(family.deCujus.member_id).filter(member => member !== undefined)
 }
 
-function grandParentOfDeCujus(parent: Member, family: Family): Member {
-  let grandParent = null as unknown as Member
-  if (parent && family.findParentsOf(parent.member_id)[0]) {
-    grandParent = family.findParentsOf(parent.member_id)[0][0]
+
+function ancestorOfDeCujus(family: Family): Member[] {
+  const ancestors: Member[] = []
+
+  function dfs(start: Member, visited = new Set<Member>()) {
+    
+    visited.add(start);
+
+    if (!start) {
+      return
+    }
+
+    const parents = family.findParentsOf(family.findMember(start.member_id).member_id);
+
+    for (const parent of parents) {
+        
+        ancestors.push(parent)
+
+        if (!visited.has(parent)) {
+            dfs(parent, visited);
+        }
+    }
   }
-  return grandParent
+
+  dfs(family.deCujus)
+
+  return ancestors.filter(ancestor => ancestor !== undefined)
 }
 
 class Ordre { 
@@ -121,8 +142,9 @@ class Ordre {
   //TODO: on Ordre1's tree, when grandchildren3 is the decujus, outsiders are qualified as members of ordre 4
   //and members of ordre 2 are not qualified
   //TODO: on Ordre1's tree, when grandgrandchildren is the decujus, outsiders are qualified as ordre 1
+  
   public findLowestCommonAncestor(deCujus: Member, nodeToQualify: Member, root: Member): Member {
-    
+
     if (deCujus.member_id === root.member_id || nodeToQualify.member_id === root.member_id) return root;
 
     let count = 0;

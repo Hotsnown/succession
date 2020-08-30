@@ -4,117 +4,130 @@ import { MemberConstructor, Family } from '../../../entities'
 
 it('should test ordre 1', () => {
     const data: MemberConstructor[] =  [
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Pierre","childs":["Claude"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Claude","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Leo","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Romeo","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"deCujus","childs":["son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"son","childs":["grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_son","childs":["grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_son","childs":["grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_son","childs":["grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_grand_son","childs":["grand_grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_grand_grand_son","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
         ]
 
-    const solution = assignOrdre(Family.create(data, "Bernard", "Bernard"))
+    const solution = assignOrdre(Family.create(data, "deCujus", "deCujus"))
 
-    const bernard = solution.findMember('Bernard')!
-    const fred = solution.findMember('Fred')!
-    const pierre = solution.findMember('Pierre')!
-    const claude = solution.findMember('Claude')!
-    const alphonse = solution.findMember('Alphonse')!
-    const leo = solution.findMember('Leo')!
-    const romeo = solution.findMember('Romeo')!
+    const bernard = solution.findMember('deCujus')!
+    const son = solution.findMember('son')!
+    const grand_son = solution.findMember('grand_son')!
+    const grand_grand_son = solution.findMember('grand_grand_son')!
+    const grand_grand_grand_son = solution.findMember('grand_grand_grand_son')!
+    const grand_grand_grand_grand_son = solution.findMember('grand_grand_grand_grand_son')!
+    const grand_grand_grand_grand_grand_son = solution.findMember('grand_grand_grand_grand_grand_son')!
 
     expect(bernard.attributes.ordre).toStrictEqual(0)
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre1)
-    expect(pierre.attributes.ordre).toStrictEqual(Ordre.Ordre1)
-    expect(claude.attributes.ordre).toStrictEqual(Ordre.Ordre1)
-    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre1)
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre1)
-    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(grand_grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(grand_grand_grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
+    expect(grand_grand_grand_grand_grand_son.attributes.ordre).toStrictEqual(Ordre.Ordre1)
 })
 
 it('should test ordre 2', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Fred","childs":["Pierre","Marie"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Marie","childs":["Gerard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Gerard","childs":["Romeo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Romeo","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Leo","childs":["Guillaume"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Guillaume","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}}
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"father","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"mother","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"sibling","childs":["nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"nephew","childs":["grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_nephew","childs":["grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_nephew","childs":["grand_grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_nephew","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}}
         ]
 
-    const solution = assignOrdre(Family.create(data, "Pierre", "Fred"))
+    const solution = assignOrdre(Family.create(data, "deCujus", "father"))
 
-    const pierre = solution.findMember('Pierre')!
-    const fred = solution.findMember('Fred')!
-    const marie = solution.findMember('Marie')!
-    const gerard = solution.findMember('Gerard')!
-    const romeo = solution.findMember('Romeo')!
-    const leo = solution.findMember('Leo')!
-    const guillaume = solution.findMember('Guillaume')!
+    const deCujus = solution.findMember('deCujus')
+    const father = solution.findMember('father')
+    const mother = solution.findMember('mother')
+    const sibling = solution.findMember('sibling')
+    const nephew = solution.findMember('nephew')
+    const grand_nephew = solution.findMember('grand_nephew')
+    const grand_grand_nephew = solution.findMember('grand_grand_nephew')
+    const grand_grand_grand_nephew = solution.findMember('grand_grand_grand_nephew')
 
-    expect(pierre.attributes.ordre).toStrictEqual(0)
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(marie.attributes.ordre).toStrictEqual(Ordre.Ordre2)
-    expect(gerard.attributes.ordre).toStrictEqual(Ordre.Ordre2)
-    expect(romeo.attributes.ordre).toStrictEqual(Ordre.Ordre2)
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre2)
-    expect(guillaume.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(deCujus.attributes.ordre).toStrictEqual(0)
+    expect(father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    //expect(mother.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(sibling.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(nephew.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(grand_nephew.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(grand_grand_nephew.attributes.ordre).toStrictEqual(Ordre.Ordre2)
+    expect(grand_grand_grand_nephew.attributes.ordre).toStrictEqual(Ordre.Ordre2)
 })
 
 it('should test ordre 3', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Leo","childs":["Bernard"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Alphonse","childs":["Leo"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Cody","childs":["Alphonse"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Etienne","childs":["Cody"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_father","childs":["father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_father","childs":["grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_grand_father","childs":["grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_grand_grand_father","childs":["grand_grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_grand_grand_grand_grand_grand_father","childs":["grand_grand_grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
         ]
 
-    const solution = assignOrdre(Family.create(data, "Pierre", "Etienne"))
+    const solution = assignOrdre(Family.create(data, "deCujus", "grand_grand_grand_grand_grand_grand_father"))
 
-    const pierre = solution.findMember('Pierre')!
-    const fred = solution.findMember('Fred')!
-    const bernard = solution.findMember('Bernard')!
-    const leo = solution.findMember('Leo')!
-    const alphonse = solution.findMember('Alphonse')!
-    const cody = solution.findMember('Cody')!
-    const etienne = solution.findMember('Etienne')!
+    const deCujus = solution.findMember('deCujus')!
+    const father = solution.findMember('father')!
+    const grand_father = solution.findMember('grand_father')!
+    const grand_grand_father = solution.findMember('grand_grand_father')!
+    const grand_grand_grand_grand_father = solution.findMember('grand_grand_grand_grand_father')!
+    const grand_grand_grand_grand_grand_father = solution.findMember('grand_grand_grand_grand_grand_father')!
+    const grand_grand_grand_grand_grand_grand_father = solution.findMember('grand_grand_grand_grand_grand_grand_father')!
 
-    expect(pierre.attributes.ordre).toStrictEqual(0)
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(bernard.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(leo.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(alphonse.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(cody.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(etienne.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(deCujus.attributes.ordre).toStrictEqual(0)
+    expect(father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_grand_grand_grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_grand_grand_grand_grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_grand_grand_grand_grand_grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
 })
 
 it('should test ordre 4', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"Pierre","childs":[],"attributes":{"status": 'valid', "degre":0, "ordre": 0, "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Fred","childs":["Pierre"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id":"Bernard","childs":["Fred"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id": "Claude", "childs":["Bernard", "Cody"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id": "Cody", "childs":["Vincent"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
-        {"member_id": "Vincent", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned", "spouse": ""}},
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"grand_father","childs":["father", "uncle"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "uncle", "childs":["cousin"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "cousin", "childs":["son_of_cousin"], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "son_of_cousin", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "grand_grand_father", "childs":["grand_father", "grand_uncle"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "grand_uncle", "childs":["grand_cousin"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id": "grand_cousin", "childs":[], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
         ]
 
-    const solution = assignOrdre(Family.create(data, "Pierre", "Claude"))
+    const solution = assignOrdre(Family.create(data, "deCujus", "grand_grand_father"))
 
-    const pierre = solution.findMember('Pierre')!
-    const fred = solution.findMember('Fred')!
-    const bernard = solution.findMember('Bernard')!
-    const claude = solution.findMember('Claude')!
-    const cody = solution.findMember('Cody')!
-    const vincent = solution.findMember('Vincent')!
-
-    expect(pierre.attributes.ordre).toStrictEqual(0)
-    expect(fred.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(bernard.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(claude.attributes.ordre).toStrictEqual(Ordre.Ordre3)
-    expect(cody.attributes.ordre).toStrictEqual(Ordre.Ordre4)
-    expect(vincent.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    const deCujus = solution.findMember('deCujus')!
+    const father = solution.findMember('father')!
+    const grand_father = solution.findMember('grand_father')!
+    const uncle = solution.findMember('uncle')!
+    const cousin = solution.findMember('cousin')!
+    const son_of_cousin = solution.findMember('son_of_cousin')
+    const grand_grand_father = solution.findMember('grand_grand_father')!
+    const grand_uncle = solution.findMember('grand_uncle')
+    const grand_cousin = solution.findMember('grand_cousin')
+    
+    expect(deCujus.attributes.ordre).toStrictEqual(0)
+    expect(father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(uncle.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    expect(cousin.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    expect(son_of_cousin.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    expect(grand_grand_father.attributes.ordre).toStrictEqual(Ordre.Ordre3)
+    expect(grand_uncle.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    expect(grand_cousin.attributes.ordre).toStrictEqual(Ordre.Ordre4)
+    
 })

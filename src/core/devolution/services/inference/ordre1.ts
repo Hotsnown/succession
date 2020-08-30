@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import { Family, Refine } from '../../entities'
-import { repartitionParTête, computeRepresentation } from '../inference'
+import { repartitionParTête, répartitionParSouche } from '../inference'
 import { assignRepresentation } from '../qualification/Représentation'
 import { byOrdre } from './utils/Ordres'
 
@@ -18,6 +18,6 @@ export const ordreOneStrategy: Refine = (family) => {
    const qualification = assignRepresentation(ordre1)
    
    return qualification.members.some(member => member.isReprésentant)
-      ? computeRepresentation(qualification)
+      ? répartitionParSouche(qualification)
       : repartitionParTête(ordre1, family)
  }
