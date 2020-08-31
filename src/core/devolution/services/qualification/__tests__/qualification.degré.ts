@@ -1,19 +1,19 @@
-import { assignDegré } from '../Degré'
+import { assignDegrés } from '../Degré'
 import { Family, Degree, MemberConstructor } from '../../../entities'
 
 it('should test degrés in ordre 1', () => {
     const data: MemberConstructor[] =  [
-        {"member_id":"deCujus","childs":["son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"son","childs":["grand_son", "grand_son2"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_son","childs":["grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_son2","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_son","childs":["grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_son","childs":["grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_grand_son","childs":["grand_grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_grand_grand_son","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"deCujus","childs":["son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"son","childs":["grand_son", "grand_son2"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_son","childs":["grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_son2","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_son","childs":["grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_son","childs":["grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_grand_son","childs":["grand_grand_grand_grand_grand_son"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_grand_grand_son","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
         ]
 
-    const solution = assignDegré(Family.create(data, "deCujus", "deCujus"))
+    const solution = assignDegrés(Family.create(data, "deCujus", "deCujus"))
 
     const deCujus = solution.findMember('deCujus')
     const son = solution.findMember('son')
@@ -36,17 +36,17 @@ it('should test degrés in ordre 1', () => {
 
 it('should test degrés in ordre 2', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"father","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"mother","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"sibling","childs":["nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"nephew","childs":["grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_nephew","childs":["grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_nephew","childs":["grand_grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_nephew","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}}
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"father","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"mother","childs":["deCujus","sibling"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"sibling","childs":["nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"nephew","childs":["grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_nephew","childs":["grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_nephew","childs":["grand_grand_grand_nephew"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_nephew","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }}
         ]
 
-    const solution = assignDegré(Family.create(data, "deCujus", "father"))
+    const solution = assignDegrés(Family.create(data, "deCujus", "father"))
 
     const deCujus = solution.findMember('deCujus')
     const father = solution.findMember('father')
@@ -69,16 +69,16 @@ it('should test degrés in ordre 2', () => {
 
 it('should test degrés in ordre 3', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_father","childs":["father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_father","childs":["grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_father","childs":["grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_grand_father","childs":["grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_grand_grand_grand_grand_father","childs":["grand_grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_father","childs":["father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_father","childs":["grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_father","childs":["grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_grand_father","childs":["grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_grand_grand_grand_grand_father","childs":["grand_grand_grand_grand_father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
         ]
 
-    const solution = assignDegré(Family.create(data, "deCujus", "grand_grand_grand_grand_grand_father"))
+    const solution = assignDegrés(Family.create(data, "deCujus", "grand_grand_grand_grand_grand_father"))
 
     const deCujus = solution.findMember('deCujus')!
     const father = solution.findMember('father')!
@@ -99,15 +99,15 @@ it('should test degrés in ordre 3', () => {
 
 it('should test degrés in ordre 4', () => {
     const data: MemberConstructor[] = [
-        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id":"grand_father","childs":["father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id": "grand_grand_father", "childs":["grand_father", "grand_uncle"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id": "grand_uncle", "childs":["grand_cousin"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
-        {"member_id": "grand_cousin", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''],}},
+        {"member_id":"deCujus","childs":[],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"father","childs":["deCujus"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id":"grand_father","childs":["father"],"attributes":{"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id": "grand_grand_father", "childs":["grand_father", "grand_uncle"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id": "grand_uncle", "childs":["grand_cousin"], "attributes": {"status": 'valid', "degre":"unassigned", "ordre": "unassigned", "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
+        {"member_id": "grand_cousin", "childs":[], "attributes": {"status": 'valid', 'degre': 'unassigned', 'ordre': 'unassigned', "branch": "unassigned", "isReprésentant": "unassigned", "isReprésenté": "unassigned", "legalRights": "unassigned","spouse": [''], "index": "unassigned", }},
         ]
 
-    const solution = assignDegré(Family.create(data, "deCujus", "grand_grand_father"))
+    const solution = assignDegrés(Family.create(data, "deCujus", "grand_grand_father"))
 
     const deCujus = solution.findMember('deCujus')!
     const father = solution.findMember('father')!

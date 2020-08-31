@@ -6,7 +6,7 @@ let edge_count: number
 /**
  * Given the De Cujus and v, v’s degree is the minimum number of edges between the De Cujus and v.
  */
-export const assignDegré: Refine = (family) =>  {
+export const assignDegrés: Refine = (family) =>  {
 
     const graph = new Degré(family.members.length)
 
@@ -39,12 +39,11 @@ export class Degré {
         this.adj[des.index].push(src); 
     }
 
-    assignDegré(deCujus: Member, nodeToQualify: Member): Member { 
-        const visited = new Array(this.V).fill(false); 
+    assignDegrés(deCujus: Member, nodeToQualify: Member): Member { 
         min_num_of_edges = 100; 
         edge_count = 0; 
 
-        minEdgeDFSUtil(this, visited, deCujus, nodeToQualify);
+        minEdgeDFSUtil(this, deCujus, nodeToQualify);
 
         if (nodeToQualify.member_id === deCujus.member_id) {
             nodeToQualify.attributes.degre = 0; return nodeToQualify
@@ -66,7 +65,7 @@ export class Degré {
 function assignDegréOf(indexFamily: Family, graph: Degré) {
     indexFamily.members.forEach(member => {
         if (member.member_id !== indexFamily.deCujus.member_id) {
-            graph.assignDegré(indexFamily.deCujus, member)
+            graph.assignDegrés(indexFamily.deCujus, member)
         }
     })
 }
@@ -76,7 +75,7 @@ function buildGraph(indexFamily: Family, graph: Degré) {
         if (member.childs) {
             for (let child of member.childs) {
                 if (indexFamily.findMember(child)) {
-                    graph.addEdge(member, indexFamily.findMember(child) as Member)
+                    graph.addEdge(member, indexFamily.findMember(child))
                 }
                 else {
                     console.error(`${child} has not been found.`)
@@ -86,8 +85,8 @@ function buildGraph(indexFamily: Family, graph: Degré) {
     })
 }
 
-function minEdgeDFSUtil(graph: Degré, visited: boolean[], src: Member, des: Member): void {
-    visited[src.index] = true; 
+function minEdgeDFSUtil(graph: Degré, src: Member, des: Member, visited=new Set<Member>()): void {
+    visited.add(src)
 
     if (src.member_id === des.member_id) { 
         if (min_num_of_edges > edge_count) {
@@ -95,13 +94,13 @@ function minEdgeDFSUtil(graph: Degré, visited: boolean[], src: Member, des: Mem
         }
     } else {
         for (let vertex of graph.adj[src.index]) { 
-            if (!visited[vertex.index]) { 
+            if (!visited.has(vertex)) { 
                 edge_count++; 
-                minEdgeDFSUtil(graph, visited, vertex, des); 
+                minEdgeDFSUtil(graph, vertex, des, visited); 
             }
         }
     }
 
-    visited[src.index] = false; 
+    visited.delete(src)
     edge_count--; 
 } 

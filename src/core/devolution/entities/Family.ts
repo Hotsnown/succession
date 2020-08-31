@@ -51,9 +51,12 @@ export class Family extends Entity<FamilyProps> {
         return this.props.value.members;
     }
 
+    /**
+     * A reference to the de cujus member.
+     */
     get deCujus(): Member {
         if (this.props.value.deCujus) {
-            return this.props.value.deCujus
+            return this.members.find(member => member.member_id === this.props.value.deCujus.member_id)
         } else if (this.members.find(isDecujus)) {
             return this.members.find(isDecujus)
         } else {
@@ -124,6 +127,26 @@ export class Family extends Entity<FamilyProps> {
 
     public indexMembers(): Family {
         return Family.create(this.members.map((member, index) => member.copyWith({ index: index })), this.deCujus.member_id, this.root.member_id)
+    }
+
+    public ancestorsOf(nodeToQualify: Member): Member[] {
+      const ancestors: Member[] = []
+    
+      const dfs = (child: Member): Member[] => {
+        
+        if (!child) return 
+    
+        const parents = this.findParentsOf(this.findMember(child.member_id).member_id);
+    
+        for (const parent of parents) {
+            ancestors.push(parent)
+            dfs(parent);
+        }
+      }
+    
+      dfs(nodeToQualify)
+    
+      return ancestors.filter(ancestor => ancestor !== undefined)
     }
 }
 

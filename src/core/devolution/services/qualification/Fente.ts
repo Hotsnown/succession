@@ -12,27 +12,25 @@ import * as R from 'ramda'
 */
 export const assignFenteAscendante: Refine = (family) => {
 
-    if (bothParentOfDeCujusAreUndefined(family)) {
+    if (bothParentsOfDeCujusAreUndefined(family)) {
         console.debug('Error: the de Cujus parents must be both not undefined when trying to assign the fente ascendante.')
         return family
     }
 
-   const extractPaternalAscendants = R.partialRight(extractAscendants, ['paternelle'])
-   const extractMaternalAscendants = R.partialRight(extractAscendants, ['maternelle'])
+   const extractPaternalAscendants = R.partial(extractAscendants, ['paternelle'])
+   const extractMaternalAscendants = R.partial(extractAscendants, ['maternelle'])
 
    return R.pipe(
        extractMother,
        extractFather,
        extractPaternalAscendants,
        extractMaternalAscendants,
-   )(family).debug()
+   )(family)
 }
 
+function extractAscendants (targetBranch: Branch, family: Family): Family {
 
-function extractAscendants (family: Family, targetBranch: Branch): Family {
-
-    function dfs(child: Member, targetBranch: Branch, visited = new Set<Member>()) {
-        visited.add(child)
+    function dfs(child: Member, targetBranch: Branch) {
 
         if (!child) return
 
@@ -44,8 +42,7 @@ function extractAscendants (family: Family, targetBranch: Branch): Family {
             if (child.attributes.branch === 'maternelle') parent.attributes.branch = 'maternelle'
             else if (child.attributes.branch === 'paternelle') parent.attributes.branch = 'paternelle'
             
-            visited.add(parent)
-            dfs(parent, targetBranch, visited)
+            dfs(parent, targetBranch)
         }
     }
     dfs (family.deCujus, targetBranch)
@@ -55,7 +52,7 @@ function extractAscendants (family: Family, targetBranch: Branch): Family {
 
 export const assignFenteCollaterale: Refine = (family) => {
 
-    if (bothParentOfDeCujusAreUndefined(family)) {
+    if (bothParentsOfDeCujusAreUndefined(family)) {
         console.debug('Error: the de Cujus parents must be both not undefined when trying to assign the fente collatérale.')
         return family
     }
@@ -109,6 +106,6 @@ const extractFather: Refine = (family) => {
     return family
 }
 
-function bothParentOfDeCujusAreUndefined(family: Family) {
+function bothParentsOfDeCujusAreUndefined(family: Family) {
     return family.findParentsOf(family.deCujus.member_id)[0] === undefined || family.findParentsOf(family.deCujus.member_id)[1] === undefined
 }

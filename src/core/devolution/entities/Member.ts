@@ -109,13 +109,6 @@ export class Member extends Entity<MemberProps> {
                 Object.assign({}, this.props.value.attributes, {attributes: {...this.props.value.attributes, ...attributesToUpdate}})));
     }
 
-    public isReprésentéIn(family: Family): Représenté {  
-        return (this.belongsTo(Ordre.Ordre1) || this.belongsTo(Ordre.Ordre2)) &&
-                (family.deCujus.hasChildEligibleToInheritIn(family) || family.deCujus.hasSiblingEligibleToInheritIn(family)) &&
-               !this.isEligibleToInherit() && 
-                this.hasChildEligibleToInheritIn(family)
-    }
-
     public belongsTo(ordre: Ordre): boolean {
         return this.attributes.ordre === ordre
     }
@@ -124,26 +117,20 @@ export class Member extends Entity<MemberProps> {
         return this.attributes.status === Status.Valid
     }
 
-    private hasChildEligibleToInheritIn(family: Family): boolean {
+    public hasChildEligibleToInheritIn(family: Family): boolean {
         //TODO: it should work if child of child is eligible to inherit
         return family.members
             .filter(member => this.childs.includes(member.member_id))
             .some(child => child.isEligibleToInherit())
     }
 
-    private hasSiblingEligibleToInheritIn(family: Family): boolean {
+    public hasSiblingEligibleToInheritIn(family: Family): boolean {
         return family.members
             .filter(member => member.attributes.ordre === 2 && member.attributes.degre === 2)
             .some(sibling => sibling.isEligibleToInherit())
     }
 
-    public isReprésentantIn(family: Family): boolean {
-        return this.isDescendantOfARepresenté(family) && //isNotParentOfDeCujus
-            this.isNotSiblingOfDeCujus(family) &&
-            this.member_id !== family.deCujus.member_id
-    }
-
-    private isNotSiblingOfDeCujus(family: Family) {
+    public isNotSiblingOfDeCujus(family: Family) {
         const parents = family.findParentsOf(family.deCujus.member_id);
         const siblingOfDeCujus = parents
             .filter(parent => parent !== undefined)
@@ -159,7 +146,7 @@ export class Member extends Entity<MemberProps> {
         return isNotSiblingOfDecujus;
     }
 
-    private isDescendantOfARepresenté(family: Family): boolean {
+    public isDescendantOfARepresenté(family: Family): boolean {
         return family.findParentsOf(this.member_id)
             .filter(parent => parent !== undefined)
             .some(parent => parent.isReprésenté === true)

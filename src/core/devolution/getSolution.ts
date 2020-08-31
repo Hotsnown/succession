@@ -27,6 +27,7 @@ export function getSolution (memberListFromUI: any, deCujusId: string, rootId: s
         )
 
     //TODO convert status 'invalid' | 'valid' to Status here and not in member's constructor
+    //TODO member where degree > 6 is not eligible to inherit
     
     try {
         return R.pipe(
