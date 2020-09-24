@@ -1,7 +1,7 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import { Family, Branch, Refine, TreeNode, Member } from "../../entities"
+import { Family, Branch, Refine, Member } from "../../entities"
 import { isMother, isFather } from '../inference'
 
 import * as R from 'ramda'
@@ -37,7 +37,7 @@ function extractAscendants (targetBranch: Branch, family: Family): Family {
         const parents = family.findParentsOf(family.findMember(child.member_id).member_id)
                                 .filter(member => member !== undefined);
 
-        for (const parent of parents) {
+        for (let parent of parents) {
 
             if (child.attributes.branch === 'maternelle') parent.attributes.branch = 'maternelle'
             else if (child.attributes.branch === 'paternelle') parent.attributes.branch = 'paternelle'
@@ -50,6 +50,10 @@ function extractAscendants (targetBranch: Branch, family: Family): Family {
     return family
 }
 
+/**
+ * - **Branche collatérale maternelle** : Given a deCujus, a node belongs to the branche maternelle if his ascendant is the deCujus’s mother's ascendant.
+ * - **Branche collatérale paternelle** : Given a deCujus, a node belongs to the branche paternelle if his ascendant is the deCujus’s father's ascendant
+*/
 export const assignFenteCollaterale: Refine = (family) => {
 
     if (bothParentsOfDeCujusAreUndefined(family)) {
@@ -57,39 +61,26 @@ export const assignFenteCollaterale: Refine = (family) => {
         return family
     }
 
-    const indexFamily = family.indexMembers()
-
-    indexFamily.members.forEach(member => {
-        if (!TreeNode.getTreeNode(member.index)) {
-            TreeNode.create(
-                member.index,
-                member.member_id,
-            )
-        }
-        if (member.childs) {
-            for (let child of member.childs) {
-                TreeNode.create(
-                    indexFamily.findMember(child).index, 
-                    indexFamily.findMember(child).member_id, 
-                    member.index
-                    )
-            }
-        }
-    })
-
-    const LCA = TreeNode.getTreeNode(indexFamily.findMember('maternal_grand_father').index)
-
-    indexFamily.findMember('maternal_grand_father').attributes.branch = 'maternelle'
-
-    for (const ascendant of TreeNode.getTreeNode(indexFamily.findMember('mother').index).ancestors()) {
-        indexFamily.findMember(ascendant.label).attributes.branch = 'maternelle'
-    }
-    
-    for (const descendant of LCA.descendants()) {
-        indexFamily.findMember(descendant.label).attributes.branch = 'maternelle'
+    const extractMaternalCollaterals = R.partial(extractCollaterals, ['maternelle'])
+    const extractPaternalCollaterals = R.partial(extractCollaterals, ['paternelle'])
+   
+    function extractCollaterals(targetBranch: Branch, family: Family): Family {
+        const [target] = targetBranch === 'paternelle' ? family.members.filter(member => isFather(member)) : family.members.filter(member => isMother(member))
+        const extract = (member: Member): Member => {
+            if (isAscendant(family, member) || isDeCujus(member, family)) return member
+            return R.intersection(
+                family.ancestorsOf(target), 
+                family.ancestorsOf(member)
+                ).length > 0 ? member.copyWith({ branch: targetBranch}) : member}
+        return Family.create(R.map(extract, family.members), family.deCujus.member_id)
     }
 
-    return indexFamily
+    return R.pipe(
+        extractMother,
+        extractFather,
+        extractMaternalCollaterals,
+        extractPaternalCollaterals,
+    )(family)
 }
 
 const extractMother: Refine = (family) => {
@@ -104,6 +95,14 @@ const extractFather: Refine = (family) => {
         .filter(member => member.isParentOfDeCujus(family) && isFather(member))
         .forEach(member => member.attributes.branch = 'paternelle')
     return family
+}
+
+function isDeCujus(member: Member, family: Family) {
+    return member.member_id === family.deCujus.member_id
+}
+
+function isAscendant(family: Family, member: Member) {
+    return family.ancestorsOf(family.deCujus).map(m => m.member_id).includes(member.member_id)
 }
 
 function bothParentsOfDeCujusAreUndefined(family: Family) {

@@ -37,7 +37,7 @@ const isDescendant: qualifyOrdre = R.curry((nodeToQualify: Member, family: Famil
   const parents = family.findParentsOf(nodeToQualify.member_id).filter(parent => parent !== undefined)
   if (parents.map(parent => parent.member_id).includes(family.deCujus.member_id)) return true
   if (parents[0]) return isDescendant(parents[0], family)
-  if (parent[1]) return isDescendant(parents[1], family)
+  if (parents[1]) return isDescendant(parents[1], family)
   return false
 })
 

@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import DemoNavbar from '../components/Navbars/DemoNavbar';
 import Footer from "../components/Footer/Footer";
@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
 import { Documentation } from '../features/Explain/Documentation'
+import { Intro } from '../components/Intro/intro'
 
 interface MainProps {
 
@@ -62,6 +63,7 @@ class Main extends React.Component<MainProps, MainState> {
                 />
               );
             })}
+              <Route exact path="/" component={Intro} />
              <Route>
                 <Documentation />
             </Route>

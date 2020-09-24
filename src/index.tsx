@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 //import "./client/assets/scss/paper-dashboard.scss?v=1.2.0";
@@ -17,9 +17,7 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
-    <Switch>
-      <Route path="/" render={(props) => <Shell {...props} />} />
-    </Switch>
+      <Route path="/" component={Shell} />
   </Router>,
   document.getElementById("root")
 );

@@ -1,8 +1,9 @@
 import React from 'react'
 
 import Tree from './Tree/Tree'
-import { Tree2 } from './Tree2'
+import { App } from './Tree2/App'
 import initialTreeValue from './initialTreeValue'
+import { RouteComponentProps } from 'react-router-dom'
 
 interface ChartProps {
     renderTree: boolean;
@@ -11,7 +12,8 @@ interface ChartProps {
     handleUpdateDeCujus: (value: string) => void;
     onUpdateMemberList: (memberList: any) => void
 }
-export const Chart = (props: ChartProps) => {
+
+export const Chart = (props: ChartProps & RouteComponentProps) => {
     if (props.renderTree) {
         return (
             <Tree
@@ -22,7 +24,10 @@ export const Chart = (props: ChartProps) => {
         )
     } else {
         return (
-            <Tree2></Tree2>
+            <App 
+                {...props}
+                onUpdateMemberList={props.onUpdateMemberList}
+            ></App>
         )
     }
 }

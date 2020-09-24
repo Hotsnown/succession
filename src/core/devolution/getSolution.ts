@@ -1,7 +1,8 @@
 /* prettier-ignore */
 /*eslint-disable*/
 
-import treeParser from './services/tree-parser/tree-parser'
+//import treeParser from './services/tree-parser/tree-parser'
+import treeParser from './services/tree-parser2/index'
 import { getQualification } from './services/qualification/main'
 import { getDevolution } from './services/inference/main'
 import { Family, MemberConstructor, Status } from './entities'
@@ -11,7 +12,7 @@ import * as R from 'ramda'
 
 export function getSolution (memberListFromUI: any, deCujusId: string, rootId: string): Family {
     
-     if (memberListFromUI === undefined) {
+    if (memberListFromUI === undefined) {
         console.error("Error: member list data from UI is undefined")
         return (Family.create([], ''))
     }
@@ -19,6 +20,8 @@ export function getSolution (memberListFromUI: any, deCujusId: string, rootId: s
     const res = treeParser(memberListFromUI, deCujusId)
 
     const rawData: MemberConstructor[] = setDefaultAttributes(res)
+
+    console.log(rawData)
 
     const family = Family.create(
         Family.create(rawData, deCujusId, rootId).members.filter(member => member !== undefined),

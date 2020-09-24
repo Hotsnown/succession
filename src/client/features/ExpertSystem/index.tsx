@@ -11,11 +11,14 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { RawTree } from './Interface'
 import { Navbar } from 'reactstrap'
 import { FamilyDTO } from './Interface'
+import { RouteComponentProps } from 'react-router-dom'
 
-export const App = () => {
+export const App = (props: RouteComponentProps) => {
 
-    const { root, family } = getInitialDataFromUrl()
+    //const { root, family } = getInitialDataFromUrl()
 
+    const root = "deCujus"
+    const family = null
     const [memberList, setMemberList] = React.useState<any>({})
     const [deCujus, setDeCujus] = React.useState<string>('deCujus')
     const [results, setResults] = React.useState<FamilyDTO>({ members: [] })
@@ -26,6 +29,8 @@ export const App = () => {
     const handleToggle = () => setIsModalOpen(!isModalOpen);
 
     const processSolution = (): void => {
+
+        console.log(memberList)
         
         if (!isValidMemberList(memberList)) throw new Error()
         if (!isValidDeCujus(deCujus)) throw new Error()
@@ -47,6 +52,7 @@ export const App = () => {
                         <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
                     </Navbar>
                     <Chart
+                        {...props}
                         renderTree={false}
                         root={root}
                         family={family}
