@@ -6,8 +6,6 @@ import { Chart } from './Chart'
 import Container from 'react-bootstrap/Container'
 import { getSolution } from './../../../core/devolution/getSolution'
 import ResultModal from './Result'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { RawTree } from './Interface'
 import { Navbar } from 'reactstrap'
 import { FamilyDTO } from './Interface'
@@ -43,14 +41,6 @@ export const App = (props: RouteComponentProps) => {
         <>
             <div className="content">
                 <Container fluid>
-                    <Navbar>
-                        <h5>Current De Cujus : {deCujus}</h5>
-                        <ButtonGroup aria-label="Expert System Controller">
-                            <Button onClick={processSolution}>Update De Cujus</Button>
-                            <Button onClick={processSolution}>Click me</Button>
-                        </ButtonGroup>
-                        <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
-                    </Navbar>
                     <Chart
                         {...props}
                         renderTree={false}
@@ -58,7 +48,10 @@ export const App = (props: RouteComponentProps) => {
                         family={family}
                         handleUpdateDeCujus={handleUpdateDeCujus}
                         onUpdateMemberList={onUpdateMemberList}
+                        deCujus={deCujus}
+                        processSolution={processSolution}
                     />
+                    <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
                 </Container>
             </div>
         </>

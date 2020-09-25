@@ -126,7 +126,14 @@ interface State {
   freezeAnimation?: boolean;
 }
 
-export class App extends React.Component<RouteComponentProps & {onUpdateMemberList}, State> {
+interface AppProps {
+  onUpdateDeCujus: (value: string) => void;
+  onUpdateMemberList: (memberList: any) => void
+  deCujus: string
+  processSolution: () => void
+}
+
+export class App extends React.Component<RouteComponentProps & AppProps, State> {
 
   state: State = {
     state: AppState.INITIAL,
@@ -226,7 +233,6 @@ export class App extends React.Component<RouteComponentProps & {onUpdateMemberLi
       return;
     }
 
-
     const args = getArguments(this.props.location);
 
     if (!args.sourceSpec) {
@@ -268,12 +274,13 @@ export class App extends React.Component<RouteComponentProps & {onUpdateMemberLi
    */
   private onSelection = (selection: IndiInfo) => {
     analyticsEvent('selection_changed');
-    const location = this.props.location;
-    const search = queryString.parse(location.search);
-    search.indi = selection.id;
-    search.gen = String(selection.generation);
-    location.search = queryString.stringify(search);
-    this.props.history.push(location);
+    //const location = this.props.location;
+    //const search = queryString.parse(location.search);
+    //search.indi = selection.id;
+    //search.gen = String(selection.generation);
+    //location.search = queryString.stringify(search);
+    //this.props.history.push(location);
+    this.props.onUpdateDeCujus(selection.id)
   }; 
 
   private onPrint = () => {
@@ -380,6 +387,9 @@ export class App extends React.Component<RouteComponentProps & {onUpdateMemberLi
       <>
        <TopBar
             {...this.props}
+            deCujus={this.props.deCujus}
+            processSolution={this.props.processSolution}
+            title={"Ordre 1"}
             data={this.state.data && this.state.data.chartData}
             allowAllRelativesChart={true}
             showingChart={

@@ -39,7 +39,7 @@ export function getFirstAppliableOrdreNumber (family: Family): number {
             }
         }
     }
-    console.error('Should not be reachable')
+    throw new Error ('Should not be reachable')
 }
 
 function computePriviledgeAscendantOrdre(family: Family): Ordre.Ordre2 | Ordre.Ordre3 {

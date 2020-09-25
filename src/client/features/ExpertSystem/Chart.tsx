@@ -11,6 +11,8 @@ interface ChartProps {
     family: string;
     handleUpdateDeCujus: (value: string) => void;
     onUpdateMemberList: (memberList: any) => void
+    deCujus: string
+    processSolution: () => void
 }
 
 export const Chart = (props: ChartProps & RouteComponentProps) => {
@@ -27,6 +29,9 @@ export const Chart = (props: ChartProps & RouteComponentProps) => {
             <App 
                 {...props}
                 onUpdateMemberList={props.onUpdateMemberList}
+                onUpdateDeCujus={props.handleUpdateDeCujus}
+                deCujus={props.deCujus}
+                processSolution={props.processSolution}
             ></App>
         )
     }

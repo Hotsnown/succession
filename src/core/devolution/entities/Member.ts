@@ -26,8 +26,8 @@ export interface MemberConstructor {
 interface MemberAttributes {
         degre: ExtendedDegree | 'unassigned';
         ordre: ExtendedOrdre | 'unassigned';
-        status: Status | 'valid' | 'invalid';
-        spouse: Spouse | 'unassigned'
+        status: Status;
+        spouse: Spouse
         legalRights: LegalRight | 'unassigned';
         branch: Branch | 'unassigned';
         isReprésenté: Représenté | 'unassigned';

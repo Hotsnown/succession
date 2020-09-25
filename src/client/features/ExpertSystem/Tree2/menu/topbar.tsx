@@ -2,13 +2,22 @@ import * as queryString from 'query-string';
 import * as React from 'react';
 import {IndiInfo, JsonGedcomData} from 'topola';
 import {Link, RouteComponentProps} from 'react-router-dom';
-import {MenuType} from './menu-item';
-import {Icon, Menu, Dropdown, Responsive} from 'semantic-ui-react';
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
-enum ScreenSize {
-  LARGE,
-  SMALL,
-}
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Container,
+} from 'reactstrap';
 
 interface EventHandlers {
   onSelection: (indiInfo: IndiInfo) => void;
@@ -24,9 +33,13 @@ interface Props {
   standalone: boolean;
   allowAllRelativesChart: boolean;
   eventHandlers: EventHandlers;
+  title: string
+  deCujus: string
+  processSolution: () => void
 }
 
 export class TopBar extends React.Component<RouteComponentProps & Props> {
+  
   private changeView(view: string) {
     const location = this.props.location;
     const search = queryString.parse(location.search);
@@ -37,246 +50,107 @@ export class TopBar extends React.Component<RouteComponentProps & Props> {
     }
   }
 
-  private chartMenus(screenSize: ScreenSize) {
-    if (!this.props.showingChart) {
-      return null;
-    }
-    const chartTypeItems = (
-      <>
-        <Dropdown.Item onClick={() => this.changeView('hourglass')}>
-          <Icon name="hourglass" />
-          Hourglass chart
-        </Dropdown.Item>
-        {this.props.allowAllRelativesChart ? (
-          <Dropdown.Item onClick={() => this.changeView('relatives')}>
-            <Icon name="users" />
-            All relatives
-          </Dropdown.Item>
-        ) : null}
-        <Dropdown.Item onClick={() => this.changeView('fancy')}>
-          <Icon name="users" />
-            Fancy tree (experimental)
-        </Dropdown.Item>
-      </>
-    );
-    switch (screenSize) {
-      case ScreenSize.LARGE:
-        return (
-          <>
-            <Menu.Item onClick={() => this.props.eventHandlers.onPrint()}>
-              <Icon name="print" />
-              Print
-            </Menu.Item>
-
-            <Dropdown
-              trigger={
-                <div>
-                  <Icon name="download" />
-                  Download
-                </div>
-              }
-              className="item"
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() => this.props.eventHandlers.onDownloadPdf()}
-                  text={'PDF file'}
-                >
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => this.props.eventHandlers.onDownloadPng()}
-                  text={'PNG file'}
-                >
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => this.props.eventHandlers.onDownloadSvg()}
-                  text={'SVG file'}
-                >
-                  
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown
-              trigger={
-                <div>
-                  <Icon name="eye" />
-                  View
-                </div>
-              }
-              className="item"
-            >
-              <Dropdown.Menu>{chartTypeItems}</Dropdown.Menu>
-            </Dropdown>
-          </>
-        );
-
-      case ScreenSize.SMALL:
-        return (
-          <>
-            <Dropdown.Item onClick={() => this.props.eventHandlers.onPrint()}>
-              <Icon name="print" />
-              Print
-            </Dropdown.Item>
-
-            <Dropdown.Divider />
-
-            <Dropdown.Item
-              onClick={() => this.props.eventHandlers.onDownloadPdf()}
-            >
-              <Icon name="download" />
-              Download PDF
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => this.props.eventHandlers.onDownloadPng()}
-            >
-              <Icon name="download" />
-              Download PNG
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => this.props.eventHandlers.onDownloadSvg()}
-            >
-              <Icon name="download" />
-              Download SVG
-            </Dropdown.Item>
-
-            <Dropdown.Divider />
-            {chartTypeItems}
-            <Dropdown.Divider />
-          </>
-        );
-    }
-  }
-
-  private title() {
-    return (
-      <Menu.Item>
-        <b>Topola Genealogy</b>
-      </Menu.Item>
-    );
-  }
-
-  private fileMenus(screenSize: ScreenSize) {
-    // Don't show "open" menus in non-standalone mode.
-    if (!this.props.standalone) {
-      return null;
-    }
-
-    switch (screenSize) {
-      case ScreenSize.LARGE:
-        // Show dropdown if chart is shown, otherwise show individual menu
-        // items.
-        const menus = this.props.showingChart ? (
-          <Dropdown
-            trigger={
-              <div>
-                <Icon name="folder open" />
-                Open
-              </div>
-            }
-            className="item"
-          >
-            <Dropdown.Menu>
-            UploadMenu
-            UrlMenu
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <>
-            UploadMenu
-            UrlMenu
-          </>
-        );
-        return menus;
-
-      case ScreenSize.SMALL:
-        return (
-          <>
-            UploadMenu
-            UrlMenu
-            <Dropdown.Divider />
-          </>
-        );
-    }
-  }
-
-  private mobileMenus() {
-    return (
-      <>
-        <Dropdown
-          trigger={
-            <div>
-              <Icon name="sidebar" />
-            </div>
-          }
-          className="item"
-          icon={null}
-        >
-          <Dropdown.Menu>
-            {this.fileMenus(ScreenSize.SMALL)}
-            {this.chartMenus(ScreenSize.SMALL)}
-
-            <Dropdown.Item
-              href="https://github.com/PeWu/topola-viewer"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Source on GitHub
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        {this.props.standalone ? (
-          <Link to="/">{this.title()}</Link>
-        ) : (
-          this.title()
-        )}
-      </>
-    );
-  }
-
-  private desktopMenus() {
-    return (
-      <>
-        {this.props.standalone ? <Link to="/">{this.title()}</Link> : null}
-        {this.fileMenus(ScreenSize.LARGE)}
-        {this.chartMenus(ScreenSize.LARGE)}
-        <Menu.Menu position="right">
-          <Menu.Item
-            href="https://github.com/PeWu/topola-viewer"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub project
-          </Menu.Item>
-        </Menu.Menu>
-      </>
-    );
-  }
-
   render() {
     return (
-      <>
-        <Responsive
-          as={Menu}
-          attached="top"
-          inverted
-          color="blue"
-          size="large"
-          minWidth={768}
-        >
-          {this.desktopMenus()}
-        </Responsive>
-        <Responsive
-          as={Menu}
-          attached="top"
-          inverted
-          color="blue"
-          size="large"
-          maxWidth={767}
-        >
-          {this.mobileMenus()}
-        </Responsive>
-      </>
-    );
+      <Navbar
+        color={"dark"}
+        expand="lg"
+      >
+        <Container fluid>
+          <div className="navbar-wrapper">
+            <NavbarBrand href="/">{this.props.title}</NavbarBrand>
+          </div>
+          <NavbarToggler onClick={() => {}}>
+            <span className="navbar-toggler-bar navbar-kebab" />
+            <span className="navbar-toggler-bar navbar-kebab" />
+            <span className="navbar-toggler-bar navbar-kebab" />
+          </NavbarToggler>
+          <Collapse
+            isOpen={true}
+            navbar
+            className="justify-content-end"
+          >
+            <Nav navbar>
+            <h5 style={{color: "white"}}>Current De Cujus : {this.props.deCujus}</h5>
+            <ButtonGroup aria-label="Expert System Controller">
+                <Button onClick={this.props.processSolution}>Update De Cujus</Button>
+                <Button onClick={this.props.processSolution}>Click me</Button>
+            </ButtonGroup>
+=              <Dropdown
+                nav
+                isOpen={true}
+                toggle={() => {}}
+              >
+                <DropdownToggle caret nav>
+                  <i className="nc-icon nc-bell-55" />
+                  <p>
+                    <span className="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </DropdownToggle>
+                <DropdownMenu right>
+                <DropdownItem onClick={() => this.changeView('hourglass')}>
+                  <i className="hourglass" />
+                  Hourglass chart
+                </DropdownItem>
+                <DropdownItem onClick={() => this.changeView('relatives')}>
+                  <i className="users" />
+                  All relatives Chart
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+              <Dropdown
+                nav
+                isOpen={true}
+                toggle={() => {}}
+              >
+                <DropdownToggle caret nav>
+                  <i className="nc-icon nc-bell-55" />
+                  <p>
+                    <span className="d-lg-none d-md-block">Download</span>
+                  </p>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={() => this.props.eventHandlers.onDownloadPdf()}>
+                    <i className="hourglass" />
+                    Download PDF
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.props.eventHandlers.onDownloadPng()}>
+                    <i className="users" />
+                    Download PNG
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.props.eventHandlers.onDownloadSvg()}>
+                    Download SVG
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+              <Dropdown
+                nav
+                isOpen={true}
+                toggle={() => {}}
+              >
+                <DropdownToggle caret nav>
+                  <i className="nc-icon nc-bell-55" />
+                  <p>
+                    <span className="d-lg-none d-md-block">Open</span>
+                  </p>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    UploadMenu
+                  </DropdownItem>
+                  <DropdownItem>
+                    UrlMenu
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+              <NavItem onClick={() => this.props.eventHandlers.onPrint()}>
+                <i className="print" />
+                <p style={{color: "white"}}>Print</p>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Container>
+      </Navbar>
+    )
   }
 }
