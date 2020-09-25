@@ -11,7 +11,7 @@ function parseGEDCOM(memberListFromUI: GEDCOM): MemberConstructor[] {
         member_id: indi.id,
         childs: getChildsFromId(memberListFromUI, indi.id),
         attributes: {
-            status: Status.Valid,
+            status: indi.status,
             degre: 'unassigned',
             ordre: 'unassigned',
             spouse: getSpouseFromId(memberListFromUI, indi.id),
