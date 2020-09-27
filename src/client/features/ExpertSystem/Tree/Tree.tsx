@@ -1,9 +1,8 @@
-import * as H from 'history';
 import * as queryString from 'query-string';
 import * as React from 'react';
 import {analyticsEvent} from '../../../utils/analytics';
 import {Chart, ChartType} from './Chart';
-import {Details} from './details';
+import {Details} from './Details';
 import {EmbeddedDataSource, EmbeddedSourceSpec} from './datasources/embedded';
 import {TopolaData} from '../../../utils/gedcom-utils';
 import {IndiInfo} from 'topola';
@@ -17,9 +16,10 @@ import {
   GedcomUrlDataSource,
   UploadedDataSource,
 } from './datasources/load_data';
-import { ErrorPopup, ErrorMessage } from './ErrorMessage';
+import { ErrorPopup, ErrorMessage } from '../../../components/Notification/ErrorMessage';
 import { data } from './datasources2/Ordre1'
 import { RouteComponentProps } from 'react-router-dom';
+import { getArguments, hasUpdatedValues } from './controller';
 
 enum TreeState {
   INITIAL,
@@ -29,89 +29,10 @@ enum TreeState {
   LOADING_MORE,
 }
 
-type DataSourceSpec =
+export type DataSourceSpec =
   | UrlSourceSpec
   | UploadSourceSpec
   | EmbeddedSourceSpec;
-
-/** Arguments passed to the application, primarily through URL parameters. */
-interface Arguments {
-  sourceSpec?: DataSourceSpec;
-  selection?: IndiInfo;
-  chartType: ChartType;
-  standalone: boolean;
-  freezeAnimation?: boolean;
-  showSidePanel: boolean;
-}
-
-/**
- * Retrieve arguments passed into the application through the URL and uploaded
- * data.
- */
-function getArguments(location: H.Location<any>): Arguments {
-  const search = queryString.parse(location.search);
-  const getParam = (name: string) => {
-    const value = search[name];
-    return typeof value === 'string' ? value : undefined;
-  };
-
-  const view = getParam('view');
-  const chartTypes = new Map<string | undefined, ChartType>([
-    ['relatives', ChartType.Relatives],
-    ['fancy', ChartType.Fancy],
-  ]);
-
-  const hash = getParam('file');
-  const url = getParam('url');
-  const embedded = getParam('embedded') === 'true'; // False by default.
-  var sourceSpec: DataSourceSpec | undefined = undefined;
-  if (hash) {
-    sourceSpec = {
-      source: DataSourceEnum.UPLOADED,
-      hash,
-      gedcom: location.state && location.state.data,
-      images: location.state && location.state.images,
-    };
-  } else if (url) {
-    sourceSpec = {
-      source: DataSourceEnum.GEDCOM_URL,
-      url,
-      handleCors: getParam('handleCors') !== 'false', // True by default.
-    };
-  } else if (embedded) {
-    sourceSpec = {source: DataSourceEnum.EMBEDDED};
-  }
-
-  const indi = getParam('indi');
-  const parsedGen = Number(getParam('gen'));
-  const selection = indi
-    ? {id: indi, generation: !isNaN(parsedGen) ? parsedGen : 0}
-    : undefined;
-
-  return {
-    sourceSpec,
-    selection,
-    // Hourglass is the default view.
-    chartType: chartTypes.get(view) || ChartType.Hourglass,
-
-    showSidePanel: getParam('sidePanel') !== 'false', // True by default.
-    standalone: getParam('standalone') !== 'false' && !embedded,
-    freezeAnimation: getParam('freeze') === 'true', // False by default
-  };
-}
-
-/**
- * Returs true if the changes object has values that are different than those
- * in state.
- */
-function hasUpdatedValues<T>(state: T, changes: Partial<T> | undefined) {
-  if (!changes) {
-    return false;
-  }
-  return Object.entries(changes).some(
-    ([key, value]) => value !== undefined && state[key] !== value,
-  );
-}
 
 interface State {
   state: TreeState;
@@ -253,8 +174,6 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
       );
       try {
         const data = await this.loadData(args.sourceSpec, args.selection);
-        console.log(data)
-        // Set state with data.
         this.setState(
           Object.assign({}, this.state, {
             state: TreeState.SHOWING_CHART,
@@ -274,13 +193,15 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
    */
   private onSelection = (selection: IndiInfo) => {
     analyticsEvent('selection_changed');
-    //const location = this.props.location;
-    //const search = queryString.parse(location.search);
-    //search.indi = selection.id;
-    //search.gen = String(selection.generation);
+    const location = this.props.location;
+    const search = queryString.parse(location.search);
+    search.indi = selection.id;
+    search.gen = String(selection.generation);
+    console.log(search)
     //location.search = queryString.stringify(search);
     //this.props.history.push(location);
     this.props.onUpdateDeCujus(selection.id)
+    this.setState({showSidePanel: true})
   }; 
 
   private onPrint = () => {
@@ -354,8 +275,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
               <Loader active size="small" className="loading-more" />
             ) : null}
             <Chart
-              //data={this.state.data!.chartData}
-              data={data}
+              data={this.state.data!.chartData}
               selection={this.state.selection!}
               chartType={this.state.chartType}
               onSelection={this.onSelection}

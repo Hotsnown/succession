@@ -2,7 +2,7 @@
 /*eslint-disable*/
 
 import React from 'react'
-import { Chart } from './Chart'
+import { Tree } from './Tree/Tree'
 import Container from 'react-bootstrap/Container'
 import { getSolution } from './../../../core/devolution/getSolution'
 import ResultModal from './Result'
@@ -41,16 +41,13 @@ export const App = (props: RouteComponentProps) => {
         <>
             <div className="content">
                 <Container fluid>
-                    <Chart
+                    <Tree 
                         {...props}
-                        renderTree={false}
-                        root={root}
-                        family={family}
-                        handleUpdateDeCujus={handleUpdateDeCujus}
                         onUpdateMemberList={onUpdateMemberList}
+                        onUpdateDeCujus={handleUpdateDeCujus}
                         deCujus={deCujus}
                         processSolution={processSolution}
-                    />
+                    ></Tree>
                     <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
                 </Container>
             </div>

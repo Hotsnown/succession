@@ -38,8 +38,19 @@ interface Props {
   processSolution: () => void
 }
 
-export class TopBar extends React.Component<RouteComponentProps & Props> {
+interface State {
+  dropdownOpen: boolean
+}
+
+export class TopBar extends React.Component<RouteComponentProps & Props, State> {
   
+  constructor(props) {
+    super(props)
+    this.state = {
+      dropdownOpen: false
+    }
+  }
+
   private changeView(view: string) {
     const location = this.props.location;
     const search = queryString.parse(location.search);
@@ -48,6 +59,12 @@ export class TopBar extends React.Component<RouteComponentProps & Props> {
       location.search = queryString.stringify(search);
       this.props.history.push(location);
     }
+  }
+
+  private dropdownToggle(e: any) {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+    });
   }
 
   render() {
@@ -78,8 +95,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props> {
             </ButtonGroup>
 =              <Dropdown
                 nav
-                isOpen={true}
-                toggle={() => {}}
+                isOpen={this.state.dropdownOpen}
+                toggle={(e: any) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
@@ -100,8 +117,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props> {
               </Dropdown>
               <Dropdown
                 nav
-                isOpen={true}
-                toggle={() => {}}
+                isOpen={this.state.dropdownOpen}
+                toggle={(e: any) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
@@ -125,8 +142,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props> {
               </Dropdown>
               <Dropdown
                 nav
-                isOpen={true}
-                toggle={() => {}}
+                isOpen={this.state.dropdownOpen}
+                toggle={(e: any) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
