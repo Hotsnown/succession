@@ -17,7 +17,7 @@ import {
   UploadedDataSource,
 } from './datasources/load_data';
 import { ErrorPopup, ErrorMessage } from '../../../components/Notification/ErrorMessage';
-import { data } from './datasources2/Ordre1'
+import { ordre4 } from './datasources2/Ordre4'
 import { RouteComponentProps } from 'react-router-dom';
 import { getArguments, hasUpdatedValues } from './controller';
 
@@ -259,7 +259,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
 
   private renderMainArea = () => {
     
-    this.props.onUpdateMemberList(data)
+    this.props.onUpdateMemberList(ordre4)
 
     switch (this.state.state) {
       case TreeState.SHOWING_CHART:
@@ -275,7 +275,8 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
               <Loader active size="small" className="loading-more" />
             ) : null}
             <Chart
-              data={this.state.data!.chartData}
+              data={ordre4}
+              //data={this.state.data!.chartData}
               selection={this.state.selection!}
               chartType={this.state.chartType}
               onSelection={this.onSelection}

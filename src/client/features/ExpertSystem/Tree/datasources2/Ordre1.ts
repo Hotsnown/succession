@@ -1,17 +1,6 @@
-import { JsonGedcomData, TreeNode } from 'topola'
 import { Status } from '../../../../../core/devolution/entities'
+import { extendedJsonGedcomData } from './extendedJsonGedcomData'
 
-interface extendedJsonGedcomData extends JsonGedcomData {
-    indis: ExtendedIndi[]
-}
-
-interface ExtendedIndi  {
-    status: Status
-    id: string
-    firstName: string
-    fams?: string[]
-    famc?: string
-}
 export const data: extendedJsonGedcomData = {
     indis: [
         {

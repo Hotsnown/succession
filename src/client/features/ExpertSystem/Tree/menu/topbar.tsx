@@ -1,7 +1,7 @@
 import * as queryString from 'query-string';
 import * as React from 'react';
 import {IndiInfo, JsonGedcomData} from 'topola';
-import {Link, RouteComponentProps} from 'react-router-dom';
+import { RouteComponentProps} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -39,7 +39,9 @@ interface Props {
 }
 
 interface State {
-  dropdownOpen: boolean
+  dataSourceDropdownOpen: boolean
+  viewDropdownOpen: boolean
+  downloadDropdownOpen: boolean
 }
 
 export class TopBar extends React.Component<RouteComponentProps & Props, State> {
@@ -47,23 +49,37 @@ export class TopBar extends React.Component<RouteComponentProps & Props, State> 
   constructor(props) {
     super(props)
     this.state = {
-      dropdownOpen: false
+      dataSourceDropdownOpen: false,
+      viewDropdownOpen: false,
+      downloadDropdownOpen: false
     }
   }
 
   private changeView(view: string) {
     const location = this.props.location;
     const search = queryString.parse(location.search);
+    console.log(search.view)
     if (search.view !== view) {
       search.view = view;
-      location.search = queryString.stringify(search);
-      this.props.history.push(location);
+      this.props.history.push("view?" + queryString.stringify(search));
     }
   }
 
-  private dropdownToggle(e: any) {
+  private dataSourceDropdownToggle(e: any) {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen,
+      dataSourceDropdownOpen: !this.state.dataSourceDropdownOpen,
+    });
+  }
+
+  private viewDropdownToggle(e: any) {
+    this.setState({
+      viewDropdownOpen: !this.state.viewDropdownOpen,
+    });
+  }
+
+  private downloadDropdownToggle(e: any) {
+    this.setState({
+      downloadDropdownOpen: !this.state.downloadDropdownOpen,
     });
   }
 
@@ -95,8 +111,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props, State> 
             </ButtonGroup>
 =              <Dropdown
                 nav
-                isOpen={this.state.dropdownOpen}
-                toggle={(e: any) => this.dropdownToggle(e)}
+                isOpen={this.state.viewDropdownOpen}
+                toggle={(e: any) => this.viewDropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
@@ -117,8 +133,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props, State> 
               </Dropdown>
               <Dropdown
                 nav
-                isOpen={this.state.dropdownOpen}
-                toggle={(e: any) => this.dropdownToggle(e)}
+                isOpen={this.state.downloadDropdownOpen}
+                toggle={(e: any) => this.downloadDropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
@@ -142,8 +158,8 @@ export class TopBar extends React.Component<RouteComponentProps & Props, State> 
               </Dropdown>
               <Dropdown
                 nav
-                isOpen={this.state.dropdownOpen}
-                toggle={(e: any) => this.dropdownToggle(e)}
+                isOpen={this.state.dataSourceDropdownOpen}
+                toggle={(e: any) => this.dataSourceDropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
