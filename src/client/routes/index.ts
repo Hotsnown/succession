@@ -18,13 +18,6 @@ export interface Route {
 
 const routes: Route[] = [
   {
-    path: '/dashboard',
-    name: 'Tree',
-    icon: 'nc-icon nc-bank',
-    component: ExpertSystem,
-    layout: '/succession',
-  },
-  {
     path: '/tables',
     name: 'Explore',
     icon: 'nc-icon nc-tile-56',

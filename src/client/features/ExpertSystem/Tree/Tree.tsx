@@ -147,7 +147,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
 
   async componentDidUpdate() {
 
-    if (this.props.location.pathname !== '/succession/dashboard/view') {
+    if (this.props.location.pathname !== '/succession/tree/view') {
       if (this.state.state !== TreeState.INITIAL) {
         this.setState(Object.assign({}, this.state, {state: TreeState.INITIAL}));
       }

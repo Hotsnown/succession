@@ -11,14 +11,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import './client/assets/css/paper-dashboard.css'
 import './client/assets/demo/demo.css'
 
-import Shell from "./client/layout/shell";
+import Main from "./client/layout/shell";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-      <Route path="/" component={Shell} />
-  </Router>,
+  <Main />,
   document.getElementById("root")
 );
 

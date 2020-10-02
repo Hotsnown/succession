@@ -10,8 +10,15 @@ import { RawTree } from './Interface'
 import { Navbar } from 'reactstrap'
 import { FamilyDTO } from './Interface'
 import { RouteComponentProps } from 'react-router-dom'
+import { getFacts } from '../../../core/explain/getFacts'
+import { Facts } from '../../../core/explain/facts'
+import { Family } from '../../../core/devolution/entities'
 
-export const App = (props: RouteComponentProps) => {
+interface Props {
+    onHandleSolution: (facts: Facts) => void
+}
+
+export const App = (props: RouteComponentProps & Props) => {
 
     //const { root, family } = getInitialDataFromUrl()
 
@@ -21,20 +28,31 @@ export const App = (props: RouteComponentProps) => {
     const [deCujus, setDeCujus] = React.useState<string>('deCujus')
     const [results, setResults] = React.useState<FamilyDTO>({ members: [] })
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [facts, setFacts] = React.useState<Facts>({} as Facts)
+    const [solution, setSolution] = React.useState<Family>({} as Family)
 
     const onUpdateMemberList = (memberList: any) => setMemberList(memberList)
     const handleUpdateDeCujus = (value: string) => setDeCujus(value)
     const handleToggle = () => setIsModalOpen(!isModalOpen);
 
     const processSolution = (): void => {
-
-        console.log(memberList)
         
         if (!isValidMemberList(memberList)) throw new Error()
         if (!isValidDeCujus(deCujus)) throw new Error()
 
-        setResults(getSolution(memberList, deCujus, root))
+        const solution = getSolution(memberList, deCujus, root)
+
+        setResults(solution)
         setIsModalOpen(true)
+        setSolution(solution)
+
+    }
+
+    const handleExplain = (memberId: string) => {
+        const facts:Facts = getFacts(solution, memberId)
+        console.log(facts)
+        setFacts(facts)
+        props.onHandleSolution(facts)
     }
 
     return (
@@ -48,7 +66,13 @@ export const App = (props: RouteComponentProps) => {
                         deCujus={deCujus}
                         processSolution={processSolution}
                     ></Tree>
-                    <ResultModal results={results} isModalOpen={isModalOpen} toggle={handleToggle} />
+                    <ResultModal 
+                        results={results} 
+                        isModalOpen={isModalOpen} 
+                        toggle={handleToggle}
+                        facts={facts}
+                        handleExplain={handleExplain}
+                    />
                 </Container>
             </div>
         </>

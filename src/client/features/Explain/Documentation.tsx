@@ -1,10 +1,17 @@
 import React from 'react'
-import { Documentation as Docu } from 'publicodes'
+import Engine, { Documentation as Docu } from 'publicodes'
 import { useLocation } from 'react-router-dom'
 import { SearchBar } from './SearchBar'
-import { engine } from '../../../core/explain/main'
+import { rules } from '../../../core/explain/rules'
+import { Facts } from '../../../core/explain/facts'
 
-export const Documentation = () => {
+interface Props {
+    facts: Facts
+}
+
+export const Documentation = ({ facts }: Props) => {
+
+    const engine = new Engine(rules).setSituation({ ...facts })
 
     const { pathname } = useLocation()
 
@@ -18,17 +25,20 @@ export const Documentation = () => {
 
     return (
         <div className='content'>
-            <Docu language={'fr'} engine={engine} documentationPath={'/documentation'} />
+            <Docu
+                language={'fr'}
+                engine={engine}
+                documentationPath={'/documentation'}
+            />
         </div>
+
     )
 }
 
 function DocumentationLanding({ rules }) {
     return (
         <>
-            <h1>
-                Documentation
-			</h1>
+            <h1>Documentation</h1>
             <p>Explorez toutes les règles de la documentation</p>
             <SearchBar rules={rules} showDefaultList={true} />
         </>

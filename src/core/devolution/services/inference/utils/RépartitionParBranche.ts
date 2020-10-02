@@ -3,8 +3,6 @@ import { repartitionParTête, excludeInheligible } from '..'
 import { assignFenteAscendante } from '../../qualification/Fente'
 
 export const répartitionParBranche = (family: Family, shares: LegalRight = LegalRight.percent('100%')): Family => {
-   console.log('ICI')
-   family.debug()
    const { maternals, paternals } = assignFenteAscendante(family).getBranches()
 
     if (nobodyRemainingIn(maternals, family)) {
@@ -38,7 +36,7 @@ export const répartitionParBranche = (family: Family, shares: LegalRight = Lega
     }
 }
 
-function nobodyRemainingIn(side: Family, wholeFamily: Family): boolean {
+export function nobodyRemainingIn(side: Family, wholeFamily: Family): boolean {
     return excludeInheligible(side, wholeFamily).members.length === 0
  }
 
