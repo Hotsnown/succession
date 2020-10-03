@@ -2,15 +2,13 @@
 /*eslint-disable*/
 
 import React from 'react'
-import { FamilyDTO } from '../Interface'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Engine, { Documentation, RuleLink } from 'publicodes';
-import { rules } from '../../../../core/explain/rules'
-import { setSituation, Facts } from '../../../../core/explain/facts'
+import { FamilyResultDTO } from '../Interface'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Badge } from 'reactstrap';
+import { Facts } from '../../../../core/explain/facts'
 import { Link } from 'react-router-dom'
 
 interface ResultProps {
-    results: FamilyDTO
+    results: FamilyResultDTO
     isModalOpen: boolean
     facts: Facts
     toggle: () => void
@@ -24,23 +22,23 @@ const ResultModal = ({ results, isModalOpen, toggle, handleExplain }: ResultProp
       <Modal isOpen={isModalOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>Results</ModalHeader>
         <ModalBody>
-            <ul>
+            <ListGroup flush>
                 {results.members
                     .filter((member) => member !== undefined &&
                                         member.attributes.legalRights !== 'unassigned' && 
                                         member.attributes.legalRights!.isNotZero())
                     .map((member, index) =>
-                    <li key={index}>
-                      {member.member_id} : {member.attributes.legalRights.toString()}
+                    <ListGroupItem key={index}>
+                      {member.member_id.toUpperCase()} : {member.attributes.legalRights.toString()}{' '}
                       <Link onClick={() => handleExplain(member.member_id)} to={"../../documentation/droitsDePierre"}> 
-                      Explain me!
+                        <Badge className="float-right">Explain me!</Badge>
                       </Link>
-                    </li>)}
-            </ul>
+                    </ListGroupItem>)}
+            </ListGroup>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
-          <Link to={"../../documentation/droitsDePierre"}>ICI</Link>
+          <Link style={{color: "white"}} to={"../../succession/documentation"}>Documentation</Link>
           </Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>

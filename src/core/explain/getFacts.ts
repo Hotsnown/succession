@@ -5,10 +5,6 @@ import { nobodyRemainingIn } from "../devolution/services/inference/utils/Répar
 import { assignFenteAscendante } from "../devolution/services/qualification/Fente"
 
 export function getFacts(family: Family, memberId: string): Facts {
-
-
-
-
     return {
         "nombreDeMembresDuDegreSuccessible" : nombreDeMembresDuDegreSuccessible(family, family),
         "nombreDeMembresDeLordreFictif" : 2,
