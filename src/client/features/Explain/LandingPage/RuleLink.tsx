@@ -1,8 +1,8 @@
 import Engine, { RuleLink as EngineRuleLink } from 'publicodes'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { rules } from '../../../core/explain/rules'
-import { Facts } from '../../../core/explain/facts'
+import { rules } from '../../../../core/explain/rules'
+import { Facts } from '../../../../core/explain/facts'
 
 type DottedName = any
 

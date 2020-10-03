@@ -1,9 +1,9 @@
 import React from 'react'
 import Engine, { Documentation as Docu } from 'publicodes'
 import { useLocation } from 'react-router-dom'
-import { SearchBar } from './SearchBar'
-import { rules } from '../../../core/explain/rules'
-import { Facts } from '../../../core/explain/facts'
+import { rules } from '../../../core/explain/rules' //TODO extract to DTO
+import { Facts } from '../../../core/explain/facts' //TODO extract to DTO
+import { DocumentationLanding } from './LandingPage/DocumentationLanding'
 
 interface Props {
     facts: Facts
@@ -31,16 +31,5 @@ export const Documentation = ({ facts }: Props) => {
                 documentationPath={'/documentation'}
             />
         </div>
-
-    )
-}
-
-function DocumentationLanding({ rules }) {
-    return (
-        <>
-            <h1>Documentation</h1>
-            <p>Explorez toutes les règles de la documentation</p>
-            <SearchBar rules={rules} showDefaultList={true} />
-        </>
     )
 }

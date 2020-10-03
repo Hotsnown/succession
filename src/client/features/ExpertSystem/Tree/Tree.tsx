@@ -17,9 +17,10 @@ import {
   UploadedDataSource,
 } from './datasources/load_data';
 import { ErrorPopup, ErrorMessage } from '../../../components/Notification/ErrorMessage';
-import { ordre4 } from './datasources2/Ordre4'
 import { RouteComponentProps } from 'react-router-dom';
 import { getArguments, hasUpdatedValues } from './controller';
+import Ordre1 from '../../Explore/Illustrations'
+import Ordre2 from '../../Explore/examples/Ordre2';
 
 enum TreeState {
   INITIAL,
@@ -45,6 +46,7 @@ interface State {
   showErrorPopup: boolean;
   sourceSpec?: DataSourceSpec;
   freezeAnimation?: boolean;
+  urlData: any
 }
 
 interface TreeProps {
@@ -61,8 +63,11 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
     standalone: true,
     chartType: ChartType.Hourglass,
     showErrorPopup: false,
+    urlData: JSON.parse(new URL(window.location.href).searchParams.get("data"))
   };
   chartRef: Chart | null = null;
+
+  
 
   /** Sets the state with a new individual selection and chart type. */
   private updateDisplay(
@@ -162,7 +167,6 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
       this.state.state === TreeState.INITIAL ||
       this.isNewData(args.sourceSpec, args.selection)
     ) {
-      // Set loading state.
       this.setState(
         Object.assign({}, this.state, {
           state: TreeState.LOADING,
@@ -184,7 +188,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
       } catch (error) {
         this.setError(error.message);
       }
-    }
+    } 
   }
 
   /**
@@ -197,7 +201,6 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
     const search = queryString.parse(location.search);
     search.indi = selection.id;
     search.gen = String(selection.generation);
-    console.log(search)
     //location.search = queryString.stringify(search);
     //this.props.history.push(location);
     this.props.onUpdateDeCujus(selection.id)
@@ -258,8 +261,8 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
   };
 
   private renderMainArea = () => {
-    
-    this.props.onUpdateMemberList(ordre4)
+
+    this.props.onUpdateMemberList(this.state.urlData)
 
     switch (this.state.state) {
       case TreeState.SHOWING_CHART:
@@ -275,7 +278,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
               <Loader active size="small" className="loading-more" />
             ) : null}
             <Chart
-              data={ordre4}
+              data={this.state.urlData}
               //data={this.state.data!.chartData}
               selection={this.state.selection!}
               chartType={this.state.chartType}

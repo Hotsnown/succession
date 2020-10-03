@@ -13,18 +13,13 @@ import {
   Col,
   Badge,
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
-import { FamilyExample } from './examples/interface';
-import simpsonsTree from './examples/simpsons'
-import weasleyTree from './examples/weasley'
-import starkTree from './examples/stark'
-import greekgods from './examples/greekgods'
-import louisXIVTree from './examples/louisXIV'
-import conjointSurvivant from './examples/conjointSurvivant'
-import ordre1 from './examples/ordre1'
-import ordre2 from './examples/ordre2';
-import ordre3 from './examples/ordre3'
-import ordre4 from './examples/ordre4'
+import Ordre1 from './examples/Ordre1'
+import Ordre2 from './examples/Ordre2';
+import Ordre3 from './examples/Ordre3'
+import Ordre4 from './examples/Ordre4'
+import { extendedJsonGedcomData } from './examples/extendedJsonGedcomData'
 
 const Tables = () => {
   return (
@@ -52,7 +47,8 @@ const Tables = () => {
                         <td>{illustration.name}</td>
                           <td>{illustration.tags.map(tag => <Badge color="primary" style={{marginRight: '5px'}}>{tag}</Badge>)}</td>
                         <td>{illustration.numberOfNodes}</td>
-                        <td><a href={illustration.link}>Click me!</a></td>
+                        {console.log(illustration.link)}
+                        <td><Link to={illustration.link}>Click me!</Link></td>
                       </tr>)}
                   </tbody>
                 </Table>
@@ -74,73 +70,37 @@ interface Illustration {
 
 const illustrations: Illustration[] = [
   {
-    name: 'Simpsons Tree',
-    tags: ['Fiction'],
-    numberOfNodes: countMembers(simpsonsTree),
-    link: encodeFamilyUrl(simpsonsTree, 'abe')
-  },
-  {
-    name: 'Weasley Tree',
-    tags: ['Fiction'],
-    numberOfNodes: countMembers(weasleyTree),
-    link: encodeFamilyUrl(weasleyTree, 'arthur')
-  },
-  {
-    name: 'Stark Tree',
-    tags: ['Fiction', 'Deaths'],
-    numberOfNodes: countMembers(starkTree),
-    link: encodeFamilyUrl(starkTree, 'rickard')
-  },
-  {
-    name: 'Greek Gods',
-    tags: ['Fiction'],
-    numberOfNodes: countMembers(greekgods),
-    link: encodeFamilyUrl(greekgods, 'chaos')
-  },
-  {
-    name: 'louis XIV Tree',
-    tags: ['Historic'],
-    numberOfNodes: countMembers(louisXIVTree),
-    link: encodeFamilyUrl(louisXIVTree, 'louisXIV')
-  },
-  {
-    name: 'Avec Conjoint Survivant Tree',
-    tags: ['Conjoint'],
-    numberOfNodes: countMembers(conjointSurvivant),
-    link: encodeFamilyUrl(conjointSurvivant, 'deCujus')
-  },
-  {
     name: 'Ordre 1',
     tags: ['Représentation'],
-    numberOfNodes: countMembers(ordre1),
-    link: encodeFamilyUrl(ordre1, 'deCujus')
+    numberOfNodes: countMembers(Ordre1),
+    link: encodeFamilyUrl(Ordre1, 'deCujus', 'deCujus')
   },
   {
     name: 'Ordre 2',
     tags: ['Représentation', 'Collatéraux Privilégiés'],
-    numberOfNodes: countMembers(ordre2),
-    link: encodeFamilyUrl(ordre2, 'father')
+    numberOfNodes: countMembers(Ordre2),
+    link: encodeFamilyUrl(Ordre2, 'father', 'deCujus')
   },
   {
     name: 'Ordre 3',
     tags: ['Fente (ascendants)', 'Collatéraux Privilégiés'],
-    numberOfNodes: countMembers(ordre3),
-    link: encodeFamilyUrl(ordre3, 'maternal_grand_father')
+    numberOfNodes: countMembers(Ordre3),
+    link: encodeFamilyUrl(Ordre3, 'maternal_grand_father', 'deCujus')
   },
   {
     name: 'Ordre 4',
     tags: ['Fente (collatéraux)'],
-    numberOfNodes: countMembers(ordre4),
-    link: encodeFamilyUrl(ordre4, 'paternal_grand_father')
+    numberOfNodes: countMembers(Ordre4),
+    link: encodeFamilyUrl(Ordre4, 'paternal_grand_father', 'deCujus')
   }
 ]
 
-function countMembers (family: FamilyExample): number {
-  return Object.keys(family).length
+function countMembers (family: extendedJsonGedcomData): number {
+  return family.indis.length
 }
 
-function encodeFamilyUrl (family: FamilyExample, root: string) {
-  return `http://${process.env.NODE_ENV === 'production' ? window.location.hostname : 'localhost:3000'}/succession/dashboard/data?root=${encodeURI(root)}&family=${encodeURI(JSON.stringify(family))}`
+function encodeFamilyUrl (family: extendedJsonGedcomData, root: string, deCujus: string) {
+  return "/succession/tree/view?url=https%3A%2F%2Fwebtreeprint.com%2Ftp_downloader.php%3Fpath%3Dfamous_gedcoms%2Fshakespeare.ged&data="+encodeURI(JSON.stringify(family))+"&root="+root+"&deCujus="+deCujus
 }
 
 export default Tables;

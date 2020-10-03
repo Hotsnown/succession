@@ -2,11 +2,8 @@
 /*eslint-disable*/
 
 import TableList from '../features/Explore/Illustrations';
-import ExpertSystem from '../features/ExpertSystem';
-import { Intro } from '../components/Intro/intro';
-import { AboutUs } from '../components/AboutUs/aboutUs';
-import { Contact } from '../components/Contact/index'
 import { Documentation } from '../features/Explain/Documentation'
+import Tree from '../features/ExpertSystem'
 
 export interface Route {
   path: string;
@@ -25,24 +22,10 @@ const routes: Route[] = [
     layout: '/succession',
   },
   {
-    path: '/intro',
-    name: 'Intro',
+    path: '/tree/view?url=https%3A%2F%2Fwebtreeprint.com%2Ftp_downloader.php%3Fpath%3Dfamous_gedcoms%2Fshakespeare.ged',
+    name: 'Expert Sytem',
     icon: 'nc-icon nc-tile-56',
-    component: Intro,
-    layout: '/succession',
-  },
-  {
-    path: '/aboutus',
-    name: 'A propos',
-    icon: 'nc-icon nc-tile-56',
-    component: AboutUs,
-    layout: '/succession',
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    icon: 'nc-icon nc-tile-56',
-    component: Contact,
+    component: Tree,
     layout: '/succession',
   },
   {

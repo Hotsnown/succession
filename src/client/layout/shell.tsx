@@ -1,20 +1,18 @@
-/*eslint-disable*/
 import React from "react";
-import { Route, Switch, RouteComponentProps, BrowserRouter } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 
-import DemoNavbar from '../components/Navbars/DemoNavbar';
+import DemoNavbar from '../components/Navbars/Navbar';
 import Footer from "../components/Footer/Footer";
 import Sidebar from "../components/Sidebar/Sidebar";
+import { Intro } from '../components/Intro/intro'
+import { AboutUs } from '../components/AboutUs/aboutUs'
+import { Contact } from '../components/Contact'
+
 import ExpertSystem from '../features/ExpertSystem';
+import { Documentation } from '../features/Explain/Documentation'
 
 import routes from "../routes";
-import { Documentation } from '../features/Explain/Documentation'
-import { Intro } from '../components/Intro/intro'
-import { Facts } from "../../core/explain/facts";
-
-interface MainProps {
-  facts: Facts
-}
+import { Facts } from "../../core/explain/facts"; //TODO extract to DTO
 
 interface MainState {
   backgroundColor: string;
@@ -22,7 +20,7 @@ interface MainState {
   facts: Facts
 }
 
-export class Main extends React.Component<RouteComponentProps & MainProps, MainState> {
+export class Shell extends React.Component<any, MainState> {
   mainPanel: any
 
   constructor(props: any) {
@@ -39,7 +37,7 @@ export class Main extends React.Component<RouteComponentProps & MainProps, MainS
   handleActiveClick = (color: string) => {
     this.setState({ activeColor: color });
   };
-  
+
   handleBgClick = (color: string) => {
     this.setState({ backgroundColor: color });
   };
@@ -71,7 +69,9 @@ export class Main extends React.Component<RouteComponentProps & MainProps, MainS
                   />
                 );
               })}
-              <Route exact path="/" component={Intro} />
+              {/* <Route exact path="/" component={Intro} /> */}
+              <Route path="/aboutus" component={AboutUs} />
+              <Route path="/contact" component={Contact} />
             </Switch>
           </BrowserRouter>
           <Footer fluid />
@@ -81,4 +81,4 @@ export class Main extends React.Component<RouteComponentProps & MainProps, MainS
   }
 }
 
-export default Main;
+export default Shell;

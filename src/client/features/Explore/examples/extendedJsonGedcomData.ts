@@ -1,5 +1,6 @@
 import { JsonGedcomData } from 'topola';
-import { Status } from '../../../../../core/devolution/entities';
+import { Status } from '../../../../core/devolution/entities';
+
 export interface extendedJsonGedcomData extends JsonGedcomData {
     indis: ExtendedIndi[];
 }

@@ -2,17 +2,18 @@
 /*eslint-disable*/
 
 import React from 'react'
-import { Tree } from './Tree/Tree'
 import Container from 'react-bootstrap/Container'
-import { getSolution } from './../../../core/devolution/getSolution'
-import ResultModal from './Result'
-import { RawTree } from './Interface'
-import { Navbar } from 'reactstrap'
-import { FamilyDTO } from './Interface'
 import { RouteComponentProps } from 'react-router-dom'
+
+import { Tree } from './Tree/Tree'
+import ResultModal from './Result'
+
+import { RawTree, FamilyResultDTO } from './Interface'
+
 import { getFacts } from '../../../core/explain/getFacts'
 import { Facts } from '../../../core/explain/facts'
 import { Family } from '../../../core/devolution/entities'
+import { getSolution } from './../../../core/devolution/getSolution'
 
 interface Props {
     onHandleSolution: (facts: Facts) => void
@@ -20,13 +21,12 @@ interface Props {
 
 export const App = (props: RouteComponentProps & Props) => {
 
-    //const { root, family } = getInitialDataFromUrl()
+    const url = new URL(window.location.href)
+    const root = url.searchParams.get('root')
 
-    const root = "deCujus"
-    const family = null
     const [memberList, setMemberList] = React.useState<any>({})
-    const [deCujus, setDeCujus] = React.useState<string>('deCujus')
-    const [results, setResults] = React.useState<FamilyDTO>({ members: [] })
+    const [deCujus, setDeCujus] = React.useState<string>(url.searchParams.get('deCujus'))
+    const [results, setResults] = React.useState<FamilyResultDTO>({ members: [] })
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [facts, setFacts] = React.useState<Facts>({} as Facts)
     const [solution, setSolution] = React.useState<Family>({} as Family)
@@ -40,7 +40,7 @@ export const App = (props: RouteComponentProps & Props) => {
         if (!isValidMemberList(memberList)) throw new Error()
         if (!isValidDeCujus(deCujus)) throw new Error()
 
-        const solution = getSolution(memberList, deCujus, root)
+        const solution = getSolution(memberList, 'deCujus', root)
 
         setResults(solution)
         setIsModalOpen(true)
@@ -83,18 +83,3 @@ export default App
 
 const isValidDeCujus = (deCujusId: string): boolean => deCujusId !== ''
 const isValidMemberList = (memberList: RawTree): boolean => true // TODO : already validated by the controller
-
-function getInitialDataFromUrl() {
-    const url = new URL(window.location.href)
-    const paramsString = url.search
-    const searchParams = new URLSearchParams(paramsString)
-    const root = searchParams.get('root')
-    const family = searchParams.get('family')
-    if (!root) {
-        //throw new Error(`${root} is not a valid root`)
-    }
-    if (!family) {
-        //throw new Error(`${family} is not a valid family`)
-    }
-    return { root, family }
-}

@@ -8,7 +8,7 @@ export interface RawTree {
     children: RawTree
 }
 
-export interface FamilyDTO {
+export interface FamilyResultDTO {
     members: Member[]
 }
 

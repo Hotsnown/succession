@@ -1,7 +1,7 @@
-import { Status } from '../../../../../core/devolution/entities'
+import { Status } from '../../../../core/devolution/entities'
 import { extendedJsonGedcomData } from './extendedJsonGedcomData'
 
-export const ordre2: extendedJsonGedcomData = {
+const Ordre2: extendedJsonGedcomData = {
     indis: [
         {
             id: "deCujus",
@@ -63,4 +63,4 @@ export const ordre2: extendedJsonGedcomData = {
     ]
 }
 
-export default ordre2
+export default Ordre2

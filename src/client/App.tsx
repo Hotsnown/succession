@@ -1,2 +1,6 @@
 import React from 'react'
-import { Main } from './layout/shell'
+import { Shell } from './layout/shell'
+
+const App = () => <Shell />
+
+export default App

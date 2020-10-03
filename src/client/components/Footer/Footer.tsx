@@ -46,11 +46,11 @@ const footerItems: footerItem[] = [
     text: 'En savoir plus'
   },
   {
-    url: '/succession/aboutus',
+    url: '/aboutus',
     text: 'A propos'
   },
   {
-    url: '/succession/contact',
+    url: '/contact',
     text: 'Contact'
   }
 ]
