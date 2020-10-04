@@ -1,21 +1,20 @@
-import { Family, Ordre } from "../devolution/entities";
-import { Facts, booleanfr } from "./facts"
-import { Degrees, getFirstAppliableOrdreNumber, byOrdre, atLeastOneMemberEligibleToInheritIn } from '../devolution/services/inference'
-import { nobodyRemainingIn } from "../devolution/services/inference/utils/RépartitionParBranche"
-import { assignFenteAscendante } from "../devolution/services/qualification/Fente"
+import { Family, Ordre, Status, Degree } from "../../devolution/entities";
+import { Facts, booleanfr } from "./Interface"
+import { Degrees, getFirstAppliableOrdreNumber, byOrdre, atLeastOneMemberEligibleToInheritIn } from '../../devolution/services/inference'
+import { nobodyRemainingIn } from "../../devolution/services/inference/utils/RépartitionParBranche"
+import { assignFenteAscendante } from "../../devolution/services/qualification/Fente"
 
 export function getFacts(family: Family, memberId: string): Facts {
     return {
         "nombreDeMembresDuDegreSuccessible" : nombreDeMembresDuDegreSuccessible(family, family),
-        "nombreDeMembresDeLordreFictif" : 2,
+        "nombreDeMembresDeLordreFictif" : nombreDeMembresDeLordreFictif(family),
         "estRepresentant": getEstRepresentant(family, memberId),
+        "nEstPasRepresentant": getNEstPasRepresentant(family, memberId),
         "nombreDeParents": getNombreDeParent(family) as 1 | 2,
         "nombreDeBranches": getNombreDeBranche(family),
         "estParent": getEstParent(family, memberId),
-        "ordre1Applicable": getOrdreApplicable(Ordre.Ordre1, family),
-        "ordre2Applicable": getOrdreApplicable(Ordre.Ordre2, family),
-        "ordre3Applicable": getOrdreApplicable(Ordre.Ordre3, family),
-        "ordre4Applicable": getOrdreApplicable(Ordre.Ordre4, family),
+        "ordrePrivilegie": getOrdrePrivilegie(family),
+        "degreSuccessible": getDegreSuccessible(family),
         "estEpoux": getEstEpoux(family, memberId),
         "epouxExiste": getEpouxExiste(family, memberId),
         "descendantExiste": getDescendantExiste(family),
@@ -26,13 +25,20 @@ export function getFacts(family: Family, memberId: string): Facts {
 function getNombreDeParent (family: Family): number{
     return family.members
         .filter(member => member.isParentOfDeCujus(family))
-        .map(member => {console.log(member.member_id); return member})
         .filter(parent => parent.isEligibleToInherit())
         .length
 }
 
 function getEstRepresentant (family: Family, memberId: string) {
     return family.findMember(memberId).attributes.isReprésentant ? 'oui' : 'non'
+}
+
+function getNEstPasRepresentant(family: Family, memberId: string) {
+    return !family.findMember(memberId).attributes.isReprésentant ? 'oui' : 'non'
+}
+
+function nombreDeMembresDeLordreFictif (family: Family) {
+    return 6
 }
 
 function nombreDeMembresDuDegreSuccessible (family: Family, membersToShareBetween: Family) {
@@ -58,22 +64,33 @@ function getEstParent(family: Family, memberId: string): booleanfr {
     else return "non"
 }
 
-function getOrdreApplicable(ordre: Ordre, family: Family): booleanfr {
-    const strategy = getFirstAppliableOrdreNumber(family)
-    return ordre === strategy ? "oui" : "non"
+function getOrdrePrivilegie(family: Family): number {
+    return getFirstAppliableOrdreNumber(family)
+}
+
+function getDegreSuccessible (family: Family): number{
+    const ret = Degrees
+                    .create(family)
+                    .firstAppliableDegree
+
+    return ret === Degree.Degree6 ? Degree.Degree6 : parseInt(ret)
 }
 
 function getEstEpoux(family: Family, memberId: string): booleanfr {
     if (family.deCujus.attributes.spouse === 'without spouse') return 'non'
     return family.deCujus.attributes.spouse
         .map(spouse => family.findMember(spouse))
+        .filter(spouse => spouse !== undefined)
         .some(spouse => spouse.member_id === memberId) 
         ? 'oui' : 'non'
 }
 
 function getEpouxExiste(family: Family, memberId: string): booleanfr {
     if (family.deCujus.attributes.spouse === 'without spouse') return 'non'
-    else return 'oui'
+    return family.deCujus.attributes.spouse
+        .map(spouseId => family.findMember(spouseId))
+        .filter(spouse => spouse !== undefined)
+        .some(spouse => spouse.attributes.status === Status.Valid) ? 'oui' : 'non'
 }
 
 function getEstDescendant(family: Family, memberId: string): booleanfr {

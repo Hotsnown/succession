@@ -7,14 +7,13 @@ export interface Facts {
     nombreDeParents: NombreDeParents,
     nombreDeBranches: NombreDeBranche,
     estParent: booleanfr,
-    ordre1Applicable: booleanfr,
-    ordre2Applicable: booleanfr,
-    ordre3Applicable: booleanfr,
-    ordre4Applicable: booleanfr,
+    ordrePrivilegie: number,
+    degreSuccessible: number,
     estEpoux: booleanfr,
     epouxExiste: booleanfr,
     descendantExiste: booleanfr
-    estDescendant: booleanfr
+    estDescendant: booleanfr,
+    nEstPasRepresentant: booleanfr,
 }
 
 type NombreDeBranche = 1 | 2
