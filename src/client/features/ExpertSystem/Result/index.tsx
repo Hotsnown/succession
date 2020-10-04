@@ -31,7 +31,7 @@ const ResultModal = ({ results, isModalOpen, toggle, handleExplain }: ResultProp
                     <ListGroupItem key={index}>
                       {member.member_id.toUpperCase()} : {member.attributes.legalRights.toString()}{' '}
                       <Link onClick={() => handleExplain(member.member_id)} to={"../../documentation/droitsDePierre"}> 
-                        <Badge className="float-right">Explain me!</Badge>
+                        <Badge className="float-right">Explain this!</Badge>
                       </Link>
                     </ListGroupItem>)}
             </ListGroup>

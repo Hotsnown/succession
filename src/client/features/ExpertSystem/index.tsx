@@ -10,8 +10,8 @@ import ResultModal from './Result'
 
 import { RawTree, FamilyResultDTO } from './Interface'
 
-import { getFacts } from '../../../core/explain/getFacts'
-import { Facts } from '../../../core/explain/facts'
+import { getFacts } from '../../../core/explain/facts/getFacts'
+import { Facts } from '../../../core/explain/facts/Interface'
 import { Family } from '../../../core/devolution/entities'
 import { getSolution } from './../../../core/devolution/getSolution'
 
