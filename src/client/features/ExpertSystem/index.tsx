@@ -23,6 +23,7 @@ export const App = (props: RouteComponentProps & Props) => {
 
     const url = new URL(window.location.href)
     const root = url.searchParams.get('root')
+    const title = url.searchParams.get('name')
 
     const [memberList, setMemberList] = React.useState<any>({})
     const [deCujus, setDeCujus] = React.useState<string>(url.searchParams.get('deCujus'))
@@ -50,7 +51,6 @@ export const App = (props: RouteComponentProps & Props) => {
 
     const handleExplain = (memberId: string) => {
         const facts:Facts = getFacts(solution, memberId)
-        console.log(facts)
         setFacts(facts)
         props.onHandleSolution(facts)
     }
@@ -65,6 +65,7 @@ export const App = (props: RouteComponentProps & Props) => {
                         onUpdateDeCujus={handleUpdateDeCujus}
                         deCujus={deCujus}
                         processSolution={processSolution}
+                        title={title}
                     ></Tree>
                     <ResultModal 
                         results={results} 

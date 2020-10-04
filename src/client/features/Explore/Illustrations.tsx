@@ -1,6 +1,3 @@
-/* prettier-ignore */
-/*eslint-disable*/
-
 import React from 'react';
 
 import {
@@ -20,6 +17,7 @@ import Ordre2 from './examples/Ordre2';
 import Ordre3 from './examples/Ordre3'
 import Ordre4 from './examples/Ordre4'
 import { extendedJsonGedcomData } from './examples/extendedJsonGedcomData'
+import { UrlBuilder } from './UrlBuilder';
 
 const Tables = () => {
   return (
@@ -71,36 +69,52 @@ interface Illustration {
 const illustrations: Illustration[] = [
   {
     name: 'Ordre 1',
-    tags: ['Représentation'],
+    tags: ['Ordre 1', 'Représentation'],
     numberOfNodes: countMembers(Ordre1),
-    link: encodeFamilyUrl(Ordre1, 'deCujus', 'deCujus')
+    link: new UrlBuilder()
+                .addFamily(Ordre1)
+                .addDeCujus('deCujus')
+                .addRoot('deCujus')
+                .addName('Ordre 1')
+                .build()
   },
   {
     name: 'Ordre 2',
-    tags: ['Représentation', 'Collatéraux Privilégiés'],
+    tags: ['Ordre 2', 'Représentation', 'Collatéraux Privilégiés'],
     numberOfNodes: countMembers(Ordre2),
-    link: encodeFamilyUrl(Ordre2, 'father', 'deCujus')
+    link: new UrlBuilder()
+            .addFamily(Ordre2)
+            .addDeCujus('deCujus')
+            .addRoot('father')
+            .addName('Ordre 2')
+            .build()    
   },
   {
     name: 'Ordre 3',
-    tags: ['Fente (ascendants)', 'Collatéraux Privilégiés'],
+    tags: ['Ordre 3', 'Fente (ascendants)', 'Collatéraux Privilégiés'],
     numberOfNodes: countMembers(Ordre3),
-    link: encodeFamilyUrl(Ordre3, 'maternal_grand_father', 'deCujus')
+    link: new UrlBuilder()
+            .addFamily(Ordre3)
+            .addDeCujus('deCujus')
+            .addRoot('maternal_grand_father')
+            .addName('Ordre 3')
+            .build()    
   },
   {
     name: 'Ordre 4',
-    tags: ['Fente (collatéraux)'],
+    tags: ['Ordre 4', 'Fente (collatéraux)'],
     numberOfNodes: countMembers(Ordre4),
-    link: encodeFamilyUrl(Ordre4, 'paternal_grand_father', 'deCujus')
+    link: new UrlBuilder()
+            .addFamily(Ordre4)
+            .addDeCujus('deCujus')
+            .addRoot('paternal_grand_father')
+            .addName('Ordre 4')
+            .build()    
   }
 ]
 
 function countMembers (family: extendedJsonGedcomData): number {
   return family.indis.length
-}
-
-function encodeFamilyUrl (family: extendedJsonGedcomData, root: string, deCujus: string) {
-  return "/succession/tree/view?url=https%3A%2F%2Fwebtreeprint.com%2Ftp_downloader.php%3Fpath%3Dfamous_gedcoms%2Fshakespeare.ged&data="+encodeURI(JSON.stringify(family))+"&root="+root+"&deCujus="+deCujus
 }
 
 export default Tables;

@@ -57,13 +57,13 @@ const Ordre3: extendedJsonGedcomData = {
         },
         {
             id: "maternal_grand_grand_father",
-            firstName: "maternal_grand_father",
+            firstName: "maternal_grand_grand_father",
             status: Status.Valid,
             fams: ["F4"],
         },
         {
             id: "maternal_grand_grand_mother",
-            firstName: "maternal_grand_father",
+            firstName: "maternal_grand_grand_mother",
             status: Status.Valid,
             fams: ["F4"],
         },

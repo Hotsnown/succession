@@ -19,8 +19,6 @@ import {
 import { ErrorPopup, ErrorMessage } from '../../../components/Notification/ErrorMessage';
 import { RouteComponentProps } from 'react-router-dom';
 import { getArguments, hasUpdatedValues } from './controller';
-import Ordre1 from '../../Explore/Illustrations'
-import Ordre2 from '../../Explore/examples/Ordre2';
 
 enum TreeState {
   INITIAL,
@@ -54,6 +52,7 @@ interface TreeProps {
   onUpdateMemberList: (memberList: any) => void
   deCujus: string
   processSolution: () => void
+  title: string
 }
 
 export class Tree extends React.Component<RouteComponentProps & TreeProps, State> {
@@ -86,7 +85,6 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
     }
   }
 
-  /** Sets error message after data load failure. */
   private setError(error: string) {
     this.setState(
       Object.assign({}, this.state, {
@@ -313,7 +311,7 @@ export class Tree extends React.Component<RouteComponentProps & TreeProps, State
             {...this.props}
             deCujus={this.props.deCujus}
             processSolution={this.props.processSolution}
-            title={"Ordre 1"}
+            title={this.props.title}
             data={this.state.data && this.state.data.chartData}
             allowAllRelativesChart={true}
             showingChart={
