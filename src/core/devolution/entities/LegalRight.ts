@@ -72,7 +72,36 @@ export class LegalRight extends ValueObject<LegalRightProps> {
     }
 
     public toString(): string {
-        return this.numerator.valueOf() + "/" + this.denominator.valueOf();
+        
+        //aproximate fraction representation to handle when the exact fraction representation is unreadable
+        if (this.numerator > 1000) return this.getlowestfraction(this.numerator/this.denominator)
+        
+        //exact fraction representation
+        return  this.numerator + "/" + this.denominator
+    }
+
+    //https://stackoverflow.com/questions/14002113/how-to-simplify-a-decimal-into-the-smallest-possible-fraction
+    private getlowestfraction(x0) {
+        var eps = 1.0E-15;
+        var h, h1, h2, k, k1, k2, a, x;
+    
+        x = x0;
+        a = Math.floor(x);
+        h1 = 1;
+        k1 = 0;
+        h = a;
+        k = 1;
+    
+        while (x-a > eps*k*k) {
+            x = 1/(x-a);
+            a = Math.floor(x);
+            h2 = h1; h1 = h;
+            k2 = k1; k1 = k;
+            h = h2 + a*h1;
+            k = k2 + a*k1;
+        }
+    
+        return h + "/" + k;
     }
 
     public plus(addend: LegalRight): LegalRight {
