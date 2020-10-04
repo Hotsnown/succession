@@ -10,4 +10,11 @@ interface ExtendedIndi {
     firstName: string;
     fams?: string[];
     famc?: string;
+    death?: {
+        date: {
+            day: number,
+            month: number,
+            year: number
+        }
+    }
 }

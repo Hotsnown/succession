@@ -1,5 +1,6 @@
 import React from 'react';
 import { SearchBar } from './SearchBar';
+
 export function DocumentationLanding({ rules }) {
     return (<>
         <h1>Documentation</h1>

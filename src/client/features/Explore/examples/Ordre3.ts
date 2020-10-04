@@ -7,7 +7,14 @@ const Ordre3: extendedJsonGedcomData = {
             id: "deCujus",
             firstName: "deCujus",
             status: Status.Deceased,
-            famc: "F1"
+            famc: "F1",
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "father",

@@ -1,7 +1,7 @@
 import React from 'react'
 import Engine, { Documentation as Docu } from 'publicodes'
 import { useLocation } from 'react-router-dom'
-import { rules } from '../../../core/explain/rules' //TODO extract to DTO
+import rules from '../../../core/explain/rules/index' //TODO extract to DTO
 import { Facts } from '../../../core/explain/facts' //TODO extract to DTO
 import { DocumentationLanding } from './LandingPage/DocumentationLanding'
 
@@ -12,6 +12,8 @@ interface Props {
 export const Documentation = ({ facts }: Props) => {
 
     const engine = new Engine(rules).setSituation({ ...facts })
+
+    console.log(engine.evaluate('droitsDePierre'))
 
     const { pathname } = useLocation()
 

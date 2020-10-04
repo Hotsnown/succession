@@ -7,32 +7,67 @@ const Ordre4: extendedJsonGedcomData = {
             id: "deCujus",
             firstName: "deCujus",
             status: Status.Deceased,
-            famc: "F1"
+            famc: "F1",
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "father",
             firstName: "father",
             status: Status.Deceased,
             fams: ["F1"],
-            famc: "F2"
+            famc: "F2",
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "mother",
             firstName: "mother",
             status: Status.Deceased,
             fams: ["F1"],
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "paternal_grand_father",
             firstName: "paternal_grand_father",
             status: Status.Deceased,
-            fams: ["F2"]
+            fams: ["F2"],
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "paternal_grand_mother",
             firstName: "paternal_grand_mother",
             status: Status.Deceased,
-            fams: ["F2"]
+            fams: ["F2"],
+            death: {
+                date: {
+                  day: 4,
+                  month: 12,
+                  year: 1840
+                },
+              },
         },
         {
             id: "uncle",
