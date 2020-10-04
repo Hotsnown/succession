@@ -12,7 +12,7 @@ import ExpertSystem from '../features/ExpertSystem';
 import { Documentation } from '../features/Explain/Documentation'
 
 import routes from "../routes";
-import { Facts } from "../../core/explain/facts"; //TODO extract to DTO
+import { Facts } from "../../core/explain/facts/Interface"; //TODO extract to DTO
 
 interface MainState {
   backgroundColor: string;
@@ -69,7 +69,7 @@ export class Shell extends React.Component<any, MainState> {
                   />
                 );
               })}
-              {/* <Route exact path="/" component={Intro} /> */}
+              <Route exact path="/" component={Intro} />
               <Route path="/aboutus" component={AboutUs} />
               <Route path="/contact" component={Contact} />
             </Switch>
